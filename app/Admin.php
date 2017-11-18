@@ -30,4 +30,14 @@ class Admin extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * 
+     * @return DB-field for authentication
+     * by default is: email
+     */
+    public function username()
+    {
+        return 'name';
+    }
+
 }

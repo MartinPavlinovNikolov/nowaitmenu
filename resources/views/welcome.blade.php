@@ -5,91 +5,81 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>{{env('APP_NAME')}}</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <!--TODO: CDN BOOTSTRAP STYLES -->
+        
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
+        <div class="container-fluid">
+            <nav class="row">
+                <div class="col-md-2">
+                    <h1><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <div class="col-md-4">
+                    <p class="text-right"><small>"this is the best thing for restaurants since refrigeration was invented"</small></p>
+                    <p class="text-right"><small>Sir Gordon Ramsay</small></p>
+                    <p  class="text-right"<><a href="#"<small>more testimonials</a></small></p>
                 </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <div class="col-md-1 col-md-offset-1">
+                    <a href="#" class="btn btn-warning btn-lg">try it free</a>
                 </div>
-            </div>
+                <div class="col-md-4">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="#">Features</a>
+                        </li>
+                        <li>
+                            |
+                        </li>
+                        <li>
+                            <a href="#">Pricing</a>
+                        </li>
+                        <li>
+                            |
+                        </li>
+                        <li>
+                            <a href="#">Support</a>
+                        </li>
+                        <li>
+                            |
+                        </li>
+                        <li>
+                            <a href="{{ route('register') }}">Register</a>
+                        </li>
+                        <li>
+                            |
+                        </li>
+                        <li>
+                            <a href="{{ route('login') }}">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <section class="row">
+                <hr>
+                <div class="col-md-10 col-md-offset-1">
+                    <h1 class="text-center">Get your restaurant runing in minutes</h2>
+                        <div class="row">
+                            <div class="col-md-4 text-center">Video tutorial-1</div>
+                            <div class="col-md-4 text-center">Video tutorial-2</div>
+                            <div class="col-md-4 text-center">Video tutorial-3</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-4 text-center"><a href="#">Enter your E-mail</a></div>
+                            <div class="col-md-4 text-center"><a href="#">Enter your password</a></div>
+                            <div class="col-md-4 text-center"><a href="#" class="btn btn-warning btn-lg">try it free</a></div>
+                        </div>
+                </div>
+            </section>
+            <footer class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="text-center">boring|stuff|in|the|footer</p>
+                </div>
+            </footer>
         </div>
+        <!--TODO: CDN BOOTSTRAPJS, jQuery...-->
     </body>
 </html>
