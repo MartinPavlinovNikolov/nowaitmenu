@@ -14,7 +14,7 @@
                 Logout
             </a>
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
             </form>
         </li>
@@ -40,6 +40,14 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- debuging purpose -->
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        @component('components.who')
+        @endcomponent
     </div>
 </div>
 @endsection

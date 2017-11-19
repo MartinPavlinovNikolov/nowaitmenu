@@ -9,10 +9,10 @@ use Auth;
 class AdminLoginController extends Controller
 {
 
-	public function __construct()
-	{
-		$this->middleware('guest:admin');
-	}
+    public function __construct()
+    {
+        $this->middleware('guest:admin', ['exept' => ['adminLogout']]);
+    }
 
     public function showLoginForm()
     {
@@ -30,6 +30,12 @@ class AdminLoginController extends Controller
             return redirect()->intended(route('admin.dashboard'));
         }
         return redirect()->back()->withInput($request->only('name'));
+    }
+
+    public function adminLogout()
+    {
+        Auth::guard('admin')->logout();
+        return redirect('/');
     }
 
 }
