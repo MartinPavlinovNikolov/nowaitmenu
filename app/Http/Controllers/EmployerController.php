@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Admin;
+use App\Employer;
 use Auth;
 
-class AdminController extends Controller
+class EmployerController extends Controller
 {
 
     /**
@@ -16,7 +16,7 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('auth:employer');
     }
 
     /**
@@ -26,7 +26,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        return view('employer.dashboard');
     }
-    
+
 }

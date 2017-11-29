@@ -20,6 +20,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
+Route::get('/login', 'Auth\EmployerLoginController@showLoginForm')->name('employer.login');
+Route::post('/login', 'Auth\EmployerLoginController@login')->name('employer.login.submit');
+Route::get('/', 'EmployerController@index')->name('employer.dashboard');
+Route::post('/logout', 'Auth\EmployerLoginController@employerLogout')->name('employer.logout');
+
 Route::prefix('admin')->group(function() {
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');

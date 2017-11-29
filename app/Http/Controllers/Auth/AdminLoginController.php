@@ -11,7 +11,7 @@ class AdminLoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:admin', ['except' => ['adminLogout']]);
+        $this->middleware('guest:admin')->except('adminLogout');
     }
 
     public function showLoginForm()
@@ -29,7 +29,7 @@ class AdminLoginController extends Controller
         if (Auth::guard('admin')->attempt(['name' => $request->name, 'password' => $request->password])) {
             return redirect()->intended(route('admin.dashboard'));
         }
-        return redirect()->back()->withInput($request->only('name'));
+        return redirect()->back()->flash($request->name);
     }
 
     public function adminLogout()

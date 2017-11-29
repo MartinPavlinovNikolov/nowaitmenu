@@ -30,7 +30,7 @@ class RedirectIfAuthenticated
                 break;
             case 'employer':
                 if (Auth::guard($guard)->check()) {
-                    return redirect()->route('/home');
+                    return redirect()->route('employer.dashboard');
                 }
                 break;
             default:

@@ -10,7 +10,7 @@ class Employer extends Authenticatable
 
     use Notifiable;
 
-    protected $guard    = 'employer';
+    protected $guard = 'employer';
 
     /**
      * The attributes that are mass assignable.
@@ -29,5 +29,15 @@ class Employer extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * 
+     * @return DB-field for authentication
+     * by default is: email
+     */
+    public function username()
+    {
+        return 'email';
+    }
 
 }

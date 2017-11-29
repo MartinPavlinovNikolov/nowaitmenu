@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('title')
-Admin
+Employer
 @stop
 
 @section('nav')
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-        {{ Auth::guard('admin')->user()->name }} <span class="caret"></span>
+        {{ Auth::guard('employer')->user()->name }} <span class="caret"></span>
     </a>
 
     <ul class="dropdown-menu">
@@ -18,7 +18,7 @@ Admin
                 Logout
             </a>
 
-            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+            <form id="logout-form" action="{{ route('employer.logout') }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
             </form>
         </li>
@@ -27,7 +27,7 @@ Admin
 @stop
 
 @section('content')
-<h2>HELLO ADMIN</h2>
+<h2>HELLO EMPLOYER</h2>
 
 <!-- debuging purpose -->
 <div class="row">
