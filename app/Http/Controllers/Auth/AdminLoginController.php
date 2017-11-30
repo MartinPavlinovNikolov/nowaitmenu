@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class AdminLoginController extends Controller
 {
@@ -29,7 +29,7 @@ class AdminLoginController extends Controller
         if (Auth::guard('admin')->attempt(['name' => $request->name, 'password' => $request->password])) {
             return redirect()->intended(route('admin.dashboard'));
         }
-        return redirect()->back()->flash($request->name);
+        return redirect()->back()->withInput();
     }
 
     public function adminLogout()

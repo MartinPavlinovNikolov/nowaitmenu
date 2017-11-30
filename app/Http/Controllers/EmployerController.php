@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Employer;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class EmployerController extends Controller
 {

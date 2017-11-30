@@ -46,13 +46,13 @@
                             |
                         </li>
                         <li>
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('employer.register') }}">Register</a>
                         </li>
                         <li>
                             |
                         </li>
                         <li>
-                            <a href="{{ route('login') }}">Login</a>
+                            <a href="{{ route('employer.login') }}">Login</a>
                         </li>
                     </ul>
                 </div>

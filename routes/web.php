@@ -15,14 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
 Route::get('/login', 'Auth\EmployerLoginController@showLoginForm')->name('employer.login');
 Route::post('/login', 'Auth\EmployerLoginController@login')->name('employer.login.submit');
-Route::get('/', 'EmployerController@index')->name('employer.dashboard');
+Route::get('/register', 'Auth\EmployerRegisterController@showRegisterForm')->name('employer.register');
+Route::post('/register', 'Auth\EmployerRegisterController@register')->name('employer.register.submit');
+Route::get('/dashboard', 'EmployerController@index')->name('employer.dashboard');
 Route::post('/logout', 'Auth\EmployerLoginController@employerLogout')->name('employer.logout');
 
 Route::prefix('admin')->group(function() {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class EmployerLoginController extends Controller
 {
@@ -22,7 +22,6 @@ class EmployerLoginController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            'name'     => 'required|min:3|max:255',
             'email'    => 'required|email|min:1',
             'password' => 'required|min:6'
         ]);
@@ -32,7 +31,7 @@ class EmployerLoginController extends Controller
                     'password' => $request->password])) {
             return redirect()->intended(route('employer.dashboard'));
         }
-        return redirect()->back()->flash();
+        return redirect()->back()->withInput();
     }
 
     public function employerLogout()
