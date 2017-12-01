@@ -9,6 +9,9 @@ class Employer extends Authenticatable
 {
 
     use Notifiable;
+    
+    protected $table = 'employers';
+    protected $primaryKey = 'employers_id';
 
     protected $guard = 'employer';
 

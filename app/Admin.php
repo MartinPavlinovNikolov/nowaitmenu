@@ -11,6 +11,7 @@ class Admin extends Authenticatable
     use Notifiable;
 
     protected $guard = 'admin';
+    protected $primaryKey = 'admin_id';
 
     /**
      * The attributes that are mass assignable.
