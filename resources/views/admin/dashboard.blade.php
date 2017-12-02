@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Admin
+Admin-Dashboard
 @stop
 
 @section('nav')
@@ -17,7 +17,7 @@ Admin
                        document.getElementById('logout-form').submit();">
                 Logout
             </a>
-            <a href="#">Settings</a>
+            <a href="{{ route('admin.settings') }}">Settings</a>
             <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
             </form>
@@ -36,35 +36,51 @@ Admin
         @endcomponent
     </div>
 </div>
-<div style="width: 80vw;margin: 0 auto;">
-    <h2 style="display: block;width:10%;margin: 0 auto 0 0;border: 1px solid greenyellow;background-color: #666;color: #fff">Users</h2>
-    <div style="border: 1px solid #000;background-color: #666;color: #fff">
-        <div style="display: flex;flex-wrap: wrap;border: 1px solid greenyellow">
-            <div style="width: 5.5%;align-content: center;align-items: center;text-align: center;border-right: 1px solid greenyellow">ID</div>
-            <div style="width: 15.5%;align-content: center;align-items: center;text-align: center;border-right: 1px solid greenyellow">Name</div>
-            <div style="width: 16.5%;align-content: center;align-items: center;text-align: center;border-right: 1px solid greenyellow">Email</div>
-            <div style="width: 8.5%;align-content: center;align-items: center;text-align: center;border-right: 1px solid greenyellow">Date created</div>
-            <div style="width: 10.5%;align-content: center;align-items: center;text-align: center;border-right: 1px solid greenyellow">Employees</div>
-            <div style="width: 9.5%;align-content: center;align-items: center;text-align: center;border-right: 1px solid greenyellow">Status</div>
-            <div style="width: 8.5%;align-content: center;align-items: center;text-align: center;border-right: 1px solid greenyellow">Last login</div>
-            <div style="width: 25.5%;align-content: center;align-items: center;text-align: center">Actions</div>
-        </div>
-        <div style="display: flex;flex-wrap: wrap;border: 1px solid greenyellow">
-            <div style="width: 5.5%;align-content: center;align-items: center;text-align: center;border-right: 1px solid greenyellow">7</div>
-            <div style="width: 15.5%;align-content: center;align-items: center;text-align: center;border-right: 1px solid greenyellow">Nick Jones</div>
-            <div style="width: 16.5%;align-content: center;align-items: center;text-align: center;border-right: 1px solid greenyellow">Nick.Jones@gmail.com</div>
-            <div style="width: 8.5%;align-content: center;align-items: center;text-align: center;border-right: 1px solid greenyellow">2017/10/16</div>
-            <div style="width: 10.5%;align-content: center;align-items: center;text-align: center;border-right: 1px solid greenyellow">
-                <button style="background-color: #bcd42a;border-radius: 5px">View(8)</button>
-            </div>
-            <div style="width: 9.5%;align-content: center;align-items: center;text-align: center;border-right: 1px solid greenyellow">Active</div>
-            <div style="width: 8.5%;align-content: center;align-items: center;text-align: center;border-right: 1px solid greenyellow">2017/10/16</div>
-            <div style="width: 25.5%;align-content: center;align-items: center;text-align: center">
-                <button style="background-color: #bcd42a;border-radius: 5px">Suspend</button>
-                <button style="background-color: #bcd42a;border-radius: 5px">Delete</button>
-                <button style="background-color: #bcd42a;border-radius: 5px">Login</button>
-            </div>
-        </div>
-    </div>
-</div>
+@if(count($employers) > 0)
+<ul style="list-style: none;padding: 0;display:flex;flex-wrap: wrap;justify-content: space-between;background-color: gold">
+    @foreach($employers as $employer)
+    <li style="width: 5%;border:1px solid black;">ID: {{ ($employer->employer_id) }}</li> 
+    <li style="width: 18%;border:1px solid black;">Company name: {{ ($employer->name) }}</li> 
+    <li style="width: 20%;border:1px solid black;">E-mail: {{ ($employer->email) }}</li> 
+    <li style="width: 20%;border:1px solid black;">Last Login: {{ $employer->last_login }}</li> 
+    <li style="width: 10%;border:1px solid black;">
+        Status: 
+        @if($employer->status == 1)
+        active
+        @else
+        disabled
+        @endif
+    </li> 
+    <li style="width: 25%;border:1px solid black;">Employees:
+        <ul style="list-style: none;padding: 0;width: 80%;display:flex;flex-wrap: wrap;justify-content: space-around;align-items: center;background-color: violet">
+            @if(count($employees) == 0)
+            <li style="background-color: linen;text-align: center">
+                Missing employees!
+            </li>
+            @else
+            <?php $i = 0; ?>
+            @foreach($employees as $employee)
+            @if($employee->employer_id == $employer->employer_id)
+            <?php $i++; ?>
+            <li style="width: 30%;margin: 1rem;background-color: wheat;text-align: center">
+                Name: {{ $employee->name }}
+            </li> 
+            @if($employee->status == 1)
+            <li style="width: 30%;margin: 1rem;background-color: greenyellow;text-align: center">Status:  
+                active
+            </li>
+            @else
+            <li style="width: 30%;margin: 1rem;background-color: tomato;text-align: center">Status:  
+                disabled
+            </li>
+            @endif
+            @endif
+            @endforeach
+            <li style="width: 90%;border:1px solid black;margin: 1rem;background-color: skyblue;text-align: center">Employees-Total: {{ $i }}</li>
+        </ul>
+    </li>
+    @endif 
+    @endforeach
+</ul>
+@endif
 @stop

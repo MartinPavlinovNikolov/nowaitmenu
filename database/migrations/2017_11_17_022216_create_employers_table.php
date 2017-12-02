@@ -18,6 +18,7 @@ class CreateEmployersTable extends Migration
             $table->string('name')->unique();
             $table->string('email')->unique();
             $table->string('password');
+            $table->dateTime('last_login');
             $table->boolean('status');
             $table->rememberToken();
             $table->timestamps();

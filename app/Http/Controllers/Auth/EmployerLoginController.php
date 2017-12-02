@@ -30,7 +30,9 @@ class EmployerLoginController extends Controller
         if (Auth::guard('employer')->attempt([
                     'name'    => $request->name,
                     'email'    => $request->email,
-                    'password' => $request->password])) {
+                    'password' => $request->password,
+                    'last_login' => date('Y-m-d H:i:s', time())
+                ])) {
             return redirect()->intended(route('employer.dashboard'));
         }
         return redirect()->back()->withInput();

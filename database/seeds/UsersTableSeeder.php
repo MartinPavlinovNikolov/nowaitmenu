@@ -15,29 +15,31 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 10; $i++)
+        for ($i = 0; $i < 100; $i++)
         {
-            $employer           = new Employer();
-            $employer->name     = 'Fatdonalds' . $i;
-            $employer->email    = 'fatdonalds' . $i . '@fat.donalds';
-            $employer->password = bcrypt('qwerty');
-            $employer->status   = true;
+            $employer             = new Employer();
+            $employer->name       = 'Fatdonalds' . $i;
+            $employer->email      = 'fatdonalds' . $i . '@fat.donalds';
+            $employer->password   = bcrypt('qwerty');
+            $employer->last_login = date('Y-m-d H:i:s', time());
+            $employer->status     = true;
             $employer->save();
         }
 
-        for ($i = 0; $i < 100; $i++)
+        for ($i = 0; $i < 1000; $i++)
         {
-            $employee           = new Employee();
-            $employee->employer_id = rand(1, 10);
-            $employee->name     = 'john' . $i;
-            $employee->password = '0000';
-            $employee->status   = rand(0, 1);
+            $employee              = new Employee();
+            $employee->employer_id = rand(1, 100);
+            $employee->name        = 'john' . $i;
+            $employee->password    = '0000';
+            $employee->status      = rand(0, 1);
             $employee->save();
         }
-        
-        $admin           = new Admin();
-        $admin->name     = 'Martin';
-        $admin->password = bcrypt('qwerty');
+
+        $admin                 = new Admin();
+        $admin->name           = 'Martin';
+        $admin->password       = bcrypt('qwerty');
+        $admin->remember_token = 'qwertyuiopasdfghjkl';
         $admin->save();
     }
 

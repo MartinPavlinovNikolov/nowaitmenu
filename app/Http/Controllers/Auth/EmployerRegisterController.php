@@ -57,6 +57,7 @@ class EmployerRegisterController extends Controller
                     'name'     => $data['name'],
                     'email'    => $data['email'],
                     'password' => bcrypt($data['password']),
+                    'last_login' => date('Y-m-d H:i:s', time()),
                     'status'   => true
         ]);
     }
