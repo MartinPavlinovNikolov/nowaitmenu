@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 100; $i++)
+        for ($i = 0; $i < 10; $i++)
         {
             $employer             = new Employer();
             $employer->name       = 'Fatdonalds' . $i;
@@ -26,10 +26,10 @@ class UsersTableSeeder extends Seeder
             $employer->save();
         }
 
-        for ($i = 0; $i < 1000; $i++)
+        for ($i = 0; $i < 100; $i++)
         {
             $employee              = new Employee();
-            $employee->employer_id = rand(1, 100);
+            $employee->employer_id = rand(1, 10);
             $employee->name        = 'john' . $i;
             $employee->password    = '0000';
             $employee->status      = rand(0, 1);

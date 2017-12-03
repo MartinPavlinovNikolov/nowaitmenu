@@ -39,7 +39,7 @@ Admin-Dashboard
 @if(count($employers) > 0)
 <ul style="list-style: none;padding: 0;display:flex;flex-wrap: wrap;justify-content: space-between;background-color: gold">
     @foreach($employers as $employer)
-    <li style="width: 5%;border:1px solid black;">ID: {{ ($employer->employer_id) }}</li> 
+    <li style="width: 5%;border:1px solid black;">ID: {{ ($employer->id) }}</li> 
     <li style="width: 18%;border:1px solid black;">Company name: {{ ($employer->name) }}</li> 
     <li style="width: 20%;border:1px solid black;">E-mail: {{ ($employer->email) }}</li> 
     <li style="width: 20%;border:1px solid black;">Last Login: {{ $employer->last_login }}</li> 
@@ -51,17 +51,9 @@ Admin-Dashboard
         disabled
         @endif
     </li> 
-    <li style="width: 25%;border:1px solid black;">Employees:
+    <li style="width: 25%;border:1px solid black;">Employees: {{ count($employer->employees) }}
         <ul style="list-style: none;padding: 0;width: 80%;display:flex;flex-wrap: wrap;justify-content: space-around;align-items: center;background-color: violet">
-            @if(count($employees) == 0)
-            <li style="background-color: linen;text-align: center">
-                Missing employees!
-            </li>
-            @else
-            <?php $i = 0; ?>
-            @foreach($employees as $employee)
-            @if($employee->employer_id == $employer->employer_id)
-            <?php $i++; ?>
+            @foreach($employer->employees as $employee)
             <li style="width: 30%;margin: 1rem;background-color: wheat;text-align: center">
                 Name: {{ $employee->name }}
             </li> 
@@ -74,12 +66,9 @@ Admin-Dashboard
                 disabled
             </li>
             @endif
-            @endif
             @endforeach
-            <li style="width: 90%;border:1px solid black;margin: 1rem;background-color: skyblue;text-align: center">Employees-Total: {{ $i }}</li>
         </ul>
     </li>
-    @endif 
     @endforeach
 </ul>
 @endif

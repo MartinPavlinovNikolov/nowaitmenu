@@ -8,10 +8,12 @@ use App\Employer;
 use App\Employee;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Validator;
+use Hash;
 
 class AdminController extends Controller
 {
-
+    
     /**
      * Create a new controller instance.
      *
@@ -30,9 +32,9 @@ class AdminController extends Controller
     public function index()
     {
         $employers = Employer::all();
-        
+
         $employees = Employee::all();
-        
+
         return view('admin.dashboard')->with(['employers' => $employers, 'employees' => $employees]);
     }
 
@@ -41,21 +43,44 @@ class AdminController extends Controller
         return view('admin.settings');
     }
 
+    public function admin_credential_rules(array $data)
+    {
+        $messages = [
+            'current-password.required' => 'Please enter current password',
+            'password.required'         => 'Please enter password',
+        ];
+
+        $validator = Validator::make($data, [
+                    'current-password'      => 'required',
+                    'password'              => 'required|min:6',
+                    'password_confirmation' => 'required|same:password',
+                        ], $messages);
+
+        return $validator;
+    }
+
     public function postSettings(Request $request)
     {
-        if ($request->validate([
-                    'password'            => 'required|min:6',
-                    'new_password'        => 'required|min:6',
-                    'new_password_repeat' => 'required|same:new_password|min:6'
-                ])) {
-            $admin           = Admin::find(Auth::guard('admin')->user()->admin_id);
-            $admin->password = bcrypt($request->new_password);
-            $admin->update();
 
-            return redirect()->back();
+        $request_data = $request->All();
+        $validator    = $this->admin_credential_rules($request_data);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput();
         }
-
-        return redirect()->back()->withErrors()->withInput();
+        else {
+            $current_password = Auth::guard('admin')->User()->password;
+            if (Hash::check($request_data['current-password'], $current_password)) {
+                $user_id            = Auth::guard('admin')->User()->id;
+                $obj_user           = Admin::find($user_id);
+                $obj_user->password = Hash::make($request_data['password']);
+                $obj_user->save();
+                return redirect()->to(route('admin.login'));
+            }
+            else {
+                $error = array('current-password' => 'Please enter correct current password');
+                return redirect()->back()->withErrors($error)->withInput();
+            }
+        }
     }
 
 }

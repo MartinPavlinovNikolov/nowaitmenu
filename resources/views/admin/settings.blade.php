@@ -42,11 +42,13 @@ Admin-Settings
 <p class="danger">{{ $error }}</p>
 @endforeach
 @endif
-<form action="{{ route('admin.settings.submit') }}" method="POST">
-    {{ csrf_field() }}
-    <input type="password" name="password" value="{{ old('password') }}" placeholder="current password">
-    <input type="password" name="new_password" value="{{ old('new_password') }}" placeholder="new password">
-    <input type="password" name="new_password_repeat" value="{{ old('new_password_repeat') }}" placeholder="new password repeat">
-    <button type="submit">Change Password</button>
+<form method="POST" action="{{ route('admin.settings.submit') }}">
+    {{ csrf_field() }} 
+    Current Password: <input type="password" name="current-password" value="{{ old('current-password') }}" placeholder="Current Password">
+    New Password: 
+    <input type="password" name="password" value="{{ old('password') }}" placeholder="New Password">
+    Re-enter Password: 
+    <input type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="Re-enter Password">
+    <button type="submit">Change it</button>
 </form>
 @stop

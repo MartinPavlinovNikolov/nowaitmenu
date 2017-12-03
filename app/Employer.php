@@ -11,8 +11,6 @@ class Employer extends Authenticatable
     use Notifiable;
     
     protected $table = 'employers';
-    protected $primaryKey = 'employers_id';
-
     protected $guard = 'employer';
 
     /**
@@ -33,6 +31,11 @@ class Employer extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function employees()
+    {
+        return $this->hasMany('App\Employee');
+    }
+    
     /**
      * 
      * @return DB-field for authentication
