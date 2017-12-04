@@ -5,13 +5,13 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Employer extends Authenticatable
+class Tablet extends Authenticatable
 {
 
     use Notifiable;
 
-    protected $table = 'employers';
-    protected $guard = 'employer';
+    protected $table = 'tablets';
+    protected $guard = 'tablet';
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +19,7 @@ class Employer extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'password',
     ];
 
     /**
@@ -31,26 +31,16 @@ class Employer extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function menu()
+    public function employer()
     {
-        return $this->hasOne('App\Menu');
+        return $this->belongTo('App\Employer');
     }
-
-    public function admins()
+    
+    public function employee()
     {
-        return $this->belongsToMany('App\Admin');
+        return $this->belongToMany('App\Employee');
     }
-
-    public function employees()
-    {
-        return $this->hasMany('App\Employee');
-    }
-
-    public function tablets()
-    {
-        return $this->hasMany('App\Tablet');
-    }
-
+    
     /**
      * 
      * @return DB-field for authentication
@@ -58,7 +48,7 @@ class Employer extends Authenticatable
      */
     public function username()
     {
-        return 'email';
+        return 'name';
     }
 
 }

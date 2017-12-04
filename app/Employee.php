@@ -10,8 +10,8 @@ class Employee extends Authenticatable
 
     use Notifiable;
 
-    protected $table      = 'employees';
-    protected $guard      = 'employeе';
+    protected $table = 'employees';
+    protected $guard = 'employeе';
 
     /**
      * The attributes that are mass assignable.
@@ -34,6 +34,26 @@ class Employee extends Authenticatable
     public function employer()
     {
         return $this->belongsTo('App\Employer');
+    }
+
+    public function tablets()
+    {
+        return $this->belongsToMany('App\Tablet');
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany('App\Order');
+    }
+
+    public function totals()
+    {
+        return $this->belongsToMany('App\Total');
+    }
+
+    public function tables()
+    {
+        return $this->belongsToMany('App\Table');
     }
 
     /**

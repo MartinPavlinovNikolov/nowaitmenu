@@ -30,6 +30,11 @@ class Admin extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function employers()
+    {
+        return $this->belongsToMany('App\Employers');
+    }
+
     /**
      * 
      * @return DB-field for authentication

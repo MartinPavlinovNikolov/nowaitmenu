@@ -52,6 +52,14 @@ return [
             'driver' => 'token',
             'provider' => 'admins',
         ],
+        'tablet' => [
+            'driver' => 'session',
+            'provider' => 'tablets',
+        ],
+        'tablet-api' => [
+            'driver' => 'token',
+            'provider' => 'tablets',
+        ],
         'employee' => [
             'driver' => 'session',
             'provider' => 'employees',
@@ -87,6 +95,10 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Admin::class,
+        ],
+        'tablets' => [
+            'driver' => 'eloquent',
+            'model' => App\Tablet::class,
         ],
         'employees' => [
             'driver' => 'eloquent',
@@ -125,10 +137,15 @@ return [
             'table' => 'password_resets',
             'expire' => 15,
         ],
+        'tablets' => [
+            'provider' => 'tablets',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
         'employers' => [
             'provider' => 'employers',
             'table' => 'password_resets',
-            'expire' => (60*8),
+            'expire' => 60,
         ]
     ],
 
