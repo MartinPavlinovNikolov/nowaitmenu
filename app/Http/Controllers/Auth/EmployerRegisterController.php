@@ -6,6 +6,7 @@ use App\Employer;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 
 class EmployerRegisterController extends Controller
 {
@@ -21,9 +22,9 @@ class EmployerRegisterController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:employer');
+        $this->middleware(['guest:employer', 'guest:employee', 'guest:admin', 'guest:tablet']);
     }
-
+    
     /**
      * Get a validator for an incoming registration request.
      *
@@ -33,14 +34,14 @@ class EmployerRegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-                    'name'     => 'required|string|max:255',
-                    'email'    => 'required|string|email|max:255|unique:employers',
-                    'password' => 'required|string|min:6|confirmed',
+                    'name'                  => 'required|string|min:2|max:255',
+                    'email'                 => 'required|string|email|max:255|unique:employers',
+                    'password'              => 'required|string|min:6|confirmed',
                     'password_confirmation' => 'same:password'
         ]);
     }
 
-    public function showRegisterForm()
+    public function showRegistrationForm()
     {
         return view('auth.employer-register');
     }
@@ -54,11 +55,11 @@ class EmployerRegisterController extends Controller
     protected function create(array $data)
     {
         return Employer::create([
-                    'name'     => $data['name'],
-                    'email'    => $data['email'],
-                    'password' => bcrypt($data['password']),
+                    'name'       => $data['name'],
+                    'email'      => $data['email'],
+                    'password'   => bcrypt($data['password']),
                     'last_login' => date('Y-m-d H:i:s', time()),
-                    'status'   => true
+                    'status'     => true
         ]);
     }
 

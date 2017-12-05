@@ -11,7 +11,7 @@ class EmployerLoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:employer')->except('employerLogout');
+        $this->middleware(['guest:employer', 'guest:employee', 'guest:admin', 'guest:tablet'])->except('employerLogout');
     }
 
     public function showLoginForm()
@@ -22,16 +22,13 @@ class EmployerLoginController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            'name'    => 'required|string|min:3|max:255',
             'email'    => 'required|string|email|min:1',
             'password' => 'required|min:6'
         ]);
 
         if (Auth::guard('employer')->attempt([
-                    'name'    => $request->name,
                     'email'    => $request->email,
-                    'password' => $request->password,
-                    'last_login' => date('Y-m-d H:i:s', time())
+                    'password' => $request->password
                 ])) {
             return redirect()->intended(route('employer.dashboard'));
         }

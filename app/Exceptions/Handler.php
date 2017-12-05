@@ -71,17 +71,21 @@ class Handler extends ExceptionHandler
         /**
          *  navigate deferent users, depend on they roles
          */
-        $guard = array_get($exception->guards(), 0);
-        switch ($guard)
-        {
-            case 'admin':
-                $login = 'admin.login';
-                break;
-            default:
-                $login = 'employer.login';
-                break;
+        try {
+
+            $guard = array_get($exception->guards(), 0);
+
+            $login = [
+                'admin'    => 'admin.login',
+                'employee' => 'employee.login',
+                'tablet'   => 'tablet.login',
+                'employer' => 'employer.login'
+            ];
+            return redirect()->guest(route($login[$guard]));
         }
-        return redirect()->guest(route($login));
+        catch (Exception $exc) {
+            return redirect()->guest(route('employer.login'));
+        }
     }
 
 }

@@ -11,7 +11,7 @@ class AdminLoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:admin')->except('adminLogout');
+        $this->middleware(['guest:employer', 'guest:employee', 'guest:admin', 'guest:tablet'])->except('adminLogout');
     }
 
     public function showLoginForm()
@@ -26,7 +26,10 @@ class AdminLoginController extends Controller
             'password' => 'required|min:6'
         ]);
 
-        if (Auth::guard('admin')->attempt(['name' => $request->name, 'password' => $request->password])) {
+        if (Auth::guard('admin')->attempt([
+                    'name'     => $request->name,
+                    'password' => $request->password
+                ])) {
             return redirect()->intended(route('admin.dashboard'));
         }
         return redirect()->back()->withInput();
