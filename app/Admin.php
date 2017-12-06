@@ -10,6 +10,7 @@ class Admin extends Authenticatable
 
     use Notifiable;
 
+    protected $table = 'admins';
     protected $guard = 'admin';
 
     /**
@@ -32,7 +33,7 @@ class Admin extends Authenticatable
 
     public function employers()
     {
-        return $this->belongsToMany('App\Employers');
+        return $this->belongsToMany('App\Employer');
     }
 
     /**
@@ -43,6 +44,15 @@ class Admin extends Authenticatable
     public function username()
     {
         return 'name';
+    }
+    /**
+     * get all employers for current administrator.
+     * 
+     * @return type
+     */
+    public function getAllEmployers()
+    {
+        return $this->employers;
     }
 
 }

@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Admin;
-use App\Employer;
-use App\Employee;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -31,11 +29,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $employers = Employer::all();
+        $id = Auth::guard('admin')->user()->id;
+        $employers = Admin::find($id)->getAllEmployers();
 
-        $employees = Employee::all();
-
-        return view('admin.dashboard')->with(['employers' => $employers, 'employees' => $employees]);
+        return view('admin.dashboard')->withEmployers($employers);
     }
 
     public function getSettings()

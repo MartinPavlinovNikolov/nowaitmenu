@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AdminLoginController extends Controller
 {
@@ -30,6 +31,8 @@ class AdminLoginController extends Controller
                     'name'     => $request->name,
                     'password' => $request->password
                 ])) {
+            Session::flash('success', 'Hello ' . Auth::guard('admin')->user()->name);
+
             return redirect()->intended(route('admin.dashboard'));
         }
         return redirect()->back()->withInput();

@@ -27,7 +27,9 @@ Admin-Dashboard
 @stop
 
 @section('content')
-<h2>HELLO ADMIN</h2>
+@if(session()->has('success'))
+    <h2>{{ session('success') }}</h2>
+@endif
 
 <!-- debuging purpose -->
 <div class="row">

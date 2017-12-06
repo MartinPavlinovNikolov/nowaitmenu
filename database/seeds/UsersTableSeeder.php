@@ -15,7 +15,25 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 10; $i++)
+        $admin                 = new Admin();
+        $admin->name           = 'Martin';
+        $admin->password       = bcrypt('qwerty');
+        $admin->remember_token = 'qwertyuiopasdfghjkl';
+        $admin->save();
+
+        $adminsLimit = rand(2, 4);
+        $iterator = 1;
+        for ($i = 0; $i < $adminsLimit; $i++)
+        {
+            $admin2                 = new Admin();
+            $admin2->name           = 'admin' . $i;
+            $admin2->password       = bcrypt('qwerty');
+            $admin2->remember_token = 'qazwsxedcrfvtgbyhn' . $i;
+            $admin2->save();
+        }
+
+        $employersLimit = rand(8, 25);
+        for ($i = 0; $i < $employersLimit; $i++)
         {
             $employer             = new Employer();
             $employer->name       = 'Fatdonalds' . $i;
@@ -24,23 +42,25 @@ class UsersTableSeeder extends Seeder
             $employer->last_login = date('Y-m-d H:i:s', time());
             $employer->status     = true;
             $employer->save();
-        }
 
-        for ($i = 0; $i < 100; $i++)
-        {
-            $employee              = new Employee();
-            $employee->employer_id = rand(1, 10);
-            $employee->name        = 'john' . $i;
-            $employee->password    = '0000';
-            $employee->status      = rand(0, 1);
-            $employee->save();
+            $admins = Admin::all();
+            foreach ($admins as $admin)
+            {
+                $employer->admins()->attach($admin);
+            }
+            
+            $employeesLimit = rand(1, 15);
+            for ($j = 1; $j < $employeesLimit; $j++)
+            {
+                $employee              = new Employee();
+                $employee->employer_id = $i;
+                $employee->name        = 'john' . $iterator;
+                $employee->password    = '0000';
+                $employee->status      = rand(0, 1);
+                $employee->save();
+                $iterator++;
+            }
         }
-
-        $admin                 = new Admin();
-        $admin->name           = 'Martin';
-        $admin->password       = bcrypt('qwerty');
-        $admin->remember_token = 'qwertyuiopasdfghjkl';
-        $admin->save();
     }
 
 }
