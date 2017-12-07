@@ -7,85 +7,97 @@
 
         <title>{{env('APP_NAME')}}</title>
 
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"> -->
-        
+        <link rel="stylesheet" href="{{ asset('/css/bootstrap-reboot.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
+
 
     </head>
     <body>
-        <div class="container-fluid">
-            <nav class="row">
-                <div class="col-md-2">
-                    <h1><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
+        <div class="container-fluid flex-column">
+            <nav class="row justify-content-around align-items-center" style="background-color: #f3e2cd">
+                <div class="col-1">
+                    <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
                 </div>
-                <div class="col-md-4">
-                    <p class="text-right"><small>"this is the best thing for restaurants since refrigeration was invented"</small></p>
-                    <p class="text-right"><small>Sir Gordon Ramsay</small></p>
-                    <p  class="text-right"<><a href="#"<small>more testimonials</a></small></p>
+                <div class="col-4">
+                    <p class="text-right text-info" style="font-size: .6rem;margin: 0">"this is the best thing for restaurants since refrigeration was invented"</p>
+                    <p class="text-right text-info" style="font-size: .6rem;margin: 0">Sir Gordon Ramsay</p>
+                    <p class="text-right  text-success" style="font-size: .5rem;margin: 0"><a href="#">more testimonials</a></p>
                 </div>
-                <div class="col-md-1 col-md-offset-1">
-                    <a href="#" class="btn btn-warning btn-lg">try it free</a>
+                <div class="col-1">
+                    <a href="#" class="btn btn-warning btn-sm">try it free</a>
                 </div>
-                <div class="col-md-4">
-                    <ul class="list-inline">
-                        <li>
-                            <a href="#">Features</a>
-                        </li>
-                        <li>
+                <div class="col-4 align-content-center">
+                    <div class="row flex-row justify-content-around">
+                        <div>
+                            <a class="text-success" href="#">Features</a>
+                        </div>
+                        <div>
                             |
-                        </li>
-                        <li>
-                            <a href="#">Pricing</a>
-                        </li>
-                        <li>
+                        </div>
+                        <div>
+                            <a class="text-success" href="#">Pricing</a>
+                        </div>
+                        <div>
                             |
-                        </li>
-                        <li>
-                            <a href="#">Support</a>
-                        </li>
-                        <li>
+                        </div>
+                        <div>
+                            <a class="text-success" href="#">Support</a>
+                        </div>
+                        <div>
                             |
-                        </li>
-                        <li>
-                            <a href="{{ route('employer.register') }}">Register</a>
-                        </li>
-                        <li>
+                        </div>
+                        <div>
+                            <a class="text-success" href="{{ route('employer.register') }}">Register</a>
+                        </div>
+                        <div>
                             |
-                        </li>
-                        <li>
-                            <a href="{{ route('employer.login') }}">Login</a>
-                        </li>
-                    </ul>
+                        </div>
+                        <div>
+                            <a class="text-success" href="{{ route('employer.login') }}">Login</a>
+                        </div>
+                    </div>
                 </div>
             </nav>
-            
+
+            <div class="row flex-row">
+                <div class="col-12" style="margin: 0;padding: 0">
+                    <hr>
+                </div>
+            </div>
+
             <!-- debuging purpose -->
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
+            <div class="row flex-row">
+                <div class="col-12 text-center">
                     @component('components.who')
                     @endcomponent
                 </div>
             </div>
-            
-            <section class="row">
-                <hr>
-                <div class="col-md-10 col-md-offset-1">
-                    <h1 class="text-center">Get your restaurant runing in minutes</h2>
-                        <div class="row">
-                            <div class="col-md-4 text-center">Video tutorial-1</div>
-                            <div class="col-md-4 text-center">Video tutorial-2</div>
-                            <div class="col-md-4 text-center">Video tutorial-3</div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-4 text-center"><a href="#">Enter your E-mail</a></div>
-                            <div class="col-md-4 text-center"><a href="#">Enter your password</a></div>
-                            <div class="col-md-4 text-center"><a href="#" class="btn btn-warning btn-lg">try it free</a></div>
-                        </div>
+
+            <section class="row flex-row" style="min-height: 55vh;flex-grow: 1">
+                <div class="col-8 offset-2 text-center">
+                    <hr>
+                    <h2 class="big">Get your restaurant runing in minutes</h2>
+                    <div class="row flex-row">
+                        <div class="col">Video tutorial-1</div>
+                        <div class="col">Video tutorial-2</div>
+                        <div class="col">Video tutorial-3</div>
+                    </div>
+                    <hr>
+                    <div class="row flex-row justify-content-between">
+                        <div class="col"><a href="#">Enter your E-mail</a></div>
+                        <div class="col"><a href="#">Enter your password</a></div>
+                        <div class="col"><a href="#" class="btn btn-warning btn-sm">try it free</a></div>
+                    </div>
                 </div>
             </section>
-            <footer class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <p class="text-center">boring|stuff|in|the|footer</p>
+            <div class="row flex-row">
+                <div class="col-12">
+                    <hr>
+                </div>
+            </div>
+            <footer class="row flex-row" style="background-color: #f3e2cd">
+                <div class="col-8 offset-2 text-center">
+                    <p class="small">boring|stuff|in|the|footer</p>
                 </div>
             </footer>
         </div>

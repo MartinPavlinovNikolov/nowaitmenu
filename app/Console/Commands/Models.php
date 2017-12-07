@@ -71,13 +71,16 @@ class Models extends Command
     {
         $this->info("\n");
         $this->info($this->dashes());
-        $this->info('|     models');
+        $this->info('|     models:');
+        $this->info($this->dashes());
+        $this->info('|');
         $this->info($this->dashes());
         $i = 0;
         foreach ($this->models_ucfirst as $m)
         {
-            $this->info('|');
+            
             $this->info('|        ' . $m);
+            $this->info($this->dashes());
             $i++;
         }
         $this->info("|");
