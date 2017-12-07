@@ -36,7 +36,7 @@ class Tablet extends Authenticatable
         return $this->belongTo('App\Employer');
     }
     
-    public function employee()
+    public function employees()
     {
         return $this->belongToMany('App\Employee');
     }

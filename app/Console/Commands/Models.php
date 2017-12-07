@@ -7,23 +7,23 @@ use Illuminate\Console\Command;
 class Models extends Command
 {
 
-    private $models_strtolower = [];
     private $models_ucfirst    = [];
-    private $tableWidth        = 0;
+    private $models_strtolower = [];
+    private $models            = [];
 
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'models{--r|relationships}';
+    protected $signature = 'models';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Show info for models';
+    protected $description = 'Show relationships for all models';
 
     /**
      * Create a new command instance.
@@ -35,6 +35,78 @@ class Models extends Command
         parent::__construct();
     }
 
+    public function setHasOne($model)
+    {
+        $class1 = 'App\\' . ucfirst($model);
+        $m1     = new $class1();
+        foreach ($this->models_strtolower as $m2)
+        {
+            if (method_exists($m1, $m2)) {
+                $class2 = 'App\\' . ucfirst($m2);
+                $m3     = new $class2();
+                if (\method_exists($m3, $model)) {
+                    $this->models[$model]['hasOne'] .= ucfirst($m2) . ', ';
+                }
+            }
+        }
+        $this->models[$model]['hasOne'] = rtrim($this->models[$model]['hasOne'], ' ');
+        $this->models[$model]['hasOne'] = rtrim($this->models[$model]['hasOne'], ',');
+    }
+
+    public function setHasMany($model)
+    {
+        $class1 = 'App\\' . ucfirst($model);
+        $m1     = new $class1();
+        foreach ($this->models_strtolower as $m2)
+        {
+            if (method_exists($m1, $m2 . 's')) {
+                $class2 = 'App\\' . ucfirst($m2);
+                $m3     = new $class2();
+                if (\method_exists($m3, $model)) {
+                    $this->models[$model]['hasMany'] .= ucfirst($m2) . ', ';
+                }
+            }
+        }
+        $this->models[$model]['hasMany'] = rtrim($this->models[$model]['hasMany'], ' ');
+        $this->models[$model]['hasMany'] = rtrim($this->models[$model]['hasMany'], ',');
+    }
+
+    public function setBelongsTo($model)
+    {
+        $class1 = 'App\\' . ucfirst($model);
+        $m1     = new $class1();
+        foreach ($this->models_strtolower as $m2)
+        {
+            if (method_exists($m1, $m2)) {
+                $class2 = 'App\\' . ucfirst($m2);
+                $m3     = new $class2();
+                if (\method_exists($m3, $model . 's')) {
+                    $this->models[$model]['belongsTo'] .= ucfirst($m2) . ', ';
+                }
+            }
+        }
+        $this->models[$model]['belongsTo'] = rtrim($this->models[$model]['belongsTo'], ' ');
+        $this->models[$model]['belongsTo'] = rtrim($this->models[$model]['belongsTo'], ',');
+    }
+
+    public function setBelongsToMany($model)
+    {
+        $class1 = 'App\\' . ucfirst($model);
+        $m1     = new $class1();
+        foreach ($this->models_strtolower as $m2)
+        {
+            if (method_exists($m1, $m2 . 's')) {
+                $class2 = 'App\\' . ucfirst($m2);
+                $m3     = new $class2();
+                if (\method_exists($m3, $model . 's')) {
+                    $this->models[$model]['belongsToMany'] .= ucfirst($m2) . ', ';
+                }
+            }
+        }
+        $this->models[$model]['belongsToMany'] = rtrim($this->models[$model]['belongsToMany'], ' ');
+        $this->models[$model]['belongsToMany'] = rtrim($this->models[$model]['belongsToMany'], ',');
+    }
+
     /**
      * set all models from default location "app\"
      * 
@@ -43,51 +115,36 @@ class Models extends Command
     private function setAllModels()
     {
         $models = array_filter(glob(app_path() . DIRECTORY_SEPARATOR . '*'), 'is_file');
+        if (\is_dir('App\models')) {
+            $models = \array_push(array_filter(glob(app_path() . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . '*'), 'is_file'));
+        }
         foreach ($models as $m)
         {
-            $m                         = explode('\\', $m);
-            $m                         = end($m);
-            $m                         = str_replace('.php', '', $m);
-            $this->tableWidth          = $this->tableWidth <= strlen($m) ? strlen($m) : $this->tableWidth;
-            $this->models_ucfirst[]    = ucfirst($m);
-            $this->models_strtolower[] = strtolower($m);
+            $m                            = explode('\\', $m);
+            $m                            = end($m);
+            $m                            = str_replace('.php', '', $m);
+            $this->models_ucfirst[]       = [ucfirst($m)];
+            $this->models_strtolower[]    = strtolower($m);
+            $this->models[strtolower($m)] = [
+                'modelName'     => ucfirst($m),
+                'hasOne'        => '',
+                'hasMany'       => '',
+                'belongsTo'     => '',
+                'belongsToMany' => ''
+            ];
         }
-
         return $this;
     }
 
-    private function dashes()
+    private function setAllRealations($data)
     {
-        $dashes = '+----------';
-        for($i=0;$i<=$this->tableWidth;$i++){
-            $dashes .= '-';
-        }
-        $dashes .= '+';
-        
-        return $dashes;
-    }
-    
-    private function generateViewTable()
-    {
-        $this->info("\n");
-        $this->info($this->dashes());
-        $this->info('|     models:');
-        $this->info($this->dashes());
-        $this->info('|');
-        $this->info($this->dashes());
-        $i = 0;
-        foreach ($this->models_ucfirst as $m)
+        foreach ($data as $model)
         {
-            
-            $this->info('|        ' . $m);
-            $this->info($this->dashes());
-            $i++;
+            $this->setHasOne($model);
+            $this->setHasMany($model);
+            $this->setBelongsTo($model);
+            $this->setBelongsToMany($model);
         }
-        $this->info("|");
-        $this->info($this->dashes());
-        $this->info("|  total models: " . $i);
-        $this->info($this->dashes());
-        $this->info("\n");
     }
 
     /**
@@ -98,7 +155,12 @@ class Models extends Command
     public function handle()
     {
         $this->setAllModels();
-        $this->generateViewTable();
+        $this->setAllRealations($this->models_strtolower);
+
+        $headers = ['models', '1 -> 1', '1 -> ∞', '∞ -> 1', '∞ -> ∞'];
+        $rows    = $this->models;
+
+        $this->table($headers, $rows);
     }
 
 }
