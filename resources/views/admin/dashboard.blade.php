@@ -5,30 +5,35 @@ Admin-Dashboard
 @stop
 
 @section('nav')
-<li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-        {{ Auth::guard('admin')->user()->name }} <span class="caret"></span>
-    </a>
+<div class="col offset-1">
+    <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
+</div>
 
-    <ul class="dropdown-menu">
-        <li>
-            <a href="#"
-               onclick="event.preventDefault();
-                       document.getElementById('logout-form').submit();">
+<div class="col-4 align-content-center">
+    <div class="row flex-row justify-content-around">
+        <div class="col">
+            <div>{{ Auth::guard('admin')->user()->name }}</div>
+        </div>
+        <div>|</div>
+        <div class="col">
+            <a href="{{ route('admin.settings') }}">Settings</a>
+        </div>
+        <div>|</div>
+        <div class="col">
+            <a href="#"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 Logout
             </a>
-            <a href="{{ route('admin.settings') }}">Settings</a>
-            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
-        </li>
-    </ul>
-</li>
-@stop
+        </div>
+    </div>
+</div>
+<form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+    {{ csrf_field() }}
+</form>
+@endsection
 
 @section('content')
 @if(session()->has('success'))
-    <h2>{{ session('success') }}</h2>
+<h2>{{ session('success') }}</h2>
 @endif
 
 <!-- debuging purpose -->
@@ -39,39 +44,70 @@ Admin-Dashboard
     </div>
 </div>
 @if(count($employers) > 0)
-<ul style="list-style: none;padding: 0;display:flex;flex-wrap: wrap;justify-content: space-between;background-color: gold">
-    @foreach($employers as $employer)
-    <li style="width: 5%;border:1px solid black;">ID: {{ ($employer->id) }}</li> 
-    <li style="width: 18%;border:1px solid black;">Company name: {{ ($employer->name) }}</li> 
-    <li style="width: 20%;border:1px solid black;">E-mail: {{ ($employer->email) }}</li> 
-    <li style="width: 20%;border:1px solid black;">Last Login: {{ $employer->last_login }}</li> 
-    <li style="width: 10%;border:1px solid black;">
-        Status: 
-        @if($employer->status == 1)
-        active
-        @else
-        disabled
-        @endif
-    </li> 
-    <li style="width: 25%;border:1px solid black;">Employees: {{ count($employer->employees) }}
-        <ul style="list-style: none;padding: 0;width: 80%;display:flex;flex-wrap: wrap;justify-content: space-around;align-items: center;background-color: violet">
-            @foreach($employer->employees as $employee)
-            <li style="width: 30%;margin: 1rem;background-color: wheat;text-align: center">
-                Name: {{ $employee->name }}
-            </li> 
-            @if($employee->status == 1)
-            <li style="width: 30%;margin: 1rem;background-color: greenyellow;text-align: center">Status:  
+<table class="table-md table-striped table-bordered table-hover">
+    <thead class="table-info">
+        <tr>
+            <th>ID</th>
+            <th>Company name</th>
+            <th>E-mail</th>
+            <th>Date created</th>
+            <th>Employees</th>
+            <th>Status</th>
+            <th>Last Login</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($employers as $employer)
+        <tr>
+            <th scope="row">{{ ($employer->id) }}</th>
+            <td>{{ ($employer->name) }}</td>
+            <td>{{ ($employer->email) }}</td>
+            <td>{{ ($employer->created_at) }}</td>
+            <td>
+                @if($employer->status == 1)
                 active
-            </li>
-            @else
-            <li style="width: 30%;margin: 1rem;background-color: tomato;text-align: center">Status:  
+                @else
                 disabled
-            </li>
-            @endif
-            @endforeach
-        </ul>
-    </li>
-    @endforeach
-</ul>
+                @endif
+            </td>
+            <td>
+                <div>
+                    <div class="btn btn-danger btn-sm btn-employer" onclick="event.preventDefault();">
+                        View({{ count($employer->employees) }})
+                    </div>
+                    <div class='table-employers' style="display: none;position: absolute;top: 30vh;left: 50%;width: 30rem;height: 50vh;transform: translateX(-50%);margin: 0 auto;background-color: gray;overflow-y: scroll">
+                        <div class="text-right">
+                        <button class="btn btn-danger btn-sm close">x</button>
+                        </div>
+                        <table class="table-md table-striped table-bordered table-hover" style="width: 80%;margin: 0 auto">
+                            <thead class="table-info">
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Actions</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($employer->employees as $employee)
+                                <tr>
+                                    <td>{{ $employee->name }}</td>
+                                    <td>
+                                        <div class="btn btn-danger btn-sm">
+                                            Login
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </td>
+            <td>{{ $employer->last_login }}</td>
+            <td>actions</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 @endif
 @stop

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" style="position:relative;min-height: 100%">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +14,7 @@
     </head>
     <body>
         <div class="container-fluid flex-column">
-            <nav class="row justify-content-around align-items-center" style="background-color: #f3e2cd">
+            <nav class="row justify-content-around align-items-center" style="background-color: #f3e2cd;min-height: 4rem">
                 <div class="col-1">
                     <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
                 </div>
@@ -95,9 +95,12 @@
                     <hr>
                 </div>
             </div>
-            <footer class="row flex-row" style="background-color: #f3e2cd">
-                <div class="col-8 offset-2 text-center">
-                    <p class="small">boring|stuff|in|the|footer</p>
+            <footer  style="background-color: #f3e2cd;position: absolute;bottom: 0;left: 0;margin:0;padding: 0;width: 100%">
+                <div class="container"><div class="row">
+                        <div class="col-12 text-center">
+                            <p class="small">boring|stuff|in|the|footer</p>
+                        </div>
+                    </div>
                 </div>
             </footer>
         </div>

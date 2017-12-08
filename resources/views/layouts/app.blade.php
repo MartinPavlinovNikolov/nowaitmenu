@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" style="position:relative;min-height: 100%">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,45 +10,36 @@
 
         <title>@yield('title')</title>
 
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"> -->
+        <link rel="stylesheet" href="{{ asset('/css/bootstrap-reboot.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
     </head>
     <body>
-        <div id="app">
-            <nav class="navbar navbar-default navbar-static-top">
-                <div class="container">
-                    <div class="navbar-header">
-
-                        <!-- Collapsed Hamburger -->
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
-                            <span class="sr-only">Toggle Navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-
-                        <!-- Branding Image -->
-                        <a class="navbar-brand" href="{{ url('/') }}">
-                            NoWaitMenu-Logo
-                        </a>
-                    </div>
-
-                    <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                        <!-- Left Side Of Navbar -->
-                        <ul class="nav navbar-nav">
-                            &nbsp
-                        </ul>
-
-                        <!-- Right Side Of Navbar -->
-                        <ul class="nav navbar-nav navbar-right">
-                        @yield('nav')
-                        </ul>    
-                    </div>
-                </div>
+        <div class="container-fluid flex-row">
+            <nav class="row justify-content-around align-items-center" style="background-color: #f3e2cd;min-height: 4rem">
+                @yield('nav')
             </nav>
             @yield('content')
+            <footer  style="background-color: #f3e2cd;position: absolute;bottom: 0;left: 0;margin:0;padding: 0;width: 100%">
+                <div class="container"><div class="row">
+                        <div class="col-12 text-center">
+                            <p class="small">boring|stuff|in|the|footer</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- Scripts -->
+            <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+            <script>
+            $(document).ready(function () {
+                $('.btn-employer').on('click', function(e){
+                    e.preventDefault();
+                    $(this).parent().children('.table-employers').css('display', 'block');
+                });
+                $('.close').on('click', function(e){
+                    $(this).parent().parent().css('display', 'none');
+                });
+            });
+            </script>
         </div>
-
-        <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>
