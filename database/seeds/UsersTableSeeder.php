@@ -32,7 +32,7 @@ class UsersTableSeeder extends Seeder
             $admin2->save();
         }
 
-        $employersLimit = rand(8, 25);
+        $employersLimit = rand(600, 1200);
         for ($i = 0; $i < $employersLimit; $i++)
         {
             $employer             = new Employer();
@@ -49,7 +49,7 @@ class UsersTableSeeder extends Seeder
                 $employer->admins()->attach($admin);
             }
             
-            $employeesLimit = rand(1, 15);
+            $employeesLimit = rand(4, 60);
             for ($j = 1; $j < $employeesLimit; $j++)
             {
                 $employee              = new Employee();

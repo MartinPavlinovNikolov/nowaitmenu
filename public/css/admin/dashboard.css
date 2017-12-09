@@ -1,0 +1,75 @@
+nav{
+    background-color: #f3e2cd;
+    min-height: 4rem;
+}
+.logout-form{
+    display: none;
+}
+th, td{
+    padding: .1rem .2rem;
+    text-align: center;
+}
+.close-table-employees{
+    text-align: center;
+    line-height: 1rem;
+    background-color: tomato;
+    border: 1px solid #000;
+    border-radius: 50%;
+}
+.btn-employer{
+    text-align: center;
+    width: 4.5rem;
+    font-size: .8rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+.table-employers{
+    width: 80%;
+    margin: 0 auto;
+}
+.table-modal-employees{
+    display: none;
+    z-index: 1000;
+    position: absolute;
+    top: 30vh;
+    left: 50%;
+    width: 20rem;
+    height: 30vh;
+    transform: translateX(-50%);
+    margin: 0 auto;
+    background-color: gray;
+    overflow-y: scroll;
+}
+.table-employees{
+    width: 80%;
+    margin: 0 auto;
+}
+.pagination{
+    margin-bottom: 5rem;
+}
+.pagination li {
+    background-color: #caccc8;
+    color: #000;
+    border: 1px solid teal;
+    padding: .1rem .6rem;
+    margin: .1rem .2rem;
+    border-radius: 10px;
+}
+.pagination li:hover{
+    background-color: #b0b3ad;
+}
+.pagination li a{
+    color: whitesmoke;
+}
+.pagination li a:hover{
+    color: #000;
+}
+footer{
+    background-color: #f3e2cd;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin:0;
+    padding: 0;
+    width: 100%;
+}

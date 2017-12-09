@@ -12,6 +12,7 @@ class Employer extends Authenticatable
 
     protected $table = 'employers';
     protected $guard = 'employer';
+    protected $dates = ['last_login'];
 
     /**
      * The attributes that are mass assignable.

@@ -50,9 +50,9 @@ class Admin extends Authenticatable
      * 
      * @return type
      */
-    public function getAllEmployers()
+    public function getAllEmployers($numberOfPages)
     {
-        return $this->employers;
+        return $this->employers()->paginate($numberOfPages);
     }
 
 }

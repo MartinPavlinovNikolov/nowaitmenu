@@ -4,6 +4,10 @@
 Admin-Dashboard
 @stop
 
+@section('styles')
+<link rel="stylesheet" href="{{ asset('/css/admin/dashboard.css') }}">
+@stop
+
 @section('nav')
 <div class="col offset-1">
     <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
@@ -26,7 +30,7 @@ Admin-Dashboard
         </div>
     </div>
 </div>
-<form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+<form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
     {{ csrf_field() }}
 </form>
 @endsection
@@ -44,7 +48,7 @@ Admin-Dashboard
     </div>
 </div>
 @if(count($employers) > 0)
-<table class="table-md table-striped table-bordered table-hover">
+<table class="table-md table-striped table-bordered table-hover table-employers">
     <thead class="table-info">
         <tr>
             <th>ID</th>
@@ -63,7 +67,7 @@ Admin-Dashboard
             <th scope="row">{{ ($employer->id) }}</th>
             <td>{{ ($employer->name) }}</td>
             <td>{{ ($employer->email) }}</td>
-            <td>{{ ($employer->created_at) }}</td>
+            <td>{{ ($employer->created_at->format('d/m/Y')) }}</td>
             <td>
                 @if($employer->status == 1)
                 active
@@ -73,25 +77,25 @@ Admin-Dashboard
             </td>
             <td>
                 <div>
-                    <div class="btn btn-danger btn-sm btn-employer" onclick="event.preventDefault();">
+                    <div class="btn btn-danger btn-sm btn-employer">
                         View({{ count($employer->employees) }})
                     </div>
-                    <div class='table-employers' style="display: none;position: absolute;top: 30vh;left: 50%;width: 30rem;height: 50vh;transform: translateX(-50%);margin: 0 auto;background-color: gray;overflow-y: scroll">
+                    <div class='table-modal-employees'>
                         <div class="text-right">
-                        <button class="btn btn-danger btn-sm close">x</button>
+                            <button class="btn close-table-employees btn-sm">x</button>
                         </div>
-                        <table class="table-md table-striped table-bordered table-hover" style="width: 80%;margin: 0 auto">
+                        <table class="table-md table-striped table-bordered table-hover table-employees">
                             <thead class="table-info">
                                 <tr>
-                                    <td>Name</td>
-                                    <td>Actions</td>
+                                    <th class='table-light'>Name</td>
+                                    <th class='table-light'>Actions</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($employer->employees as $employee)
                                 <tr>
-                                    <td>{{ $employee->name }}</td>
-                                    <td>
+                                    <td class='table-light'>{{ $employee->name }}</td>
+                                    <td class='table-light'>
                                         <div class="btn btn-danger btn-sm">
                                             Login
                                         </div>
@@ -103,11 +107,21 @@ Admin-Dashboard
                     </div>
                 </div>
             </td>
-            <td>{{ $employer->last_login }}</td>
+            <td>{{ $employer->last_login->format('d/m/Y') }}</td>
             <td>actions</td>
         </tr>
         @endforeach
     </tbody>
 </table>
+<div class="row">
+    <div class="col-12 text-center">
+        {{ $employers->links() }}
+    </div>
+</div>
 @endif
+@stop
+
+@section('scripts')
+<script src="{{ asset('/js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('/js/admin/dashboard.js') }}"></script>
 @stop

@@ -12,14 +12,15 @@
 
         <link rel="stylesheet" href="{{ asset('/css/bootstrap-reboot.min.css') }}">
         <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
+        @yield('styles')
     </head>
     <body>
         <div class="container-fluid flex-row">
-            <nav class="row justify-content-around align-items-center" style="background-color: #f3e2cd;min-height: 4rem">
+            <nav class="row justify-content-around align-items-center">
                 @yield('nav')
             </nav>
             @yield('content')
-            <footer  style="background-color: #f3e2cd;position: absolute;bottom: 0;left: 0;margin:0;padding: 0;width: 100%">
+            <footer>
                 <div class="container"><div class="row">
                         <div class="col-12 text-center">
                             <p class="small">boring|stuff|in|the|footer</p>
@@ -27,19 +28,7 @@
                     </div>
                 </div>
             </footer>
-            <!-- Scripts -->
-            <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
-            <script>
-            $(document).ready(function () {
-                $('.btn-employer').on('click', function(e){
-                    e.preventDefault();
-                    $(this).parent().children('.table-employers').css('display', 'block');
-                });
-                $('.close').on('click', function(e){
-                    $(this).parent().parent().css('display', 'none');
-                });
-            });
-            </script>
+            @yield('scripts')
         </div>
     </body>
 </html>

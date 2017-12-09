@@ -30,7 +30,7 @@ class AdminController extends Controller
     public function index()
     {
         $id = Auth::guard('admin')->user()->id;
-        $employers = Admin::find($id)->getAllEmployers();
+        $employers = Admin::find($id)->getAllEmployers(10);
 
         return view('admin.dashboard')->withEmployers($employers);
     }
