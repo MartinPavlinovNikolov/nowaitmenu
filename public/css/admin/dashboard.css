@@ -1,4 +1,3 @@
-
 .logout-form{
     display: none;
 }
@@ -6,8 +5,13 @@ th, td{
     padding: .1rem .2rem;
     text-align: center;
 }
+.radio-wrapper label{
+    padding: 0;
+    margin:0 0 0 -4.5rem;
+}
 .close-table-employees{
     position: fixed;
+    font-size: .5rem;
     top: .2rem;
     right: .2rem;
     text-align: center;
@@ -18,8 +22,8 @@ th, td{
 }
 .btn-employer{
     text-align: center;
-    width: 4.5rem;
-    font-size: .8rem;
+    width: 2.5rem;
+    font-size: .5rem;
     margin-left: 1rem;
     margin-right: 1rem;
 }
@@ -51,8 +55,15 @@ th, td{
     border-color: #1c7430;
     box-shadow: 0 0 0 0.2rem rgba(40,167,69,.5);
 }
+.status-buttons-wrapper button{
+    font-size: 0.4rem;
+    margin: auto 0;
+    padding: .1rem;
+    border: 1px solid #000;
+    width: 1.8rem;
+}
 .pagination{
-    margin: 1rem auto 5rem;
+    margin: 1rem auto 1rem;
     width: 50vw;
 }
 .pagination div {
@@ -74,4 +85,7 @@ th, td{
 }
 .pagination div a:hover{
     color: #000;
+}
+#employer-counter-statistic{
+    margin-bottom: 5rem;
 }

@@ -67,7 +67,7 @@ class AdminController extends Controller
         else {
             $current_password = Auth::guard('admin')->User()->password;
             if (Hash::check($request_data['current_password'], $current_password)) {
-                $admin            = Admin::find(Auth::guard('admin')->User()->id);
+                $admin           = Admin::find(Auth::guard('admin')->User()->id);
                 $admin->password = Hash::make($request_data['password']);
                 $admin->update();
                 Auth::guard('admin')->login($admin);
@@ -79,11 +79,16 @@ class AdminController extends Controller
             }
         }
     }
-    
+
     public function getSearchEmployers(Request $request)
     {
-        $employers = Admin::find(Auth::guard('admin')->user()->id)->getFilteredEmployers($request->search, 10);
-        
+        if ($request->input('sort') == 'name') {
+            $employers = Admin::find(Auth::guard('admin')->user()->id)->getFilteredEmployersByCompanyName($request->input('value'), 10);
+        }
+        elseif ($request->input('sort') == 'email') {
+            $employers = Admin::find(Auth::guard('admin')->user()->id)->getFilteredEmployersByEmail($request->input('value'), 10);
+        }
+
         return view('admin.dashboard')->withEmployers($employers);
     }
 

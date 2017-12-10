@@ -11,10 +11,10 @@
     <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
 </div>
 
-<div class="col-4 align-content-center">
+<div class="col-5 align-content-center">
     <div class="row flex-row justify-content-around">
         <div class="col">
-            <div>{{ Auth::guard('admin')->user()->name }}</div>
+            <div>Admin: {{ Auth::guard('admin')->user()->name }}</div>
         </div>
         <div>|</div>
         <div class="col">
@@ -39,9 +39,24 @@
 @endif
 
 <form method='GET' action="{{ route('admin.search.employers') }}" role="search">
-    <div class="row">
-        <input type="text" class=" col-2 offset-2 form-control" name="name" placeholder="Search...">
-        <button class="col-1 offset-1 btn btn-primary btn-sm" type="submit">Search</button>
+    <div class="row flex-row align-items-center">
+        <input type="text" class=" col-2 offset-2 form-control" name="value" placeholder="Search...">
+        <button class="col-1 btn btn-primary btn-sm" type="submit">Search</button>
+        <div class="col-3">
+            <div class="flex-wrap">
+                <div class="row flex-row align-items-center radio-wrapper">
+                    <input class="col text-sm" id="name" type="radio" name="sort" value="name" checked="checked">
+                    <label class="col text-sm" for="name">find by name</label>
+                </div>
+                <div class="row flex-row align-items-center radio-wrapper">
+                    <input class="col text-sm" id="email" type="radio" name="sort" value="email">
+                    <label class="col text-sm" for="email">find by email</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-1">
+            <a href="{{ route('admin.dashboard') }}" class="btn btn-warning btn-sm">Show all employers</a>
+        </div>
     </div>
 </form>
 
@@ -62,17 +77,19 @@
     <tbody>
         @foreach($employers as $employer)
         <tr>
-            <th scope="row">{{ ($employer->id) }}</th>
-            <td>{{ ($employer->name) }}</td>
-            <td>{{ ($employer->email) }}</td>
-            <td>{{ ($employer->created_at->format('d/m/Y')) }}</td>
-            <td>
-                @if($employer->status == 1)
+            <th class="text-sm" scope="row">{{ ($employer->id) }}</th>
+            <td class="text-sm">{{ ($employer->name) }}</td>
+            <td class="text-sm">{{ ($employer->email) }}</td>
+            <td class="text-sm">{{ ($employer->created_at->format('d/m/Y')) }}</td>
+            @if($employer->status == 1)
+            <td class="text-sm text-success">
                 active
-                @else
-                disabled
-                @endif
             </td>
+            @else
+            <td class="text-sm text-danger">
+                disabled
+            </td>
+            @endif
             <td>
                 <div>
                     <div class="btn btn-danger btn-sm btn-employer">
@@ -109,13 +126,23 @@
                 </div>
             </td>
             <td>{{ $employer->last_login->format('d/m/Y') }}</td>
-            <td>actions</td>
+            <td class="status-buttons-wrapper">
+                <div class="flex-wrap">
+                    <div class="col"><button class="col btn btn-sm btn-warning">Suspend</button></div>
+                    <div class="col"><button class="col btn btn-sm btn-danger">Delete</button></div>
+                    <div class="col"><button class="col btn btn-sm btn-primary">Login</button></div>
+                </div>
+            </td>
         </tr>
         @endforeach
     </tbody>
 </table>
 <div class="flex-row justify-content-around">
     {{ $employers->links('vendor.pagination.default') }}
+</div>
+@else
+<div class="text-center">
+    <h2 class="text-danger">Nothing found!</h2>
 </div>
 @endif
 @stop
