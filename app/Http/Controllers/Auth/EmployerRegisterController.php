@@ -24,7 +24,7 @@ class EmployerRegisterController extends Controller
     {
         $this->middleware(['guest:employer', 'guest:employee', 'guest:admin', 'guest:tablet']);
     }
-    
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -61,6 +61,11 @@ class EmployerRegisterController extends Controller
                     'last_login' => date('Y-m-d H:i:s', time()),
                     'status'     => true
         ]);
+    }
+
+    protected function guard()
+    {
+        return Auth::guard('employer');
     }
 
 }

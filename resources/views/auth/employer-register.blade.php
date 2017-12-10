@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Registration')
+
 @section('nav')
 <div class="col offset-1">
     <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>

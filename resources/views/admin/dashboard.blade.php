@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
-@section('title')
-Admin-Dashboard
-@stop
+@section('title', 'Admin | Dashboard')
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('/css/admin/dashboard.css') }}">
@@ -40,13 +38,13 @@ Admin-Dashboard
 <h2>{{ session('success') }}</h2>
 @endif
 
-<!-- debuging purpose -->
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        @component('components.who')
-        @endcomponent
+<form method='GET' action="{{ route('admin.search.employers') }}" role="search">
+    <div class="row">
+        <input type="text" class=" col-2 offset-2 form-control" name="name" placeholder="Search...">
+        <button class="col-1 offset-1 btn btn-primary btn-sm" type="submit">Search</button>
     </div>
-</div>
+</form>
+
 @if(count($employers) > 0)
 <table class="table-md table-striped table-bordered table-hover table-employers">
     <thead class="table-info">
@@ -81,29 +79,32 @@ Admin-Dashboard
                         View({{ count($employer->employees) }})
                     </div>
                     <div class='table-modal-employees'>
-                        <div class="text-right">
-                            <button class="btn close-table-employees btn-sm">x</button>
+                        <div>
+                            <h5>Employees:</h5>
                         </div>
-                        <table class="table-md table-striped table-bordered table-hover table-employees">
-                            <thead class="table-info">
-                                <tr>
-                                    <th class='table-light'>Name</td>
-                                    <th class='table-light'>Actions</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($employer->employees as $employee)
-                                <tr>
-                                    <td class='table-light'>{{ $employee->name }}</td>
-                                    <td class='table-light'>
-                                        <div class="btn btn-danger btn-sm">
-                                            Login
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <button class="btn close-table-employees btn-sm">x</button>
+                        <div class="overflow-table">
+                            <table class="table-md table-striped table-bordered table-hover table-employees">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th class='table-light'>Name</td>
+                                        <th class='table-light'>Actions</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($employer->employees as $employee)
+                                    <tr>
+                                        <td class='table-light'>{{ $employee->name }}</td>
+                                        <td class='table-light'>
+                                            <div class="btn btn-danger btn-sm">
+                                                Login
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </td>
@@ -113,10 +114,8 @@ Admin-Dashboard
         @endforeach
     </tbody>
 </table>
-<div class="row">
-    <div class="col-12 text-center">
-        {{ $employers->links() }}
-    </div>
+<div class="flex-row justify-content-around">
+    {{ $employers->links('vendor.pagination.default') }}
 </div>
 @endif
 @stop

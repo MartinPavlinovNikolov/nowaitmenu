@@ -1,15 +1,11 @@
 @extends('layouts.app')
 
-@section('title')
-Admin-Login
-@stop
+@section('title', 'Admin | Login')
 
 @section('nav')
-<nav class="row justify-content-around align-items-center" style="background-color: #f3e2cd">
-    <div class="col offset-1">
-        <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
-    </div>
-</nav>
+<div class="col offset-1">
+    <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
+</div>
 @endsection
 
 @section('content')

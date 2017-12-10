@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Employer
+{!! Auth::guard('employer')->user()->name !!} | Dashboard
 @stop
 
 @section('nav')
@@ -28,13 +28,5 @@ Employer
 @endsection
 
 @section('content')
-<h2>HELLO EMPLOYER</h2>
 
-<!-- debuging purpose -->
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        @component('components.who')
-        @endcomponent
-    </div>
-</div>
 @stop

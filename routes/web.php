@@ -18,4 +18,5 @@ Route::prefix('admin')->group(function() {
     Route::get('/settings', 'AdminController@getSettings')->name('admin.settings');
     Route::post('/settings', 'AdminController@postSettings')->name('admin.settings.submit');
     Route::post('/logout', 'Auth\AdminLoginController@adminLogout')->name('admin.logout');
+    Route::get('/search/employers/{name?}', 'AdminController@getSearchEmployers')->name('admin.search.employers');
 });

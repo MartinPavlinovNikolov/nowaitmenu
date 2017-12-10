@@ -1,7 +1,4 @@
-nav{
-    background-color: #f3e2cd;
-    min-height: 4rem;
-}
+
 .logout-form{
     display: none;
 }
@@ -10,6 +7,9 @@ th, td{
     text-align: center;
 }
 .close-table-employees{
+    position: fixed;
+    top: .2rem;
+    right: .2rem;
     text-align: center;
     line-height: 1rem;
     background-color: tomato;
@@ -25,7 +25,7 @@ th, td{
 }
 .table-employers{
     width: 80%;
-    margin: 0 auto;
+    margin: 1rem  auto 0;
 }
 .table-modal-employees{
     display: none;
@@ -38,38 +38,40 @@ th, td{
     transform: translateX(-50%);
     margin: 0 auto;
     background-color: gray;
+}
+.overflow-table{
+    height: 70%;
     overflow-y: scroll;
 }
 .table-employees{
     width: 80%;
     margin: 0 auto;
 }
-.pagination{
-    margin-bottom: 5rem;
+.table-employers tr:hover{
+    border-color: #1c7430;
+    box-shadow: 0 0 0 0.2rem rgba(40,167,69,.5);
 }
-.pagination li {
-    background-color: #caccc8;
+.pagination{
+    margin: 1rem auto 5rem;
+    width: 50vw;
+}
+.pagination div {
+    background-color: #53da72;
     color: #000;
-    border: 1px solid teal;
+    border-color: #1c7430;
     padding: .1rem .6rem;
     margin: .1rem .2rem;
     border-radius: 10px;
 }
-.pagination li:hover{
-    background-color: #b0b3ad;
+.pagination div:hover{
+    color: #fff;
+    background-color: #1c7430;
+    border-color: #1c7430;
+    box-shadow: 0 0 0 0.2rem rgba(40,167,69,.5);
 }
-.pagination li a{
+.pagination div a{
     color: whitesmoke;
 }
-.pagination li a:hover{
+.pagination div a:hover{
     color: #000;
-}
-footer{
-    background-color: #f3e2cd;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin:0;
-    padding: 0;
-    width: 100%;
 }

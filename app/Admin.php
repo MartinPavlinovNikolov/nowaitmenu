@@ -54,5 +54,10 @@ class Admin extends Authenticatable
     {
         return $this->employers()->paginate($numberOfPages);
     }
+    
+    public function getFilteredEmployers($name, $numberOfPages)
+    {
+        return $this->employers()->where('name','LIKE', '%'.$name.'%')->paginate($numberOfPages);
+    }
 
 }

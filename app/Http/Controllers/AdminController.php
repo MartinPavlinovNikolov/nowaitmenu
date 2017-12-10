@@ -8,10 +8,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use Hash;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
-    
+
     /**
      * Create a new controller instance.
      *
@@ -29,9 +30,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $id = Auth::guard('admin')->user()->id;
+        $id        = Auth::guard('admin')->user()->id;
         $employers = Admin::find($id)->getAllEmployers(10);
-
         return view('admin.dashboard')->withEmployers($employers);
     }
 
@@ -43,12 +43,12 @@ class AdminController extends Controller
     public function admin_credential_rules(array $data)
     {
         $messages = [
-            'current-password.required' => 'Please enter current password',
+            'current_password.required' => 'Please enter current password',
             'password.required'         => 'Please enter password',
         ];
 
         $validator = Validator::make($data, [
-                    'current-password'      => 'required',
+                    'current_password'      => 'required',
                     'password'              => 'required|min:6',
                     'password_confirmation' => 'required|same:password',
                         ], $messages);
@@ -66,18 +66,25 @@ class AdminController extends Controller
         }
         else {
             $current_password = Auth::guard('admin')->User()->password;
-            if (Hash::check($request_data['current-password'], $current_password)) {
-                $user_id            = Auth::guard('admin')->User()->id;
-                $obj_user           = Admin::find($user_id);
-                $obj_user->password = Hash::make($request_data['password']);
-                $obj_user->save();
-                return redirect()->to(route('admin.login'));
+            if (Hash::check($request_data['current_password'], $current_password)) {
+                $admin            = Admin::find(Auth::guard('admin')->User()->id);
+                $admin->password = Hash::make($request_data['password']);
+                $admin->update();
+                Auth::guard('admin')->login($admin);
+                return redirect()->route('admin.dashboard');
             }
             else {
-                $error = array('current-password' => 'Please enter correct current password');
+                $error = array('current_password' => 'Please enter correct current password');
                 return redirect()->back()->withErrors($error)->withInput();
             }
         }
+    }
+    
+    public function getSearchEmployers(Request $request)
+    {
+        $employers = Admin::find(Auth::guard('admin')->user()->id)->getFilteredEmployers($request->search, 10);
+        
+        return view('admin.dashboard')->withEmployers($employers);
     }
 
 }
