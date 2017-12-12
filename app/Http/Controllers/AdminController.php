@@ -82,11 +82,14 @@ class AdminController extends Controller
 
     public function getSearchEmployers(Request $request)
     {
+        $id = Auth::guard('admin')->user()->id;
         if ($request->input('sort') == 'name') {
-            $employers = Admin::find(Auth::guard('admin')->user()->id)->getFilteredEmployersByCompanyName($request->input('value'), 10);
+            $employers       = Admin::find($id)->getFilteredEmployersByCompanyName($request->input('value'), 10);
+            $employers->appends(['sort' => 'email', 'value' => $request->input('value')])->render();
         }
         elseif ($request->input('sort') == 'email') {
-            $employers = Admin::find(Auth::guard('admin')->user()->id)->getFilteredEmployersByEmail($request->input('value'), 10);
+            $employers       = Admin::find($id)->getFilteredEmployersByEmail($request->input('value'), 10);
+            $employers->appends(['sort' => 'email', 'value' => $request->input('value')])->render();
         }
 
         return view('admin.dashboard')->withEmployers($employers);

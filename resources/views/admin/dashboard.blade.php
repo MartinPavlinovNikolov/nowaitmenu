@@ -81,18 +81,9 @@
             <td class="text-sm">{{ ($employer->name) }}</td>
             <td class="text-sm">{{ ($employer->email) }}</td>
             <td class="text-sm">{{ ($employer->created_at->format('d/m/Y')) }}</td>
-            @if($employer->status == 1)
-            <td class="text-sm text-success">
-                active
-            </td>
-            @else
-            <td class="text-sm text-danger">
-                disabled
-            </td>
-            @endif
             <td>
                 <div>
-                    <div class="btn btn-danger btn-sm btn-employer">
+                    <div class="btn btn-danger btn-sm btn-employer text-center">
                         View({{ count($employer->employees) }})
                     </div>
                     <div class='table-modal-employees'>
@@ -125,12 +116,21 @@
                     </div>
                 </div>
             </td>
+            @if($employer->status == 1)
+            <td class="text-sm text-success">
+                active
+            </td>
+            @else
+            <td class="text-sm text-danger">
+                disabled
+            </td>
+            @endif
             <td>{{ $employer->last_login->format('d/m/Y') }}</td>
             <td class="status-buttons-wrapper">
-                <div class="flex-wrap">
-                    <div class="col"><button class="col btn btn-sm btn-warning">Suspend</button></div>
-                    <div class="col"><button class="col btn btn-sm btn-danger">Delete</button></div>
-                    <div class="col"><button class="col btn btn-sm btn-primary">Login</button></div>
+                <div class="flex-row justify-content-center">
+                    <button class="btn btn-sm btn-warning">Suspend</button>
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                    <button class="btn btn-sm btn-primary">Login</button>
                 </div>
             </td>
         </tr>

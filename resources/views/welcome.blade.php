@@ -64,15 +64,6 @@
                     <hr>
                 </div>
             </div>
-
-            <!-- debuging purpose -->
-            <div class="row flex-row">
-                <div class="col-12 text-center">
-                    @component('components.who')
-                    @endcomponent
-                </div>
-            </div>
-
             <section class="row flex-row" style="min-height: 55vh;flex-grow: 1">
                 <div class="col-8 offset-2 text-center">
                     <hr>

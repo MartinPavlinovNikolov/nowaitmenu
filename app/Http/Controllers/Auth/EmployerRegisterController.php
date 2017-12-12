@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Employer;
+use App\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -54,13 +55,20 @@ class EmployerRegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return Employer::create([
-                    'name'       => $data['name'],
-                    'email'      => $data['email'],
-                    'password'   => bcrypt($data['password']),
-                    'last_login' => date('Y-m-d H:i:s', time()),
-                    'status'     => true
-        ]);
+        $employer             = new Employer();
+        $employer->name       = $data['name'];
+        $employer->email      = $data['email'];
+        $employer->password   = bcrypt($data['password']);
+        $employer->last_login = date('Y-m-d H:i:s', time());
+        $employer->status     = true;
+        $employer->save();
+
+        $admins = Admin::all();
+        foreach ($admins as $admin)
+        {
+            $employer->admins()->attach($admin);
+        }
+        return $employer;
     }
 
     protected function guard()
