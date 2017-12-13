@@ -18,5 +18,8 @@ Route::prefix('admin')->group(function() {
     Route::get('/settings', 'AdminController@getSettings')->name('admin.settings');
     Route::post('/settings', 'AdminController@postSettings')->name('admin.settings.submit');
     Route::post('/logout', 'Auth\AdminLoginController@adminLogout')->name('admin.logout');
-    Route::get('/search/employers/{value?}', 'AdminController@getSearchEmployers')->name('admin.search.employers');
+    Route::get('/search/employers', 'AdminController@getSearchEmployers')->name('admin.search.employers');
+    Route::get('/employer/logout/{id}', 'AdminController@logoutEmployer')->name('admin.employer.logout');
+    Route::get('/employer/delete/{id}', 'AdminController@deleteEmployer')->name('admin.employer.delete');
+    Route::get('/employer/login/{id}', 'AdminController@loginEmployer')->name('admin.employer.login');
 });

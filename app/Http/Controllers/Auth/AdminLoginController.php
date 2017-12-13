@@ -31,7 +31,7 @@ class AdminLoginController extends Controller
                     'name'     => $request->name,
                     'password' => $request->password
                 ])) {
-            Session::flash('success', 'Hello ' . Auth::guard('admin')->user()->name);
+            Session::flash('message', 'Hello ' . Auth::guard('admin')->user()->name);
 
             return redirect()->intended(route('admin.dashboard'));
         }

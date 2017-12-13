@@ -12,4 +12,8 @@ class Table extends Model
     {
         return $this->belongsToMany('App\Employee');
     }
+    
+    public function employer(){
+        return $this->belongsTo('App\Employer');
+    }
 }

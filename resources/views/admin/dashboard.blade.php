@@ -34,23 +34,29 @@
 @endsection
 
 @section('content')
-@if(session()->has('success'))
-<h2>{{ session('success') }}</h2>
+@if(session()->has('message'))
+<div class="text-center">
+    <h2>{{ session('message') }}</h2>
+</div>
 @endif
 
 <form method='GET' action="{{ route('admin.search.employers') }}" role="search">
     <div class="row flex-row align-items-center">
-        <input type="text" class=" col-2 offset-2 form-control" name="value" placeholder="Search...">
-        <button class="col-1 btn btn-primary btn-sm" type="submit">Search</button>
+        <input type="text" class=" col-2 offset-2 form-control" name="value" placeholder="Search..." value='@if(session()->has('value')){{ session('value') }}@endif'>
+               <button class="col-1 btn btn-primary btn-sm" type="submit">Search</button>
         <div class="col-3">
             <div class="flex-wrap">
                 <div class="row flex-row align-items-center radio-wrapper">
-                    <input class="col text-sm" id="name" type="radio" name="sort" value="name" checked="checked">
-                    <label class="col text-sm" for="name">find by name</label>
+                    <input class="col text-sm" id="name" type="radio" name="sort" value="name" @if((session()->has('sort') && session('sort')=='name') || (!session()->has('sort')))
+                           checked="checked"
+                           @endif>
+                           <label class="col text-sm" for="name">find by name</label>
                 </div>
                 <div class="row flex-row align-items-center radio-wrapper">
-                    <input class="col text-sm" id="email" type="radio" name="sort" value="email">
-                    <label class="col text-sm" for="email">find by email</label>
+                    <input class="col text-sm" id="email" type="radio" name="sort" value="email" @if(session()->has('sort') && session('sort')=='email')
+                           checked="checked"
+                           @endif>
+                    <label class="col text-sm" for="email">findby email</label>
                 </div>
             </div>
         </div>
@@ -128,9 +134,9 @@
             <td>{{ $employer->last_login->format('d/m/Y') }}</td>
             <td class="status-buttons-wrapper">
                 <div class="flex-row justify-content-center">
-                    <button class="btn btn-sm btn-warning">Suspend</button>
-                    <button class="btn btn-sm btn-danger">Delete</button>
-                    <button class="btn btn-sm btn-primary">Login</button>
+                    <a href='{{ route('admin.employer.logout', ['id' => $employer->id]) }}' class="btn btn-sm btn-warning">Suspend</a>
+                    <a href='{{ route('admin.employer.delete', ['id' => $employer->id]) }}' class="btn btn-sm btn-danger">Delete</a>
+                    <a href='{{ route('admin.employer.login', ['id' => $employer->id]) }}' class="btn btn-sm btn-primary">Login</a>
                 </div>
             </td>
         </tr>

@@ -51,6 +51,11 @@ class Employer extends Authenticatable
     {
         return $this->hasMany('App\Tablet');
     }
+    
+    public function tables()
+    {
+        return $this->hasMany('App\Table');
+    }
 
     /**
      * 

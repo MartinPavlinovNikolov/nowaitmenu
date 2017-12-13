@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Admin;
+use App\Employer;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -84,15 +85,50 @@ class AdminController extends Controller
     {
         $id = Auth::guard('admin')->user()->id;
         if ($request->input('sort') == 'name') {
-            $employers       = Admin::find($id)->getFilteredEmployersByCompanyName($request->input('value'), 10);
+            $employers = Admin::find($id)->getFilteredEmployersByCompanyName($request->input('value'), 10);
             $employers->appends(['sort' => 'email', 'value' => $request->input('value')])->render();
         }
         elseif ($request->input('sort') == 'email') {
-            $employers       = Admin::find($id)->getFilteredEmployersByEmail($request->input('value'), 10);
+            $employers = Admin::find($id)->getFilteredEmployersByEmail($request->input('value'), 10);
             $employers->appends(['sort' => 'email', 'value' => $request->input('value')])->render();
         }
+        Session::flash('value', $request->input('value'));
+        Session::flash('sort', $request->input('sort'));
 
         return view('admin.dashboard')->withEmployers($employers);
+    }
+
+    public function logoutEmployer($id)
+    {
+        $employer         = Employer::find($id);
+        $employer->status = false;
+        $employer->update();
+
+        Session::flash('message', 'Employer was logget out!');
+
+        return redirect()->back();
+    }
+
+    public function deleteEmployer($id)
+    {
+        $employer = Employer::find($id);
+        $employer->admins()->detach();
+        $employer->delete();
+
+        Session::flash('message', 'Employer was removed from the sistem!');
+
+        return redirect()->back();
+    }
+
+    public function loginEmployer($id)
+    {
+        $employer         = Employer::find($id);
+        $employer->status = true;
+        $employer->update();
+
+        Session::flash('message', 'Employer was logget in!');
+
+        return redirect()->back();
     }
 
 }
