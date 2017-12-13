@@ -31,6 +31,13 @@ class EmployerLoginController extends Controller
                     'email'    => $request->email,
                     'password' => $request->password
                 ])) {
+            if(Auth::guard('employer')->user()->status == false){
+                Auth::guard('employer')->logout();
+                Session::flush();
+                Session::flash('message', 'Access Forbidden!');
+                return redirect()->back()->withInput();
+            }
+            
             return redirect()->intended(route('employer.dashboard'));
         }
         return redirect()->back()->withInput();

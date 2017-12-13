@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Admin;
-use App\Employer;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -100,9 +99,8 @@ class AdminController extends Controller
 
     public function logoutEmployer($id)
     {
-        $employer         = Employer::find($id);
-        $employer->status = false;
-        $employer->update();
+        $admin_id = Auth::guard('admin')->user()->id;
+        Admin::find($admin_id)->logoutEmployer($id);
 
         Session::flash('message', 'Employer was logget out!');
 
@@ -111,9 +109,8 @@ class AdminController extends Controller
 
     public function deleteEmployer($id)
     {
-        $employer = Employer::find($id);
-        $employer->admins()->detach();
-        $employer->delete();
+        $admin_id = Auth::guard('admin')->user()->id;
+        Admin::find($admin_id)->deleteEmployer($id);
 
         Session::flash('message', 'Employer was removed from the sistem!');
 
@@ -122,9 +119,8 @@ class AdminController extends Controller
 
     public function loginEmployer($id)
     {
-        $employer         = Employer::find($id);
-        $employer->status = true;
-        $employer->update();
+        $admin_id = Auth::guard('admin')->user()->id;
+        Admin::find($admin_id)->loginEmployer($id);
 
         Session::flash('message', 'Employer was logget in!');
 

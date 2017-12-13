@@ -64,5 +64,25 @@ class Admin extends Authenticatable
     {
         return $this->employers()->where('email','LIKE', '%'.$email.'%')->paginate($numberOfPages);
     }
-
+    
+    public function logoutEmployer($id)
+    {
+        $employer         = $this->employers()->find($id);
+        $employer->status = false;
+        $employer->update();
+    }
+    
+    public function deleteEmployer($id)
+    {
+        $employer         = $this->employers()->find($id);
+        $employer->admins()->detach();
+        $employer->delete();
+    }
+    
+    public function loginEmployer($id)
+    {
+        $employer         = $this->employers()->find($id);
+        $employer->status = true;
+        $employer->update();
+    }
 }
