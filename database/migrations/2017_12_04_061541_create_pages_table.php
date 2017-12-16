@@ -15,9 +15,8 @@ class CreatePagesTable extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('menus_id')->nullable()->unsigned();
+            $table->integer('menu_id')->unsigned();
             $table->string('header');
-            $table->timestamps();
         });
     }
 

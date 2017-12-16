@@ -16,9 +16,18 @@ class CreateEmployeeTotalTable extends Migration
         Schema::create('employee_total', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id')->unsigned();
-            $table->foreign('employee_id')->references('id')->on('employees');
+            
+            $table->foreign('employee_id')
+                    ->references('id')
+                    ->on('employees')
+                    ->onDelete('cascade');
+            
             $table->integer('total_id')->unsigned();
-            $table->foreign('total_id')->references('id')->on('totals');
+            
+            $table->foreign('total_id')
+                    ->references('id')
+                    ->on('totals')
+                    ->onDelete('cascade');;
         });
     }
 

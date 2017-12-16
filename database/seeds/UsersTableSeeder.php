@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Employer;
 use App\Employee;
 use App\Admin;
+use App\Status;
 
 class UsersTableSeeder extends Seeder
 {
@@ -22,7 +23,7 @@ class UsersTableSeeder extends Seeder
         $admin->save();
 
         $adminsLimit = rand(2, 4);
-        $iterator = 1;
+        $iterator    = 1;
         for ($i = 0; $i < $adminsLimit; $i++)
         {
             $admin2                 = new Admin();
@@ -32,7 +33,7 @@ class UsersTableSeeder extends Seeder
             $admin2->save();
         }
 
-        $employersLimit = rand(600, 1200);
+        $employersLimit = rand(25, 35);
         for ($i = 0; $i < $employersLimit; $i++)
         {
             $employer             = new Employer();
@@ -40,24 +41,31 @@ class UsersTableSeeder extends Seeder
             $employer->email      = 'fatdonalds' . $i . '@fat.donalds';
             $employer->password   = bcrypt('qwerty');
             $employer->last_login = date('Y-m-d H:i:s', time());
-            $employer->status     = true;
             $employer->save();
+            
+            $status         = new Status();
+            $status->active = true;
+            $employer->status()->save($status);
 
             $admins = Admin::all();
             foreach ($admins as $admin)
             {
                 $employer->admins()->attach($admin);
             }
-            
-            $employeesLimit = rand(4, 60);
+
+            $employeesLimit = rand(4, 8);
             for ($j = 1; $j < $employeesLimit; $j++)
             {
                 $employee              = new Employee();
                 $employee->employer_id = $i;
                 $employee->name        = 'john' . $iterator;
                 $employee->password    = '0000';
-                $employee->status      = rand(0, 1);
                 $employee->save();
+
+                $status         = new Status();
+                $status->active = rand(0, 1);
+                $employee->status()->save($status);
+
                 $iterator++;
             }
         }

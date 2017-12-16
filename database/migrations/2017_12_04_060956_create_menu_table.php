@@ -16,7 +16,6 @@ class CreateMenuTable extends Migration
         Schema::create('menu', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employer_id')->nullable()->unsigned();
-            $table->timestamps();
         });
     }
 

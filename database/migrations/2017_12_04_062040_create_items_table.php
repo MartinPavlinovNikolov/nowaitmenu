@@ -19,7 +19,6 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->integer('price');
             $table->string('location');
-            $table->timestamps();
         });
     }
 

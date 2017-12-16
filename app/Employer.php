@@ -20,7 +20,7 @@ class Employer extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'last_login', 'status'
+        'name', 'email', 'password', 'last_login'
     ];
 
     /**
@@ -51,10 +51,15 @@ class Employer extends Authenticatable
     {
         return $this->hasMany('App\Tablet');
     }
-    
+
     public function tables()
     {
         return $this->hasMany('App\Table');
+    }
+
+    public function status()
+    {
+        return $this->morphOne('App\Status', 'statusable');
     }
 
     /**

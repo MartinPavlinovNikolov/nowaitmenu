@@ -6,6 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateAdminEmployerTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -16,9 +17,18 @@ class CreateAdminEmployerTable extends Migration
         Schema::create('admin_employer', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('admin_id')->unsigned();
-            $table->foreign('admin_id')->references('id')->on('admins');
+
+            $table->foreign('admin_id')
+                    ->references('id')
+                    ->on('admins')
+                    ->onDelete('cascade');
+            
             $table->integer('employer_id')->unsigned();
-            $table->foreign('employer_id')->references('id')->on('employers');
+
+            $table->foreign('employer_id')
+                    ->references('id')
+                    ->on('employers')
+                    ->onDelete('cascade');
         });
     }
 
@@ -31,4 +41,5 @@ class CreateAdminEmployerTable extends Migration
     {
         Schema::dropIfExists('admin_employer');
     }
+
 }

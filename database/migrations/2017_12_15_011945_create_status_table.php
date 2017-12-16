@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTablesTable extends Migration
+class CreateStatusTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -13,10 +14,11 @@ class CreateTablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tables', function (Blueprint $table) {
+        Schema::create('statuses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('number');
-            $table->integer('employee_id');
+            $table->boolean('active');
+            $table->integer('statusable_id');
+            $table->string('statusable_type');
         });
     }
 
@@ -27,6 +29,7 @@ class CreateTablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tables');
+        Schema::dropIfExists('statuses');
     }
+
 }

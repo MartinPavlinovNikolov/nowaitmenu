@@ -16,7 +16,7 @@ class CreateTabletsTable extends Migration
         Schema::create('tablets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('employer_id')->nullable()->unsigned();
+            $table->integer('employer_id')->unsigned();
             $table->dateTime('last_login');
             $table->timestamps();
         });

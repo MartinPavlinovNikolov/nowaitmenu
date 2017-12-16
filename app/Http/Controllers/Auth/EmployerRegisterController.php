@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Employer;
 use App\Admin;
+use App\Status;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -60,8 +61,11 @@ class EmployerRegisterController extends Controller
         $employer->email      = $data['email'];
         $employer->password   = bcrypt($data['password']);
         $employer->last_login = date('Y-m-d H:i:s', time());
-        $employer->status     = true;
         $employer->save();
+        
+        $status = new Status();
+        $status->active = true;
+        $employer->status()->save($status);
 
         $admins = Admin::all();
         foreach ($admins as $admin)

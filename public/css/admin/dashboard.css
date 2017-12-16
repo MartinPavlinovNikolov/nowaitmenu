@@ -9,6 +9,10 @@ th, td{
     padding: 0;
     margin:0 0 0 -4.5rem;
 }
+.btn-all-of-some-employers{
+    font-size: .7rem;
+    margin: 0;
+}
 .close-table-employees{
     position: fixed;
     font-size: .5rem;

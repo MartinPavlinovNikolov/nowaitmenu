@@ -8,6 +8,7 @@ class Total extends Model
 {
 
     protected $table = 'totals';
+    public $timestamps = false;
 
     public function employees()
     {

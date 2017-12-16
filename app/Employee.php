@@ -56,6 +56,11 @@ class Employee extends Authenticatable
         return $this->belongsToMany('App\Table');
     }
 
+    public function status()
+    {
+        return $this->morphOne('App\Status', 'statusable');
+    }
+
     /**
      * 
      * @return DB-field for authentication

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Employer;
 
 class EmployerLoginController extends Controller
 {
@@ -31,7 +32,8 @@ class EmployerLoginController extends Controller
                     'email'    => $request->email,
                     'password' => $request->password
                 ])) {
-            if(Auth::guard('employer')->user()->status == false){
+            $employer = Employer::find(Auth::guard('employer')->user()->id);
+            if($employer->status->active == false){
                 Auth::guard('employer')->logout();
                 Session::flush();
                 Session::flash('message', 'Access Forbidden!');

@@ -32,6 +32,12 @@ class AdminController extends Controller
     {
         $id        = Auth::guard('admin')->user()->id;
         $employers = Admin::find($id)->getAllEmployers(10);
+
+        if (Session::exists('sort') && Session::exists('value')) {
+            Session::forget('sort');
+            Session::forget('value');
+        }
+
         return view('admin.dashboard')->withEmployers($employers);
     }
 
@@ -85,14 +91,18 @@ class AdminController extends Controller
         $id = Auth::guard('admin')->user()->id;
         if ($request->input('sort') == 'name') {
             $employers = Admin::find($id)->getFilteredEmployersByCompanyName($request->input('value'), 10);
-            $employers->appends(['sort' => 'email', 'value' => $request->input('value')])->render();
+            $employers->appends(['sort' => 'name', 'value' => $request->input('value')])->render();
+
+            Session::flash('value', $request->input('value'));
+            Session::flash('sort', 'name');
         }
         elseif ($request->input('sort') == 'email') {
             $employers = Admin::find($id)->getFilteredEmployersByEmail($request->input('value'), 10);
             $employers->appends(['sort' => 'email', 'value' => $request->input('value')])->render();
+
+            Session::flash('value', $request->input('value'));
+            Session::flash('sort', 'email');
         }
-        Session::flash('value', $request->input('value'));
-        Session::flash('sort', $request->input('sort'));
 
         return view('admin.dashboard')->withEmployers($employers);
     }
@@ -100,9 +110,9 @@ class AdminController extends Controller
     public function logoutEmployer($id)
     {
         $admin_id = Auth::guard('admin')->user()->id;
-        Admin::find($admin_id)->logoutEmployer($id);
+        $companyName = Admin::find($admin_id)->logoutEmployer($id);
 
-        Session::flash('message', 'Employer was logget out!');
+        Session::flash('message', "Employer: $companyName, was logget out!");
 
         return redirect()->back();
     }
@@ -110,9 +120,9 @@ class AdminController extends Controller
     public function deleteEmployer($id)
     {
         $admin_id = Auth::guard('admin')->user()->id;
-        Admin::find($admin_id)->deleteEmployer($id);
+        $companyName = Admin::find($admin_id)->deleteEmployer($id);
 
-        Session::flash('message', 'Employer was removed from the sistem!');
+        Session::flash('message', "Employer: $companyName, was removed from the system!");
 
         return redirect()->back();
     }
@@ -120,11 +130,27 @@ class AdminController extends Controller
     public function loginEmployer($id)
     {
         $admin_id = Auth::guard('admin')->user()->id;
-        Admin::find($admin_id)->loginEmployer($id);
+        $companyName = Admin::find($admin_id)->loginEmployer($id);
 
-        Session::flash('message', 'Employer was logget in!');
+        Session::flash('message', "Employer: $companyName, was logget in!");
 
         return redirect()->back();
+    }
+    
+    public function getActiveEmployers()
+    {
+        $id        = Auth::guard('admin')->user()->id;
+        $employers = Admin::find($id)->getActiveEmployers(10);
+        
+        return view('admin.dashboard')->withEmployers($employers);
+    }
+    
+    public function getDisabledEmployers()
+    {
+        $id        = Auth::guard('admin')->user()->id;
+        $employers = Admin::find($id)->getDisabledEmployers(10);
+        
+        return view('admin.dashboard')->withEmployers($employers);
     }
 
 }

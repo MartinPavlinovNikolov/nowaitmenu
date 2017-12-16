@@ -8,6 +8,7 @@ class Page extends Model
 {
 
     protected $table = 'pages';
+    public $timestamps = false;
 
     public function menu()
     {

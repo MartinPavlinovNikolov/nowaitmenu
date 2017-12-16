@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
 
-    protected $table = 'menus';
+    protected $table = 'items';
+    public $timestamps = false;
 
     public function page()
     {

@@ -6,6 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateEmployeesTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -16,10 +17,9 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->integer('employer_id')->nullable()->unsigned();
+            $table->integer('employer_id')->unsigned();
             /* pin code */
             $table->string('password');
-            $table->boolean('status');
             $table->timestamps();
         });
     }
@@ -36,4 +36,5 @@ class CreateEmployeesTable extends Migration
         Schema::dropIfExists('employee_total');
         Schema::dropIfExists('employees');
     }
+
 }

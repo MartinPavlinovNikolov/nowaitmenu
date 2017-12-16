@@ -6,6 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateEmployersTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -19,7 +20,6 @@ class CreateEmployersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->dateTime('last_login');
-            $table->boolean('status');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -35,4 +35,5 @@ class CreateEmployersTable extends Migration
         Schema::dropIfExists('admin_employer');
         Schema::dropIfExists('employers');
     }
+
 }
