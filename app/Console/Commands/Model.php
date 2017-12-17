@@ -65,6 +65,8 @@ class Model extends Models
             $this->model['hasMany']       = '';
             $this->model['belongsTo']     = '';
             $this->model['belongsToMany'] = '';
+            $this->model['morphTo']       = '';
+            $this->model['able']          = '';
         }
         return $this;
     }
@@ -111,7 +113,7 @@ class Model extends Models
             if (method_exists($m1, $m2)) {
                 $class2 = 'App\\' . ucfirst($m2);
                 $m3     = new $class2();
-                if (\method_exists($m3, $model . 's')) {
+                if (\method_exists($m3, $model . 's') || \method_exists($m3, $model . 'ses')) {
                     $this->model['belongsTo'] .= ucfirst($m2) . ', ';
                 }
             }
@@ -128,7 +130,7 @@ class Model extends Models
             if (method_exists($m1, $m2 . 's')) {
                 $class2 = 'App\\' . ucfirst($m2);
                 $m3     = new $class2();
-                if (\method_exists($m3, $model . 's')) {
+                if (\method_exists($m3, $model . 's') || \method_exists($m3, $model . 'ses')) {
                     $this->model['belongsToMany'] .= ucfirst($m2) . ', ';
                 }
             }
@@ -137,12 +139,48 @@ class Model extends Models
         $this->model['belongsToMany'] = rtrim($this->model['belongsToMany'], ',');
     }
 
+    public function setMorphTo($model)
+    {
+        $m1 = new $this->modelFull();
+        foreach ($this->models_strtolower as $m2)
+        {
+            if (\method_exists($m1, $m2) || \method_exists($m1, $m2 . 's') || \method_exists($m1, $m2 . 'ses')) {
+                $class2 = 'App\\' . ucfirst($m2);
+                $m3     = new $class2();
+                if (method_exists($m3, $m2 . 'able')) {
+                    $this->model['morphTo'] .= ucfirst($m2) . ', ';
+                }
+            }
+        }
+        $this->model['morphTo'] = rtrim($this->model['morphTo'], ' ');
+        $this->model['morphTo'] = rtrim($this->model['morphTo'], ',');
+    }
+    
+    public function setAble($model)
+    {
+        $m1 = new $this->modelFull();
+        foreach ($this->models_strtolower as $m2)
+        {
+            if (method_exists($m1, $model . 'able')) {
+                $class2 = 'App\\' . ucfirst($m2);
+                $m3     = new $class2();
+                if (\method_exists($m3, $model) || \method_exists($m3, $model . 's') || \method_exists($m3, $model . 'ses')) {
+                    $this->model['able'] .= ucfirst($m2) . ', ';
+                }
+            }
+        }
+        $this->model['able'] = rtrim($this->model['able'], ' ');
+        $this->model['able'] = rtrim($this->model['able'], ',');
+    }
+
     private function setRelationships($data)
     {
         $this->setHasOne($data);
         $this->setHasMany($data);
         $this->setBelongsTo($data);
         $this->setBelongsToMany($data);
+        $this->setMorphTo($data);
+        $this->setAble($data);
     }
 
     /**
@@ -162,7 +200,7 @@ class Model extends Models
         if ($this->exist()) {
             $this->setAllModels();
             $this->setRelationships($this->model['modelName']);
-            $headers = ['models', '1 -> 1', '1 -> ∞', '∞ -> 1', '∞ -> ∞'];
+            $headers = ['models', '1 -> 1', '1 -> ∞', '∞ -> 1', '∞ -> ∞', '1 -> morph', 'morph -> ∞'];
             $rows    = [$this->model];
 
             $this->table($headers, $rows);

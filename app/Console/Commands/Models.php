@@ -59,7 +59,7 @@ class Models extends Command
         $m1     = new $class1();
         foreach ($this->models_strtolower as $m2)
         {
-            if (method_exists($m1, $m2 . 's')) {
+            if (method_exists($m1, $m2 . 's') || method_exists($m1, $m2 . 'ses')) {
                 $class2 = 'App\\' . ucfirst($m2);
                 $m3     = new $class2();
                 if (\method_exists($m3, $model)) {
@@ -80,7 +80,7 @@ class Models extends Command
             if (method_exists($m1, $m2)) {
                 $class2 = 'App\\' . ucfirst($m2);
                 $m3     = new $class2();
-                if (\method_exists($m3, $model . 's')) {
+                if (\method_exists($m3, $model . 's') || \method_exists($m3, $model . 'ses')) {
                     $this->models[$model]['belongsTo'] .= ucfirst($m2) . ', ';
                 }
             }
@@ -98,13 +98,49 @@ class Models extends Command
             if (method_exists($m1, $m2 . 's')) {
                 $class2 = 'App\\' . ucfirst($m2);
                 $m3     = new $class2();
-                if (\method_exists($m3, $model . 's')) {
+                if (\method_exists($m3, $model . 's') || \method_exists($m3, $model . 'ses')) {
                     $this->models[$model]['belongsToMany'] .= ucfirst($m2) . ', ';
                 }
             }
         }
         $this->models[$model]['belongsToMany'] = rtrim($this->models[$model]['belongsToMany'], ' ');
         $this->models[$model]['belongsToMany'] = rtrim($this->models[$model]['belongsToMany'], ',');
+    }
+
+    public function setMorphTo($model)
+    {
+        $class1 = 'App\\' . ucfirst($model);
+        $m1     = new $class1();
+        foreach ($this->models_strtolower as $m2)
+        {
+            if (\method_exists($m1, $m2) || \method_exists($m1, $m2 . 's') || \method_exists($m1, $m2 . 'ses')) {
+                $class2 = 'App\\' . ucfirst($m2);
+                $m3     = new $class2();
+                if (method_exists($m3, $m2 . 'able')) {
+                    $this->models[$model]['morphTo'] .= ucfirst($m2) . ', ';
+                }
+            }
+        }
+        $this->models[$model]['morphTo'] = rtrim($this->models[$model]['morphTo'], ' ');
+        $this->models[$model]['morphTo'] = rtrim($this->models[$model]['morphTo'], ',');
+    }
+
+    public function setAble($model)
+    {
+        $class1 = 'App\\' . ucfirst($model);
+        $m1     = new $class1();
+        foreach ($this->models_strtolower as $m2)
+        {
+            if (method_exists($m1, $model . 'able')) {
+                $class2 = 'App\\' . ucfirst($m2);
+                $m3     = new $class2();
+                if (\method_exists($m3, $model) || \method_exists($m3, $model . 's') || \method_exists($m3, $model . 'ses')) {
+                    $this->models[$model]['able'] .= ucfirst($m2) . ', ';
+                }
+            }
+        }
+        $this->models[$model]['able'] = rtrim($this->models[$model]['able'], ' ');
+        $this->models[$model]['able'] = rtrim($this->models[$model]['able'], ',');
     }
 
     /**
@@ -130,7 +166,9 @@ class Models extends Command
                 'hasOne'        => '',
                 'hasMany'       => '',
                 'belongsTo'     => '',
-                'belongsToMany' => ''
+                'belongsToMany' => '',
+                'morphTo'       => '',
+                'able'          => ''
             ];
         }
         return $this;
@@ -144,6 +182,8 @@ class Models extends Command
             $this->setHasMany($model);
             $this->setBelongsTo($model);
             $this->setBelongsToMany($model);
+            $this->setMorphTo($model);
+            $this->setAble($model);
         }
     }
 
@@ -157,7 +197,7 @@ class Models extends Command
         $this->setAllModels();
         $this->setAllRealations($this->models_strtolower);
 
-        $headers = ['models', '1 -> 1', '1 -> ∞', '∞ -> 1', '∞ -> ∞'];
+        $headers = ['models', '1 -> 1', '1 -> ∞', '∞ -> 1', '∞ -> ∞', '1 -> morph', 'morph -> ∞'];
         $rows    = $this->models;
 
         $this->table($headers, $rows);
