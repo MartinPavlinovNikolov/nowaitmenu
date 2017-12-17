@@ -31,6 +31,10 @@ class Admin extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * 
+     * @return Join with employers table
+     */
     public function employers()
     {
         return $this->belongsToMany('App\Employer');
@@ -48,25 +52,49 @@ class Admin extends Authenticatable
 
     /**
      * get all employers for current administrator.
-     * 
-     * @return type
+     *
+     * @param type ( integer )$numberOfPages
+     *      default: 10; 
+     * @return all employers paginate by *
      */
-    public function getAllEmployers($numberOfPages = 10)
+    public function getAllEmployers(int $numberOfPages = 10)
     {
         return $this->employers()->paginate($numberOfPages);
     }
 
-    public function getFilteredEmployersByCompanyName($name, $numberOfPages)
+    /**
+     * get all employers for current administrator by name.
+     * 
+     * 
+     * @param type string $name
+     * @param integer $numberOfPages
+     *      default: 10; 
+     * @return all employers, filtered by name.Paginate by *
+     */
+    public function getFilteredEmployersByCompanyName(string $name, int $numberOfPages)
     {
         return $this->employers()->where('name', 'LIKE', '%' . $name . '%')->paginate($numberOfPages);
     }
 
-    public function getFilteredEmployersByEmail($email, $numberOfPages)
+    /**
+     * get all employers for current administrator by email.
+     * 
+     * @param string $email
+     * @param int $numberOfPages
+     * @return all employers, filtered by email.Paginate by *
+     */
+    public function getFilteredEmployersByEmail(string $email, int $numberOfPages)
     {
         return $this->employers()->where('email', 'LIKE', '%' . $email . '%')->paginate($numberOfPages);
     }
 
-    public function logoutEmployer($id)
+    /**
+     * update status of the employer by id.Logout.
+     * 
+     * @param int $id
+     * @return string $name
+     */
+    public function logoutEmployer(int $id)
     {
         $employer = $this->employers()->find($id);
         $name     = $employer->name;
@@ -77,7 +105,13 @@ class Admin extends Authenticatable
         return $name;
     }
 
-    public function deleteEmployer($id)
+    /**
+     * Delete employer by id.
+     * 
+     * @param int $id
+     * @return string $name
+     */
+    public function deleteEmployer(int $id)
     {
         $employer = $this->employers()->find($id);
         $name     = $employer->name;
@@ -87,8 +121,14 @@ class Admin extends Authenticatable
 
         return $name;
     }
-
-    public function loginEmployer($id)
+    
+    /**
+     * update status of the employer by id.Login.
+     * 
+     * @param int $id
+     * @return string $name
+     */
+    public function loginEmployer(int $id)
     {
         $employer = $this->employers()->find($id);
         $name     = $employer->name;
@@ -99,18 +139,30 @@ class Admin extends Authenticatable
         return $name;
     }
     
-    public function getActiveEmployers($numberOfPages = 10)
+    /**
+     * get collection off all active employers
+     * 
+     * @param int $numberOfPages default=10;
+     * @return colction
+     */
+    public function getActiveEmployers(int $numberOfPages = 10)
     {
-        return $this->employers()->whereHas('Status', function($status){
-        $status->where('active', true);
-        })->paginate($numberOfPages);
+        return $this->employers()->whereHas('Status', function($status) {
+                    $status->where('active', true);
+                })->paginate($numberOfPages);
     }
     
-    public function getDisabledEmployers($numberOfPages = 10)
+    /**
+     * get collection off all disabled employers
+     * 
+     * @param int $numberOfPages default=10;
+     * @return colction
+     */
+    public function getDisabledEmployers(int $numberOfPages = 10)
     {
-        return $this->employers()->whereHas('Status', function($status){
-        $status->where('active', false);
-        })->paginate($numberOfPages);
+        return $this->employers()->whereHas('Status', function($status) {
+                    $status->where('active', false);
+                })->paginate($numberOfPages);
     }
 
 }

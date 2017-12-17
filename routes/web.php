@@ -21,7 +21,7 @@ Route::prefix('admin')->group(function() {
     Route::get('/search/employers', 'AdminController@getSearchEmployers')->name('admin.search.employers');
     Route::get('/active/employers', 'AdminController@getActiveEmployers')->name('admin.active.employers');
     Route::get('/disabled/employers', 'AdminController@getDisabledEmployers')->name('admin.disabled.employers');
-    Route::get('/employer/logout/{id}', 'AdminController@logoutEmployer')->name('admin.employer.logout');
-    Route::get('/employer/delete/{id}', 'AdminController@deleteEmployer')->name('admin.employer.delete');
-    Route::get('/employer/login/{id}', 'AdminController@loginEmployer')->name('admin.employer.login');
+    Route::get('/logout/employer/{id}', 'AdminController@logoutEmployer')->name('admin.logout.employer');
+    Route::get('/delete/employer/{id}', 'AdminController@deleteEmployer')->name('admin.delete.employer');
+    Route::get('/login/employer/{id}', 'AdminController@loginEmployer')->name('admin.login.employer');
 });

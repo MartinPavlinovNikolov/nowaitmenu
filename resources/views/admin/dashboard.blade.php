@@ -42,7 +42,7 @@
 
 <form method='GET' action="{{ route('admin.search.employers') }}" role="search">
     <div class="row flex-row align-items-center">
-        <input type="text" class=" col-2 offset-2 form-control" name="value" placeholder="Search..." value='@if(session()->has('value')){{ session('value') }}@endif'>
+        <input type="text" class=" col-2 offset-2 form-control" name="value" placeholder="Search..." value='@if(session()->has('value') && !empty('value')){{ session('value') }}@endif'>
         <button class="col-1 btn btn-primary btn-sm" type="submit">Search</button>
         <div class="col-3">
             <div class="flex-wrap">
@@ -138,9 +138,9 @@
             <td>{{ $employer->last_login->format('d/m/Y') }}</td>
             <td class="status-buttons-wrapper">
                 <div class="flex-row justify-content-center">
-                    <a href='{{ route('admin.employer.logout', ['id' => $employer->id]) }}' class="btn btn-sm btn-warning">Suspend</a>
-                    <a href='{{ route('admin.employer.delete', ['id' => $employer->id]) }}' class="btn btn-sm btn-danger">Delete</a>
-                    <a href='{{ route('admin.employer.login', ['id' => $employer->id]) }}' class="btn btn-sm btn-primary">Login</a>
+                    <a href='{{ route('admin.logout.employer', ['id' => $employer->id]) }}' class="btn btn-sm btn-warning">Suspend</a>
+                    <a href='{{ route('admin.delete.employer', ['id' => $employer->id]) }}' class="btn btn-sm btn-danger">Delete</a>
+                    <a href='{{ route('admin.login.employer', ['id' => $employer->id]) }}' class="btn btn-sm btn-primary">Login</a>
                 </div>
             </td>
         </tr>
