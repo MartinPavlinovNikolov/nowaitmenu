@@ -16,9 +16,16 @@
         @yield('styles')
     </head>
     <body>
-        <div class="container-fluid flex-row">
-            <nav class="row justify-content-around align-items-center">
-                @yield('nav')
+        <div class="container-fluid">
+            <nav class="row flex-row justify-content-between align-items-center">
+                <div class="col-auto">
+                    <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
+                </div>
+                <div class="col-auto align-content-center">
+                    <div class="row justify-content-around align-items-center prity-nav-items">
+                        @yield('nav')
+                    </div>
+                </div>
             </nav>
             @yield('content')
             <footer>

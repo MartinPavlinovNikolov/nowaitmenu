@@ -7,26 +7,18 @@
 @stop
 
 @section('nav')
-<div class="col offset-1">
-    <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
+<div class="col-auto">
+    <span>Admin: {{ Auth::guard('admin')->user()->name }}</span>
 </div>
-
-<div class="col-5 align-content-center">
-    <div class="row flex-row justify-content-around">
-        <div class="col">
-            <div>Admin: {{ Auth::guard('admin')->user()->name }}</div>
-        </div>
-        <div>|</div>
-        <div class="col">
-            <a href="{{ route('admin.settings') }}">Settings</a>
-        </div>
-        <div>|</div>
-        <div class="col">
-            <a href="#"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                Logout
-            </a>
-        </div>
-    </div>
+<div class="col-auto">|</div>
+<div class="col-auto">
+    <a href="{{ route('admin.settings') }}">Settings</a>
+</div>
+<div class="col-auto">|</div>
+<div class="col-auto">
+    <a href="#"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+        Logout
+    </a>
 </div>
 <form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
     {{ csrf_field() }}
@@ -43,20 +35,20 @@
 <form method='GET' action="{{ route('admin.search.employers') }}" role="search">
     <div class="row flex-row align-items-center">
         <input type="text" class=" col-2 offset-2 form-control" name="value" placeholder="Search..." value='@if(session()->has('value') && !empty('value')){{ session('value') }}@endif'>
-        <button class="col-1 btn btn-primary btn-sm" type="submit">Search</button>
+               <button class="col-1 btn btn-primary btn-sm" type="submit">Search</button>
         <div class="col-3">
             <div class="flex-wrap">
                 <div class="row flex-row align-items-center radio-wrapper">
                     <input class="col text-sm" id="name" type="radio" name="sort" value="name" @if((session()->has('sort') && session('sort')=='name') || (!session()->has('sort')))
                            checked="checked"
                            @endif>
-                    <label class="col text-sm" for="name">find by name</label>
+                           <label class="col text-sm" for="name">find by name</label>
                 </div>
                 <div class="row flex-row align-items-center radio-wrapper">
                     <input class="col text-sm" id="email" type="radio" name="sort" value="email" @if(session()->has('sort') && session('sort')=='email')
                            checked="checked"
                            @endif>
-                    <label class="col text-sm" for="email">find by email</label>
+                           <label class="col text-sm" for="email">find by email</label>
                 </div>
             </div>
         </div>
@@ -138,9 +130,9 @@
             <td>{{ $employer->last_login->format('d/m/Y') }}</td>
             <td class="status-buttons-wrapper">
                 <div class="flex-row justify-content-center">
-                    <a href='{{ route('admin.logout.employer', ['id' => $employer->id]) }}' class="btn btn-sm btn-warning">Suspend</a>
+                    <a href='{{ route('admin.logout.employer', ['id' => $employer->id]) }}' class="btn btn-sm {{ $employer->status->active ? 'btn-warning' : 'text-muted disabled'}}">Suspend</a>
                     <a href='{{ route('admin.delete.employer', ['id' => $employer->id]) }}' class="btn btn-sm btn-danger">Delete</a>
-                    <a href='{{ route('admin.login.employer', ['id' => $employer->id]) }}' class="btn btn-sm btn-primary">Login</a>
+                    <a href='{{ route('admin.login.employer', ['id' => $employer->id]) }}' class="btn btn-sm {{ $employer->status->active ? 'text-muted disabled' : 'btn-primary'}}">Login</a>
                 </div>
             </td>
         </tr>

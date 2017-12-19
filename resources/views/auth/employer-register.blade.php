@@ -3,10 +3,7 @@
 @section('title', 'Registration')
 
 @section('nav')
-<div class="col offset-1">
-    <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
-</div>
-<div class="col offset-8">
+<div class="col-auto">
     <a href="{{ route('employer.login') }}">Login</a>
 </div>
 @endsection

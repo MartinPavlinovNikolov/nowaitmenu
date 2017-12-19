@@ -22,9 +22,9 @@ class UsersTableSeeder extends Seeder
         $admin->remember_token = 'qwertyuiopasdfghjkl';
         $admin->save();
 
-        $adminsLimit = rand(2, 4);
+        $adminsLimit = rand(2, 3);
         $iterator    = 1;
-        for ($i = 0; $i < $adminsLimit; $i++)
+        for ($i = 1; $i < $adminsLimit; $i++)
         {
             $admin2                 = new Admin();
             $admin2->name           = 'admin' . $i;
@@ -33,14 +33,15 @@ class UsersTableSeeder extends Seeder
             $admin2->save();
         }
 
-        $employersLimit = rand(25, 35);
-        for ($i = 0; $i < $employersLimit; $i++)
+        $employersLimit = 80;
+        for ($i = 1; $i < $employersLimit; $i++)
         {
             $employer             = new Employer();
             $employer->name       = 'Fatdonalds' . $i;
             $employer->email      = 'fatdonalds' . $i . '@fat.donalds';
             $employer->password   = bcrypt('qwerty');
             $employer->last_login = date('Y-m-d H:i:s', time());
+            $employer->remember_token = 'qaklsjlkjlkjlkdjl' . $i;
             $employer->save();
             
             $status         = new Status();
@@ -53,7 +54,7 @@ class UsersTableSeeder extends Seeder
                 $employer->admins()->attach($admin);
             }
 
-            $employeesLimit = rand(4, 8);
+            $employeesLimit = rand(4, rand(5, rand(6, rand(7, 16))));
             for ($j = 1; $j < $employeesLimit; $j++)
             {
                 $employee              = new Employee();
@@ -63,7 +64,7 @@ class UsersTableSeeder extends Seeder
                 $employee->save();
 
                 $status         = new Status();
-                $status->active = rand(0, 1);
+                $status->active = rand(rand(rand(rand(0, 1), 1), 1), 1);
                 $employee->status()->save($status);
 
                 $iterator++;

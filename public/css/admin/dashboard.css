@@ -1,3 +1,25 @@
+.prity-nav-items {
+    margin-right: 0;
+    margin-left: 0;
+    padding-left: .2rem;
+    padding-right: .2rem;
+}
+
+.prity-nav-items > .col,
+.prity-nav-items > [class*="col-"] {
+    padding-left: .2rem;
+    padding-right: .2rem;
+}
+.prity-nav-items:first-of-type > .col,
+.prity-nav-items:first-of-type > [class*="col-"] {
+    padding-left: 0;
+    padding-right: .2rem;
+}
+.prity-nav-items:last-of-type > .col,
+.prity-nav-items:last-of-type > [class*="col-"] {
+    padding-left: .2rem;
+    padding-right: 0;
+}
 .logout-form{
     display: none;
 }

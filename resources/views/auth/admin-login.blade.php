@@ -2,12 +2,6 @@
 
 @section('title', 'Admin | Login')
 
-@section('nav')
-<div class="col offset-1">
-    <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
-</div>
-@endsection
-
 @section('content')
 <div class="row">
     <div class="col-6 offset-3">

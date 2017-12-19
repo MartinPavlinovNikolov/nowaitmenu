@@ -3,26 +3,18 @@
 @section('title', 'Admin | Settings')
 
 @section('nav')
-<div class="col offset-1">
-    <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
+<div class="col-auto">
+    <div>{{ Auth::guard('admin')->user()->name }}</div>
 </div>
-
-<div class="col-4 align-content-center">
-    <div class="row flex-row justify-content-around">
-        <div class="col">
-            <div>{{ Auth::guard('admin')->user()->name }}</div>
-        </div>
-        <div>|</div>
-        <div class="col">
-            <a href="{{ route('admin.dashboard') }}">Dashboard</a>
-        </div>
-        <div>|</div>
-        <div class="col">
-            <a href="#"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                Logout
-            </a>
-        </div>
-    </div>
+<div class="col-auto">|</div>
+<div class="col-auto">
+    <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+</div>
+<div class="col-auto">|</div>
+<div class="col-auto">
+    <a href="#"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+        Logout
+    </a>
 </div>
 <form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
     {{ csrf_field() }}
@@ -30,7 +22,6 @@
 @endsection
 
 @section('content')
-<h2>change password</h2>
 @if(count($errors) > 0)
 @foreach($errors->all() as $error)
 <p class="danger">{{ $error }}</p>
@@ -41,7 +32,7 @@
     <div class="col-6 offset-3">
         <div class="panel panel-default">
             <div class="panel-heading text-center">
-                <h1>Change password</h1>
+                <h2>Change password</h2>
             </div>
 
             <div class="panel-body">

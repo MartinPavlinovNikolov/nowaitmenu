@@ -4,23 +4,39 @@
 {!! Auth::guard('employer')->user()->name !!} | Dashboard
 @stop
 
-@section('nav')
-<div class="col offset-1">
-    <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
-</div>
+@section('styles')
+<link rel="stylesheet" href="{{ asset('/css/employer/dashboard.css') }}">
+@stop
 
-<div class="col-4 align-content-center">
-    <div class="row flex-row justify-content-around">
-        <div class="col">
-            <div>{{ Auth::guard('employer')->user()->name }}</div>
-        </div>
-        <div>|</div>
-        <div class="col">
-            <a href="#"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                Logout
-            </a>
-        </div>
-    </div>
+@section('nav')
+<div class="col-auto">
+    <span>Admin: {{ Auth::guard('employer')->user()->name }}</span>
+</div>
+<div class="col-auto">|</div>
+<div class="col-auto">
+    <a href="#">Menu</a>
+</div>
+<div class="col-auto">|</div>
+<div class="col-auto">
+    <a href="#">Printer</a>
+</div>
+<div class="col-auto">|</div>
+<div class="col-auto">
+    <a href="#">Tablets</a>
+</div>
+<div class="col-auto">|</div>
+<div class="col-auto">
+    <a href="#">Employees</a>
+</div>
+<div class="col-auto">|</div>
+<div class="col-auto">
+    <a href="#">Tables</a>
+</div>
+<div class="col-auto">|</div>
+<div class="col-auto">
+    <a href="#"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+        Logout
+    </a>
 </div>
 <form id="logout-form" action="{{ route('employer.logout') }}" method="POST" style="display: none;">
     {{ csrf_field() }}

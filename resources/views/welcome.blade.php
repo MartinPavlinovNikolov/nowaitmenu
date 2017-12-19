@@ -58,20 +58,21 @@
                     </div>
                 </div>
             </nav>
-
-            <div class="row flex-row">
-                <div class="col-12" style="margin: 0;padding: 0">
-                    <hr>
-                </div>
-            </div>
             <section class="row flex-row" style="min-height: 55vh;flex-grow: 1">
                 <div class="col-8 offset-2 text-center">
-                    <hr>
                     <h2 class="big">Get your restaurant runing in minutes</h2>
-                    <div class="row flex-row">
-                        <div class="col">Video tutorial-1</div>
-                        <div class="col">Video tutorial-2</div>
-                        <div class="col">Video tutorial-3</div>
+                    <hr>
+                    <div class="text-success row flex-row justify-content-around">
+                        @for($i=1;$i<=3;$i++)
+                        <div class="row flex-row flex-wrap justify-content-center align-content-center" style="width: 12rem;height: 8rem;border: 2px solid red;border-radius: 10px;background-color: #f3e2cd;">
+                            <div class="w-100 align-self-start" style="font-size: .8rem;padding: 0">
+                                Video tutorial-{{$i}}
+                            </div>
+                            <div class="w-100 align-self-center" style="font-size: 4rem;padding: 0">
+                                &triangleright;
+                            </div>
+                        </div>
+                        @endfor
                     </div>
                     <hr>
                     <div class="row flex-row justify-content-between">
@@ -79,13 +80,9 @@
                         <div class="col"><a href="#">Enter your password</a></div>
                         <div class="col"><a href="#" class="btn btn-warning btn-sm">try it free</a></div>
                     </div>
-                </div>
-            </section>
-            <div class="row flex-row">
-                <div class="col-12">
                     <hr>
                 </div>
-            </div>
+            </section>
             <footer  style="background-color: #f3e2cd;position: absolute;bottom: 0;left: 0;margin:0;padding: 0;width: 100%">
                 <div class="container"><div class="row">
                         <div class="col-12 text-center">
