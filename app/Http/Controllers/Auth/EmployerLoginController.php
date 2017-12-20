@@ -40,6 +40,8 @@ class EmployerLoginController extends Controller
                 return redirect()->back()->withInput();
             }
             
+            Session::flash('message', 'Hello' . $employer->name);
+            
             return redirect()->intended(route('employer.dashboard'));
         }
         return redirect()->back()->withInput();

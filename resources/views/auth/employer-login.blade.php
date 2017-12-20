@@ -15,13 +15,6 @@
             <div class="panel-heading text-center">
                 <h1>Employer Login</h1>
             </div>
-            
-            @if(session()->has('message'))
-            <div class="text-center">
-                <h2 class="text-danger">{{ session('message') }}</h2>
-            </div>
-            @endif
-            
             <div class="panel-body">
                 <form class="form" method="POST" action="{{ route('employer.login.submit') }}">
                     {{ csrf_field() }}

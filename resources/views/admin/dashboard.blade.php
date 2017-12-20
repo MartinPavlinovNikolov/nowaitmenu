@@ -26,12 +26,6 @@
 @endsection
 
 @section('content')
-@if(session()->has('message'))
-<div class="text-center">
-    <h2>{{ session('message') }}</h2>
-</div>
-@endif
-
 <form method='GET' action="{{ route('admin.search.employers') }}" role="search">
     <div class="row flex-row align-items-center">
         <input type="text" class=" col-2 offset-2 form-control" name="value" placeholder="Search..." value='@if(session()->has('value') && !empty('value')){{ session('value') }}@endif'>

@@ -10,7 +10,11 @@
 
 @section('nav')
 <div class="col-auto">
-    <span>Admin: {{ Auth::guard('employer')->user()->name }}</span>
+    <span>{{ Auth::guard('employer')->user()->name }}</span>
+</div>
+<div class="col-auto">|</div>
+<div class="col-auto">
+    <a href="{{ route('employer.dashboard') }}">Home</a>
 </div>
 <div class="col-auto">|</div>
 <div class="col-auto">
@@ -44,5 +48,6 @@
 @endsection
 
 @section('content')
-
+Here i must create some random animations with examples of work flow of the application.
+Some tips animations.Slides.
 @stop
