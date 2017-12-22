@@ -2,23 +2,12 @@
 
 @section('title', 'Admin | Settings')
 
+@section('styles')
+<link rel="stylesheet" href="{{ asset('/css/admin/dashboard.css') }}">
+@stop
+
 @section('nav')
-<div class="col-auto">
-    <div>{{ Auth::guard('admin')->user()->name }}</div>
-</div>
-<div class="col-auto">|</div>
-<div class="col-auto">
-    <a href="{{ route('admin.dashboard') }}">Dashboard</a>
-</div>
-<div class="col-auto">|</div>
-<div class="col-auto">
-    <a href="#"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-        Logout
-    </a>
-</div>
-<form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
-    {{ csrf_field() }}
-</form>
+    @include('admin._nav')
 @endsection
 
 @section('content')

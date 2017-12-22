@@ -9,45 +9,14 @@
 @stop
 
 @section('nav')
-<div class="col-auto">
-    <span>{{ Auth::guard('employer')->user()->name }}</span>
-</div>
-<div class="col-auto">|</div>
-<div class="col-auto">
-    <a href="{{ route('employer.dashboard') }}">Home</a>
-</div>
-<div class="col-auto">|</div>
-<div class="col-auto">
-    <a href="#">Menu</a>
-</div>
-<div class="col-auto">|</div>
-<div class="col-auto">
-    <a href="#">Printer</a>
-</div>
-<div class="col-auto">|</div>
-<div class="col-auto">
-    <a href="#">Tablets</a>
-</div>
-<div class="col-auto">|</div>
-<div class="col-auto">
-    <a href="#">Employees</a>
-</div>
-<div class="col-auto">|</div>
-<div class="col-auto">
-    <a href="#">Tables</a>
-</div>
-<div class="col-auto">|</div>
-<div class="col-auto">
-    <a href="#"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-        Logout
-    </a>
-</div>
-<form id="logout-form" action="{{ route('employer.logout') }}" method="POST" style="display: none;">
-    {{ csrf_field() }}
-</form>
+    @include('employer._nav')
 @endsection
 
 @section('content')
-Here i must create some random animations with examples of work flow of the application.
-Some tips animations.Slides.
+    @include('employer._content')
+@stop
+
+@section('scripts')
+<script src="{{ asset('/js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('/js/employer/dashboard.js') }}"></script>
 @stop

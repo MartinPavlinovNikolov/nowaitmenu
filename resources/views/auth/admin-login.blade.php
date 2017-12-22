@@ -55,3 +55,8 @@
     </div>
 </div>
 @endsection
+
+@section('scripts')
+<script src="{{ asset('/js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('/js/admin/dashboard.js') }}"></script>
+@endsection

@@ -2,10 +2,12 @@
 
 @section('title', 'Registration')
 
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('/css/employer/dashboard.css') }}">
+@endsection
+
 @section('nav')
-<div class="col-auto">
-    <a href="{{ route('employer.login') }}">Login</a>
-</div>
+    @include('auth._employer_nav')
 @endsection
 
 @section('content')
@@ -81,3 +83,8 @@
     </div>
 </div>
 @endsection
+
+@section('scripts')
+<script src="{{ asset('/js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('/js/employer/dashboard.js') }}"></script>
+@stop
