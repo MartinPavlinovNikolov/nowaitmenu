@@ -14,9 +14,16 @@ class CreatePagesTable extends Migration
     public function up()
     {
         Schema::create('pages', function (Blueprint $table) {
+            
+            $table->engine = 'InnoDB';
+            
             $table->increments('id');
             $table->integer('menu_id')->unsigned();
             $table->string('header');
+            $table->foreign('menu_id')
+                    ->references('id')
+                    ->on('menu')
+                    ->onDelete('cascade');
         });
     }
 
@@ -27,6 +34,7 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('items');
         Schema::dropIfExists('pages');
     }
 }

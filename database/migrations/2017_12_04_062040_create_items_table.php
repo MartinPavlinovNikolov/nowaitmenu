@@ -14,11 +14,18 @@ class CreateItemsTable extends Migration
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
+            
+            $table->engine = 'InnoDB';
+            
             $table->increments('id');
-            $table->integer('page_id')->nullable()->unsigned();
+            $table->integer('page_id')->unsigned();
             $table->string('name');
             $table->integer('price');
             $table->string('location');
+            $table->foreign('page_id')
+                    ->references('id')
+                    ->on('pages')
+                    ->onDelete('cascade');
         });
     }
 

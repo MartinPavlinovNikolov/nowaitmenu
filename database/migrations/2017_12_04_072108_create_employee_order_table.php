@@ -16,14 +16,11 @@ class CreateEmployeeOrderTable extends Migration
         Schema::create('employee_order', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id')->unsigned();
-            
+            $table->integer('order_id')->unsigned();
             $table->foreign('employee_id')
                     ->references('id')
                     ->on('employees')
                     ->onDelete('cascade');
-            
-            $table->integer('order_id')->unsigned();
-            
             $table->foreign('order_id')
                     ->references('id')
                     ->on('orders')

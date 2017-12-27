@@ -14,8 +14,15 @@ class CreateMenuTable extends Migration
     public function up()
     {
         Schema::create('menu', function (Blueprint $table) {
+            
+            $table->engine = 'InnoDB';
+            
             $table->increments('id');
-            $table->integer('employer_id')->nullable()->unsigned();
+            $table->integer('employer_id')->unsigned();
+            $table->foreign('employer_id')
+                    ->references('id')
+                    ->on('employers')
+                    ->onDelete('cascade');
         });
     }
 
@@ -26,6 +33,7 @@ class CreateMenuTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('pages');
         Schema::dropIfExists('menu');
     }
 }

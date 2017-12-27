@@ -16,14 +16,11 @@ class CreateEmployeeTabletTable extends Migration
         Schema::create('employee_tablet', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id')->unsigned();
-            
+            $table->integer('tablet_id')->unsigned();
             $table->foreign('employee_id')
                     ->references('id')
                     ->on('employees')
                     ->onDelete('cascade');
-            
-            $table->integer('tablet_id')->unsigned();
-            
             $table->foreign('tablet_id')
                     ->references('id')
                     ->on('tablets')
@@ -38,6 +35,6 @@ class CreateEmployeeTabletTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('emploee_tablet');
+        Schema::dropIfExists('employee_tablet');
     }
 }

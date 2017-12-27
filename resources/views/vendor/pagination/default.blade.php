@@ -1,5 +1,5 @@
 @if ($paginator->hasPages())
-<div class="pagination">
+<div class="pagination flex-wrap justify-content-center">
     {{-- Previous Page Link --}}
     @if ($paginator->onFirstPage())
     <div class="btn btn-default btn-sm disabled"><span>&laquo;</span></div>

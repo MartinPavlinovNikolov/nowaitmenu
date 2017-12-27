@@ -14,13 +14,10 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(App\Employee::class, function (Faker $faker) {
-    static $password;
 
     return [
         'name' => $faker->name,
-        'employer_id' => rand(1, 10),
-        'password' => $password ?: $password = '0000',
-        'status' => bool(rand(0, 1)),
-        'remember_token' => str_random(500)
+        'employer_id' => rand(1, 20),
+        'password' => '0000'
     ];
 });

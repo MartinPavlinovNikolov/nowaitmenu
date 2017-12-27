@@ -14,11 +14,18 @@ class CreateTabletsTable extends Migration
     public function up()
     {
         Schema::create('tablets', function (Blueprint $table) {
+            
+            $table->engine = 'InnoDB';
+            
             $table->increments('id');
             $table->string('name');
             $table->integer('employer_id')->unsigned();
             $table->dateTime('last_login');
             $table->timestamps();
+            $table->foreign('employer_id')
+                    ->references('id')
+                    ->on('employers')
+                    ->onDelete('cascade');
         });
     }
 

@@ -17,14 +17,11 @@ class CreateAdminEmployerTable extends Migration
         Schema::create('admin_employer', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('admin_id')->unsigned();
-
+            $table->integer('employer_id')->unsigned();
             $table->foreign('admin_id')
                     ->references('id')
                     ->on('admins')
                     ->onDelete('cascade');
-            
-            $table->integer('employer_id')->unsigned();
-
             $table->foreign('employer_id')
                     ->references('id')
                     ->on('employers')

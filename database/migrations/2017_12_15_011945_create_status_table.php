@@ -17,7 +17,7 @@ class CreateStatusTable extends Migration
         Schema::create('statuses', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('active');
-            $table->integer('statusable_id');
+            $table->integer('statusable_id')->unsigned();
             $table->string('statusable_type');
         });
     }

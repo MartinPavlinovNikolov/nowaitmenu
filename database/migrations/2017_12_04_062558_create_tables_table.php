@@ -14,9 +14,16 @@ class CreateTablesTable extends Migration
     public function up()
     {
         Schema::create('tables', function (Blueprint $table) {
+            
+            $table->engine = 'InnoDB';
+            
             $table->increments('id');
             $table->integer('number');
-            $table->integer('employee_id');
+            $table->integer('employee_id')->unsigned();
+            $table->foreign('employee_id')
+                    ->references('id')
+                    ->on('employees')
+                    ->onDelete('cascade');
         });
     }
 

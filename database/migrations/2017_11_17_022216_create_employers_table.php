@@ -15,6 +15,9 @@ class CreateEmployersTable extends Migration
     public function up()
     {
         Schema::create('employers', function (Blueprint $table) {
+            
+            $table->engine = 'InnoDB';
+            
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('email')->unique();
@@ -33,6 +36,9 @@ class CreateEmployersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('admin_employer');
+        Schema::dropIfExists('employees');
+        Schema::dropIfExists('tablets');
+        Schema::dropIfExists('menu');
         Schema::dropIfExists('employers');
     }
 

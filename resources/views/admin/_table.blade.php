@@ -1,4 +1,3 @@
-@if(count($employers) > 0)
 <table class="table-md table-striped table-bordered table-hover table-employers">
     <thead class="table-info">
         <tr>
@@ -13,6 +12,7 @@
         </tr>
     </thead>
     <tbody>
+@if(count($employers) > 0)
         @foreach($employers as $employer)
         <tr>
             <th class="text-sm" scope="row">{{ ($employer->id) }}</th>
@@ -73,13 +73,13 @@
             </td>
         </tr>
         @endforeach
-    </tbody>
-</table>
-<div class="flex-row justify-content-around">
-    {{ $employers->links('vendor.pagination.default') }}
-</div>
 @else
 <div class="text-center">
     <h2 class="text-danger">Nothing found!</h2>
 </div>
 @endif
+    </tbody>
+</table>
+<div class="flex-row justify-content-around">
+    {{ $employers->links('vendor.pagination.default') }}
+</div>
