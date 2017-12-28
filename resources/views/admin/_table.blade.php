@@ -1,14 +1,14 @@
-<table class="table-md table-striped table-bordered table-hover table-employers">
+<table class="table-md table-striped table-bordered table-hover table-employers table-condensed">
     <thead class="table-info">
         <tr>
-            <th>ID</th>
-            <th>Company name</th>
-            <th>E-mail</th>
-            <th>Date created</th>
-            <th>Employees</th>
-            <th>Status</th>
-            <th>Last Login</th>
-            <th>Actions</th>
+            <th class="text-sm">ID</th>
+            <th class="text-sm">Company name</th>
+            <th class="text-sm">E-mail</th>
+            <th class="text-sm">Date created</th>
+            <th class="text-sm">Employees</th>
+            <th class="text-sm">Status</th>
+            <th class="text-sm">Last Login</th>
+            <th class="text-sm">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -66,9 +66,9 @@
             <td>{{ $employer->last_login->format('d/m/Y') }}</td>
             <td class="status-buttons-wrapper">
                 <div class="flex-row justify-content-center">
-                    <a href='{{ route('admin.logout.employer', ['id' => $employer->id]) }}' class="btn btn-sm process {{ $employer->status->active ? 'btn-warning' : 'text-muted disabled'}}">Suspend</a>
-                    <a href='{{ route('admin.delete.employer', ['id' => $employer->id]) }}' class="btn btn-sm btn-danger process">Delete</a>
-                    <a href='{{ route('admin.login.employer', ['id' => $employer->id]) }}' class="btn btn-sm process {{ $employer->status->active ? 'text-muted disabled' : 'btn-primary'}}">Login</a>
+                    <a href='{{ route('admin.logout.employer', ['id' => $employer->id]) }}' class="badge badge-sm process {{ $employer->status->active ? 'badge-warning' : 'text-muted disabled'}}">Suspend</a>
+                    <a href='{{ route('admin.delete.employer', ['id' => $employer->id]) }}' class="badge badge-sm badge-danger process">Delete</a>
+                    <a href='{{ route('admin.login.employer', ['id' => $employer->id]) }}' class="badge badge-sm process {{ $employer->status->active ? 'text-muted disabled' : 'badge-primary'}}">Login</a>
                 </div>
             </td>
         </tr>

@@ -18,6 +18,7 @@ $factory->define(App\Employee::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'employer_id' => rand(1, 20),
+        'remember_token' => str_random(10),
         'password' => '0000'
     ];
 });

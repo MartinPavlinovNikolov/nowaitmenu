@@ -23,6 +23,7 @@ class CreateEmployeesTable extends Migration
             $table->integer('employer_id')->unsigned();
             /* pin code */
             $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
             $table->foreign('employer_id')
                     ->references('id')

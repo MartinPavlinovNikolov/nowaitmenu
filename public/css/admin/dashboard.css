@@ -60,6 +60,7 @@ th, td{
 .table-employers{
     width: 80%;
     margin: 1rem  auto 0;
+    font-size: .9rem;
 }
 .table-modal-employees{
     display: none;

@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             {
                 $admin->employers()->attach($employer);
             }
-            factory(App\Status::class, 1)->create([
+            factory(App\Status::class)->create([
                 'statusable_id'   => $employer->id,
                 'statusable_type' => App\Employer::class
             ]);
@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
             ]);
             foreach ($employees as $employee)
             {
-                factory(App\Status::class, 1)->create([
+                factory(App\Status::class)->create([
                     'statusable_id'   => $employee->id,
                     'statusable_type' => App\Employee::class
                 ]);
