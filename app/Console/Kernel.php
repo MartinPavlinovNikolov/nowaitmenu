@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Models::class,
-        Commands\Model::class
+        Commands\Model::class,
+        Commands\Factories::class
     ];
 
     /**

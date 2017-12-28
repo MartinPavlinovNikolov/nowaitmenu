@@ -50,10 +50,7 @@ class Model extends Models
      */
     private function setAllModels()
     {
-        $models = array_filter(glob(app_path() . DIRECTORY_SEPARATOR . '*'), 'is_file');
-        if (\is_dir('App\models')) {
-            $models = \array_push(array_filter(glob(app_path() . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . '*'), 'is_file'));
-        }
+        $models = $this->getAllModels();
         foreach ($models as $m)
         {
             $m                            = explode('\\', $m);
@@ -84,8 +81,7 @@ class Model extends Models
                 }
             }
         }
-        $this->model['hasOne'] = rtrim($this->model['hasOne'], ' ');
-        $this->model['hasOne'] = rtrim($this->model['hasOne'], ',');
+        $this->trimmer($this->model['hasOne']);
     }
 
     public function setHasMany($model)
@@ -101,8 +97,7 @@ class Model extends Models
                 }
             }
         }
-        $this->model['hasMany'] = rtrim($this->model['hasMany'], ' ');
-        $this->model['hasMany'] = rtrim($this->model['hasMany'], ',');
+        $this->trimmer($this->model['hasMany']);
     }
 
     public function setBelongsTo($model)
@@ -118,8 +113,7 @@ class Model extends Models
                 }
             }
         }
-        $this->model['belongsTo'] = rtrim($this->model['belongsTo'], ' ');
-        $this->model['belongsTo'] = rtrim($this->model['belongsTo'], ',');
+        $this->trimmer($this->model['belongsTo']);
     }
 
     public function setBelongsToMany($model)
@@ -135,8 +129,7 @@ class Model extends Models
                 }
             }
         }
-        $this->model['belongsToMany'] = rtrim($this->model['belongsToMany'], ' ');
-        $this->model['belongsToMany'] = rtrim($this->model['belongsToMany'], ',');
+        $this->trimmer($this->model['belongsToMany']);
     }
 
     public function setMorphTo($model)
@@ -152,8 +145,7 @@ class Model extends Models
                 }
             }
         }
-        $this->model['morphTo'] = rtrim($this->model['morphTo'], ' ');
-        $this->model['morphTo'] = rtrim($this->model['morphTo'], ',');
+        $this->trimmer($this->model['morphTo']);
     }
     
     public function setAble($model)
@@ -169,18 +161,7 @@ class Model extends Models
                 }
             }
         }
-        $this->model['able'] = rtrim($this->model['able'], ' ');
-        $this->model['able'] = rtrim($this->model['able'], ',');
-    }
-
-    private function setRelationships($data)
-    {
-        $this->setHasOne($data);
-        $this->setHasMany($data);
-        $this->setBelongsTo($data);
-        $this->setBelongsToMany($data);
-        $this->setMorphTo($data);
-        $this->setAble($data);
+        $this->trimmer($this->model['able']);
     }
 
     /**
@@ -199,11 +180,8 @@ class Model extends Models
 
         if ($this->exist()) {
             $this->setAllModels();
-            $this->setRelationships($this->model['modelName']);
-            $headers = ['models', '1 -> 1', '1 -> ∞', '∞ -> 1', '∞ -> ∞', '1 -> morph', 'morph -> ∞'];
-            $rows    = [$this->model];
-
-            $this->table($headers, $rows);
+            $this->setAllRealationsForCurrentModel($this->model['modelName']);
+            $this->showTableInConsole([$this->model]);
         }
         else {
             $this->error('Model ' . $this->modelFull . ' not found');

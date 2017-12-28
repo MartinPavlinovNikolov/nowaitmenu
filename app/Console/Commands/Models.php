@@ -35,6 +35,15 @@ class Models extends Command
         parent::__construct();
     }
 
+    /**
+     * remove ' ' and ',' from the right side of the string.
+     * @param type $dataForTriming
+     */
+    public function trimmer(&$dataForTriming)
+    {
+        $dataForTriming = rtrim(rtrim($dataForTriming, ' '), ',');
+    }
+
     public function setHasOne($model)
     {
         $class1 = 'App\\' . ucfirst($model);
@@ -49,8 +58,7 @@ class Models extends Command
                 }
             }
         }
-        $this->models[$model]['hasOne'] = rtrim($this->models[$model]['hasOne'], ' ');
-        $this->models[$model]['hasOne'] = rtrim($this->models[$model]['hasOne'], ',');
+        $this->trimmer($this->models[$model]['hasOne']);
     }
 
     public function setHasMany($model)
@@ -67,8 +75,7 @@ class Models extends Command
                 }
             }
         }
-        $this->models[$model]['hasMany'] = rtrim($this->models[$model]['hasMany'], ' ');
-        $this->models[$model]['hasMany'] = rtrim($this->models[$model]['hasMany'], ',');
+        $this->trimmer($this->models[$model]['hasMany']);
     }
 
     public function setBelongsTo($model)
@@ -85,8 +92,7 @@ class Models extends Command
                 }
             }
         }
-        $this->models[$model]['belongsTo'] = rtrim($this->models[$model]['belongsTo'], ' ');
-        $this->models[$model]['belongsTo'] = rtrim($this->models[$model]['belongsTo'], ',');
+        $this->trimmer($this->models[$model]['belongsTo']);
     }
 
     public function setBelongsToMany($model)
@@ -103,8 +109,7 @@ class Models extends Command
                 }
             }
         }
-        $this->models[$model]['belongsToMany'] = rtrim($this->models[$model]['belongsToMany'], ' ');
-        $this->models[$model]['belongsToMany'] = rtrim($this->models[$model]['belongsToMany'], ',');
+        $this->trimmer($this->models[$model]['belongsToMany']);
     }
 
     public function setMorphTo($model)
@@ -121,8 +126,7 @@ class Models extends Command
                 }
             }
         }
-        $this->models[$model]['morphTo'] = rtrim($this->models[$model]['morphTo'], ' ');
-        $this->models[$model]['morphTo'] = rtrim($this->models[$model]['morphTo'], ',');
+        $this->trimmer($this->models[$model]['morphTo']);
     }
 
     public function setAble($model)
@@ -139,8 +143,20 @@ class Models extends Command
                 }
             }
         }
-        $this->models[$model]['able'] = rtrim($this->models[$model]['able'], ' ');
-        $this->models[$model]['able'] = rtrim($this->models[$model]['able'], ',');
+        $this->trimmer($this->models[$model]['able']);
+    }
+
+    /**
+     * get all models names
+     * @return array
+     */
+    public function getAllModels()
+    {
+        $models = array_filter(glob(app_path() . DIRECTORY_SEPARATOR . '*'), 'is_file');
+        if (\is_dir('App\models')) {
+            $models = \array_push(array_filter(glob(app_path() . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . '*'), 'is_file'));
+        }
+        return (array) $models;
     }
 
     /**
@@ -150,10 +166,7 @@ class Models extends Command
      */
     private function setAllModels()
     {
-        $models = array_filter(glob(app_path() . DIRECTORY_SEPARATOR . '*'), 'is_file');
-        if (\is_dir('App\models')) {
-            $models = \array_push(array_filter(glob(app_path() . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . '*'), 'is_file'));
-        }
+        $models = $this->getAllModels();
         foreach ($models as $m)
         {
             $m                            = explode('\\', $m);
@@ -174,17 +187,30 @@ class Models extends Command
         return $this;
     }
 
-    private function setAllRealations($data)
+    public function setAllRealationsForCurrentModel($data)
+    {
+        $this->setHasOne($data);
+        $this->setHasMany($data);
+        $this->setBelongsTo($data);
+        $this->setBelongsToMany($data);
+        $this->setMorphTo($data);
+        $this->setAble($data);
+    }
+
+    public function setAllRelations($data)
     {
         foreach ($data as $model)
         {
-            $this->setHasOne($model);
-            $this->setHasMany($model);
-            $this->setBelongsTo($model);
-            $this->setBelongsToMany($model);
-            $this->setMorphTo($model);
-            $this->setAble($model);
+            $this->setAllRealationsForCurrentModel($model);
         }
+    }
+
+    public function showTableInConsole($data)
+    {
+        $headers = ['models', '1 -> 1', '1 -> ∞', '∞ -> 1', '∞ -> ∞', '1 -> morph', 'morph -> ∞'];
+        $rows    = $data;
+
+        $this->table($headers, $rows);
     }
 
     /**
@@ -197,10 +223,7 @@ class Models extends Command
         $this->setAllModels();
         $this->setAllRealations($this->models_strtolower);
 
-        $headers = ['models', '1 -> 1', '1 -> ∞', '∞ -> 1', '∞ -> ∞', '1 -> morph', 'morph -> ∞'];
-        $rows    = $this->models;
-
-        $this->table($headers, $rows);
+        $this->showTableInConsole($this->models);
     }
 
 }
