@@ -35,9 +35,11 @@ class Factories extends Command
 
     public function getAllFactories()
     {
-        $factories = array_filter(glob('database' . DIRECTORY_SEPARATOR . 'factories' . DIRECTORY_SEPARATOR . '*'), 'is_file');
-        foreach($factories as $factory){
-            $this->factories[] = $factory;
+        $dir = 'database' . DIRECTORY_SEPARATOR . 'factories' . DIRECTORY_SEPARATOR;
+        $factories = array_filter(glob($dir . '*'), 'is_file');
+        foreach ($factories as $factory)
+        {
+            $this->factories[]['col'] = str_replace($dir, '', str_replace('.php', '', $factory));
         }
     }
 

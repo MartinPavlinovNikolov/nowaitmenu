@@ -115,8 +115,8 @@ class Admin extends Authenticatable
     {
         $employer = $this->employers()->find($id);
         $name     = $employer->name;
-        foreach($employer->admins() as $admin){
-            $admin->detach();
+        foreach($employer->admins()->get() as $admin){
+            $admin->employers()->detach($employer);
         }
         $employer->delete();
 
