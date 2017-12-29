@@ -221,7 +221,7 @@ class Models extends Command
     public function handle()
     {
         $this->setAllModels();
-        $this->setAllRealations($this->models_strtolower);
+        $this->setAllRelations($this->models_strtolower);
 
         $this->showTableInConsole($this->models);
     }

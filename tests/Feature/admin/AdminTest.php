@@ -3,14 +3,18 @@
 namespace Tests\Feature\admin;
 
 use Tests\TestCase;
+use App\Admin;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class AdminTest extends TestCase
 {
 
+    use WithFaker;
     use WithoutMiddleware;
+    use DatabaseMigrations;
 
     /**
      * @test 
@@ -28,4 +32,17 @@ class AdminTest extends TestCase
         $response->assertSee('Actions');
     }
 
+    /**
+     * @test
+     */
+    public function admin_can_be_createat()
+    {
+
+        $admin = factory(\App\Admin::class)->create([
+            'name' => 'TestName'
+        ]);
+
+        $this->assertEquals($admin->name, 'TestName');
+    }
+    
 }
