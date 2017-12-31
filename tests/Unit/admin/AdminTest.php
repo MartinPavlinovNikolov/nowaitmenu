@@ -26,7 +26,9 @@ class AdminTest extends TestCase
             $admin->employers()->attach($employer);
         }
 
-        $this->assertCount(20, $employers);
+        $result = $admin->getAllEmployers();
+
+        $this->assertCount(20, $result);
     }
 
 }

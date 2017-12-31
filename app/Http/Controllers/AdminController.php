@@ -31,7 +31,7 @@ class AdminController extends Controller
     public function index()
     {
         $id        = Auth::guard('admin')->user()->id;
-        $employers = Admin::find($id)->getAllEmployersWithPaginator(10);
+        $employers = Admin::find($id)->getAllEmployers(10);
         if (Session::exists('sort') && Session::exists('value')) {
             Session::forget('sort');
             Session::forget('value');

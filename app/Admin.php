@@ -57,8 +57,11 @@ class Admin extends Authenticatable
      *      default: 10; 
      * @return all employers paginate by *
      */
-    public function getAllEmployersWithPaginator(int $numberOfPages = 10)
+    public function getAllEmployers(int $numberOfPages = null)
     {
+        if($numberOfPages == null){
+            return $this->employers()->get();
+        }
         return $this->employers()->paginate($numberOfPages);
     }
 
@@ -71,8 +74,11 @@ class Admin extends Authenticatable
      *      default: 10; 
      * @return all employers, filtered by name.Paginate by *
      */
-    public function getFilteredEmployersByCompanyName(string $name, int $numberOfPages)
+    public function getFilteredEmployersByCompanyName(string $name, int $numberOfPages = null)
     {
+        if ($numberOfPages == null) {
+            return $this->employers()->where('name', 'LIKE', '%' . $name . '%')->get();
+        }
         return $this->employers()->where('name', 'LIKE', '%' . $name . '%')->paginate($numberOfPages);
     }
 
@@ -83,8 +89,11 @@ class Admin extends Authenticatable
      * @param int $numberOfPages
      * @return all employers, filtered by email.Paginate by *
      */
-    public function getFilteredEmployersByEmail(string $email, int $numberOfPages)
+    public function getFilteredEmployersByEmail(string $email, int $numberOfPages = null)
     {
+        if ($numberOfPages == null) {
+            $this->employers()->where('email', 'LIKE', '%' . $email . '%')->get();
+        }
         return $this->employers()->where('email', 'LIKE', '%' . $email . '%')->paginate($numberOfPages);
     }
 
@@ -115,14 +124,15 @@ class Admin extends Authenticatable
     {
         $employer = $this->employers()->find($id);
         $name     = $employer->name;
-        foreach($employer->admins()->get() as $admin){
+        foreach ($employer->admins()->get() as $admin)
+        {
             $admin->employers()->detach($employer);
         }
         $employer->delete();
 
         return $name;
     }
-    
+
     /**
      * update status of the employer by id.Login.
      * 
@@ -139,28 +149,38 @@ class Admin extends Authenticatable
 
         return $name;
     }
-    
+
     /**
      * get collection off all active employers
      * 
      * @param int $numberOfPages default=10;
      * @return colction
      */
-    public function getActiveEmployers(int $numberOfPages = 10)
+    public function getActiveEmployers(int $numberOfPages = null)
     {
+        if ($numberOfPages == null) {
+            return $this->employers()->whereHas('Status', function($status) {
+                        $status->where('active', true);
+                    })->get();
+        }
         return $this->employers()->whereHas('Status', function($status) {
                     $status->where('active', true);
                 })->paginate($numberOfPages);
     }
-    
+
     /**
      * get collection off all disabled employers
      * 
      * @param int $numberOfPages default=10;
      * @return colction
      */
-    public function getDisabledEmployers(int $numberOfPages = 10)
+    public function getDisabledEmployers(int $numberOfPages = null)
     {
+        if ($numberOfPages == null) {
+            return $this->employers()->whereHas('Status', function($status) {
+                        $status->where('active', false);
+                    })->get();
+        }
         return $this->employers()->whereHas('Status', function($status) {
                     $status->where('active', false);
                 })->paginate($numberOfPages);
