@@ -3,46 +3,60 @@
 namespace Tests\Feature\admin;
 
 use Tests\TestCase;
-use App\Admin;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use App\Admin;
 
 class AdminTest extends TestCase
 {
 
-    use WithFaker;
-    use WithoutMiddleware;
     use DatabaseMigrations;
 
     /**
-     * @test 
+     * @test
      */
-    public function admin_can_see_correct_structure_of_table()
+    public function admin_can_see_the_number_of_all_employers_in_dashboard()
     {
-        $response = $this->get('admin');
-        $response->assertSee('ID');
-        $response->assertSee('Company name');
-        $response->assertSee('E-mail');
-        $response->assertSee('Date created');
-        $response->assertSee('Employees');
-        $response->assertSee('Status');
-        $response->assertSee('Last Login');
-        $response->assertSee('Actions');
+        $admin = factory(\App\Admin::class)->create();
+
+        factory(\App\Employer::class, 20)->create()->each(function($employer) {
+            $employer->admins()->attach(Admin::find(1));
+        });
+
+        $this->actingAs($admin, 'admin')
+                ->get(route('admin.dashboard'))
+                ->assertSee('showing from 1-10 of 20');
     }
 
     /**
      * @test
      */
-    public function admin_can_be_createat()
+    public function admin_can_get__corect_structure_of_the_table()
     {
+        $admin = factory(\App\Admin::class)->create();
 
-        $admin = factory(\App\Admin::class)->create([
-            'name' => 'TestName'
-        ]);
-
-        $this->assertEquals($admin->name, 'TestName');
+        $this->actingAs($admin, 'admin')
+                ->get(route('admin.dashboard'))
+                ->assertSee('ID')
+                ->assertSee('Company name')
+                ->assertSee('E-mail')
+                ->assertSee('Date created')
+                ->assertSee('Employees')
+                ->assertSee('Status')
+                ->assertSee('Last Login')
+                ->assertSee('Actions');
     }
-    
+
+    /**
+     * @test
+     */
+    public function admin_can_get_dashboard()
+    {
+        $admin = factory(\App\Admin::class)->create();
+
+        $this->actingAs($admin, 'admin')
+                ->assertAuthenticated('admin')
+                ->get(route('admin.dashboard'))
+                ->assertStatus(200);
+    }
+
 }

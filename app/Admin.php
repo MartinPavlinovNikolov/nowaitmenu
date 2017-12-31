@@ -57,7 +57,7 @@ class Admin extends Authenticatable
      *      default: 10; 
      * @return all employers paginate by *
      */
-    public function getAllEmployers(int $numberOfPages = 10)
+    public function getAllEmployersWithPaginator(int $numberOfPages = 10)
     {
         return $this->employers()->paginate($numberOfPages);
     }

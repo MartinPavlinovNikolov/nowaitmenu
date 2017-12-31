@@ -31,13 +31,12 @@ class AdminController extends Controller
     public function index()
     {
         $id        = Auth::guard('admin')->user()->id;
-        $employers = Admin::find($id)->getAllEmployers(10);
-
+        $employers = Admin::find($id)->getAllEmployersWithPaginator(10);
         if (Session::exists('sort') && Session::exists('value')) {
             Session::forget('sort');
             Session::forget('value');
         }
-
+        
         return view('admin.dashboard')->withEmployers($employers);
     }
 
@@ -89,19 +88,21 @@ class AdminController extends Controller
     public function getSearchEmployers(Request $request)
     {
         $id = Auth::guard('admin')->user()->id;
-        if ($request->input('sort') == 'name') {
+        if ($request->input('sort') == 'name' && $request->input('value') != null) {
             $employers = Admin::find($id)->getFilteredEmployersByCompanyName($request->input('value'), 10);
             $employers->appends(['sort' => 'name', 'value' => $request->input('value')])->render();
 
             Session::flash('value', $request->input('value'));
             Session::flash('sort', 'name');
         }
-        elseif ($request->input('sort') == 'email') {
+        elseif ($request->input('sort') == 'email' && $request->input('value') != null) {
             $employers = Admin::find($id)->getFilteredEmployersByEmail($request->input('value'), 10);
             $employers->appends(['sort' => 'email', 'value' => $request->input('value')])->render();
 
             Session::flash('value', $request->input('value'));
             Session::flash('sort', 'email');
+        }else{
+            return redirect(route('admin.dashboard'));
         }
 
         return view('admin.dashboard')->withEmployers($employers);
