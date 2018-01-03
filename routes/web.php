@@ -12,16 +12,18 @@ Route::get('/dashboard', 'EmployerController@index')->name('employer.dashboard')
 Route::post('/logout', 'Auth\EmployerLoginController@employerLogout')->name('employer.logout');
 
 Route::prefix('admin')->group(function() {
+    Route::get('/', 'AdminController@index')->name('admin.dashboard');
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
-    Route::get('/', 'AdminController@index')->name('admin.dashboard');
     Route::get('/settings', 'AdminController@getSettings')->name('admin.settings');
     Route::post('/settings', 'AdminController@postSettings')->name('admin.settings.submit');
     Route::post('/logout', 'Auth\AdminLoginController@adminLogout')->name('admin.logout');
-    Route::get('/search/employers', 'AdminController@getSearchEmployers')->name('admin.search.employers');
-    Route::get('/active/employers', 'AdminController@getActiveEmployers')->name('admin.active.employers');
-    Route::get('/disabled/employers', 'AdminController@getDisabledEmployers')->name('admin.disabled.employers');
-    Route::get('/logout/employer/{id}', 'AdminController@logoutEmployer')->name('admin.logout.employer');
-    Route::get('/delete/employer/{id}', 'AdminController@deleteEmployer')->name('admin.delete.employer');
-    Route::get('/login/employer/{id}', 'AdminController@loginEmployer')->name('admin.login.employer');
+    Route::get('/employers/search', 'AdminController@getSearchEmployers')->name('admin.employers.search');
+    Route::get('/employers/active', 'AdminController@getActiveEmployers')->name('admin.employers.active');
+    Route::get('/employers/disabled', 'AdminController@getDisabledEmployers')->name('admin.employers.disabled');
+    Route::get('/employer/logout/{id}', 'AdminController@logoutEmployer')->name('admin.employer.logout');
+    Route::get('/employer/delete/{id}', 'AdminController@deleteEmployer')->name('admin.employer.delete');
+    Route::get('/employer/login/{id}', 'AdminController@loginEmployer')->name('admin.employer.login');
+    Route::get('/employer/employee/logout/{employer_id}/{employee_id}', 'AdminController@loginEmployee')->name('admin.employer.employee.logout');
+    Route::get('/employer/employee/login/{employer_id}/{employee_id}', 'AdminController@loginEmployee')->name('admin.employer.employee.login');
 });

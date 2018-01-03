@@ -1,4 +1,4 @@
-<form method='GET' action="{{ route('admin.search.employers') }}" role="search">
+<form method='GET' action="{{ route('admin.employers.search') }}" role="search">
     <div class="row flex-row align-items-center">
         <input id='search' type="text" class=" col-2 offset-2 form-control" name="value" placeholder="Search..." value='@if(session()->has('value') && !empty('value')){{ session('value') }}@endif'>
                <button class="col-1 btn btn-primary btn-sm if-process" type="submit">Search</button>
@@ -21,8 +21,8 @@
         <div class="col-2">
             <div class="flex-row align-items-center">
                 <a href="{{ route('admin.dashboard') }}" class="col btn btn-warning btn-sm btn-all-of-some-employers process"><span class="text-primary">All</span> employers</a>
-                <a href="{{ route('admin.active.employers') }}" class="col btn btn-warning btn-sm btn-all-of-some-employers process"><span class="text-success">Active</span> employers</a>
-                <a href="{{ route('admin.disabled.employers') }}" class="col btn btn-warning btn-sm btn-all-of-some-employers process"><span class="text-danger">Disabled</span> employers</a>
+                <a href="{{ route('admin.employers.active') }}" class="col btn btn-warning btn-sm btn-all-of-some-employers process"><span class="text-success">Active</span> employers</a>
+                <a href="{{ route('admin.employers.disabled') }}" class="col btn btn-warning btn-sm btn-all-of-some-employers process"><span class="text-danger">Disabled</span> employers</a>
             </div>
         </div>
     </div>

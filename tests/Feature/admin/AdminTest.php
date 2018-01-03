@@ -3,7 +3,7 @@
 namespace Tests\Feature\admin;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Admin;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
@@ -11,39 +11,7 @@ class AdminTest extends TestCase
 {
 
     use WithoutMiddleware;
-    use DatabaseMigrations;
-
-    protected function seedAll()
-    {
-        $Martin    = factory(\App\Admin::class)->create([
-            'name' => 'Martin'
-        ]);
-        $admins    = factory(\App\Admin::class, 2)->create();
-        $employers = factory(\App\Employer::class, 20)->create();
-        foreach ($employers as $employer)
-        {
-            $Martin->employers()->attach($employer);
-            foreach ($admins as $admin)
-            {
-                $admin->employers()->attach($employer);
-            }
-            factory(\App\Status::class)->create([
-                'statusable_id'   => $employer->id,
-                'statusable_type' => \App\Employer::class
-            ]);
-            $employees = factory(\App\Employee::class, rand(4, 8))->create([
-                'employer_id' => $employer->id
-            ]);
-            foreach ($employees as $employee)
-            {
-                factory(\App\Status::class)->create([
-                    'statusable_id'   => $employee->id,
-                    'statusable_type' => \App\Employee::class
-                ]);
-            }
-        }
-        return $Martin;
-    }
+    use RefreshDatabase;
 
     /**
      * @test
@@ -90,6 +58,34 @@ class AdminTest extends TestCase
                 ->assertAuthenticated('admin')
                 ->get(route('admin.dashboard'))
                 ->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function admin_get_all_active_employers()
+    {
+        $admin = $this->seedAll();
+        $this->actingAs($admin, 'admin')
+                ->assertAuthenticated('admin')
+                ->get(route('admin.active.employers'))
+                ->assertStatus(200)
+                ->assertSee('showing from 1-10 of 20')
+                ->assertDontSee('Nothing found');
+    }
+
+    /**
+     * @test
+     */
+    public function admin_get_all_disabled_employers()
+    {
+        $admin = $this->seedAll();
+        $this->actingAs($admin, 'admin')
+                ->assertAuthenticated('admin')
+                ->get(route('admin.disabled.employers'))
+                ->assertStatus(200)
+                ->assertSee('Nothing found')
+                ->assertDontSee('showing from 1-10');
     }
 
 }

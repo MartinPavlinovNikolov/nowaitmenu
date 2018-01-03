@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-@if(count($employers) > 0)
+        @if(count($employers) > 0)
         @foreach($employers as $employer)
         <tr>
             <th class="text-sm" scope="row">{{ ($employer->id) }}</th>
@@ -42,9 +42,15 @@
                                     <tr>
                                         <td class='table-light'>{{ $employee->name }}</td>
                                         <td class='table-light'>
-                                            <div class="btn btn-danger btn-sm">
+                                            @if($employee->status->active == true)
+                                            <a href='{{ route('admin.employer.employee.logout', ['employer_id' => $employer->id, 'employee_id' => $employee->id]) }}' class="badge badge-sm badge-warning">
+                                                Logout
+                                            </a>
+                                            @else
+                                            <a href='{{ route('admin.employer.employee.login', ['id' => $employee->id, 'employee_id' => $employee->id]) }}' class="badge badge-sm badge-primary">
                                                 Login
                                             </div>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
@@ -66,19 +72,19 @@
             <td>{{ $employer->last_login->format('d/m/Y') }}</td>
             <td class="status-buttons-wrapper">
                 <div class="flex-row justify-content-center">
-                    <a href='{{ route('admin.logout.employer', ['id' => $employer->id]) }}' class="badge badge-sm process {{ $employer->status->active ? 'badge-warning' : 'text-muted disabled'}}">Suspend</a>
-                    <a href='{{ route('admin.delete.employer', ['id' => $employer->id]) }}' class="badge badge-sm badge-danger process">Delete</a>
-                    <a href='{{ route('admin.login.employer', ['id' => $employer->id]) }}' class="badge badge-sm process {{ $employer->status->active ? 'text-muted disabled' : 'badge-primary'}}">Login</a>
+                    <a href='{{ route('admin.employer.logout', ['id' => $employer->id]) }}' class="badge badge-sm process {{ $employer->status->active ? 'badge-warning' : 'text-muted disabled'}}">Suspend</a>
+                    <a href='{{ route('admin.employer.delete', ['id' => $employer->id]) }}' class="badge badge-sm badge-danger process">Delete</a>
+                    <a href='{{ route('admin.employer.login', ['id' => $employer->id]) }}' class="badge badge-sm process {{ $employer->status->active ? 'text-muted disabled' : 'badge-primary'}}">Login</a>
                 </div>
             </td>
         </tr>
         @endforeach
-@else
-<div class="text-center">
-    <h2 class="text-danger">Nothing found!</h2>
-</div>
-@endif
-    </tbody>
+        @else
+    <div class="text-center">
+        <h2 class="text-danger">Nothing found!</h2>
+    </div>
+    @endif
+</tbody>
 </table>
 <div class="flex-row justify-content-around">
     {{ $employers->links('vendor.pagination.default') }}

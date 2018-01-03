@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             foreach ($employees as $employee)
             {
                 factory(App\Status::class)->create([
+                    'active' => rand(0, 1),
                     'statusable_id'   => $employee->id,
                     'statusable_type' => App\Employee::class
                 ]);

@@ -3,16 +3,13 @@
 namespace Tests\Unit\admin;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AdminTest extends TestCase
 {
-
-    use WithFaker;
     use WithoutMiddleware;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     /**
      * @test

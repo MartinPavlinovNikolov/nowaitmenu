@@ -151,6 +151,40 @@ class Admin extends Authenticatable
     }
 
     /**
+     * update status of the employee by id.Logout.
+     * 
+     * @param int $id
+     * @return string $name
+     */
+    public function logoutEmployee(int $employer_id, int $employee_id)
+    {
+        $employee = $this->employers()->find($employer_id)->employees()->find($employee_id);
+        $name     = $employee->name;
+        $employee->status()->update([
+            'active' => false
+        ]);
+
+        return $name;
+    }
+    
+    /**
+     * update status of the employer by id.Login.
+     * 
+     * @param int $id
+     * @return string $name
+     */
+    public function loginEmployee(int $employer_id, int $employee_id)
+    {
+        $employee = $this->employers()->find($employer_id)->employees()->find($employee_id);
+        $name     = $employee->name;
+        $employee->status()->update([
+            'active' => true
+        ]);
+
+        return $name;
+    }
+    
+    /**
      * get collection off all active employers
      * 
      * @param int $numberOfPages default=10;
