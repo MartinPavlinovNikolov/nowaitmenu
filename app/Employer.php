@@ -57,7 +57,7 @@ class Employer extends Authenticatable
     {
         return $this->hasMany('App\Table');
     }
-    
+
     /**
      * Delete the employer and all employees to that employer from the database.
      *
@@ -74,13 +74,14 @@ class Employer extends Authenticatable
         // If the model doesn't exist, there is nothing to delete so we'll just return
         // immediately and not do anything else. Otherwise, we will continue with a
         // deletion process on the model, firing the proper events, and so forth.
-        if (! $this->exists) {
+        if (!$this->exists) {
             return;
         }
-        
+
         //custom delete related models
         $this->status()->delete();
-        foreach($this->employees()->get() as $employee){
+        foreach ($this->employees()->get() as $employee)
+        {
             $employee->delete();
         }
 
@@ -111,6 +112,21 @@ class Employer extends Authenticatable
     public function username()
     {
         return 'email';
+    }
+
+    /**
+     * get all employers for current administrator.
+     *
+     * @param type ( integer )$numberOfPages
+     *      default: 10; 
+     * @return all employers paginate by *
+     */
+    public function getAllEmployees(int $numberOfPages = null)
+    {
+        if ($numberOfPages == null) {
+            return $this->employees()->get();
+        }
+        return $this->employees()->paginate($numberOfPages);
     }
 
 }

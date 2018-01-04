@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\admin;
+namespace Tests\Feature\Admin;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -68,7 +68,7 @@ class AdminTest extends TestCase
         $admin = $this->seedAll();
         $this->actingAs($admin, 'admin')
                 ->assertAuthenticated('admin')
-                ->get(route('admin.active.employers'))
+                ->get(route('admin.employers.active'))
                 ->assertStatus(200)
                 ->assertSee('showing from 1-10 of 20')
                 ->assertDontSee('Nothing found');
@@ -82,7 +82,7 @@ class AdminTest extends TestCase
         $admin = $this->seedAll();
         $this->actingAs($admin, 'admin')
                 ->assertAuthenticated('admin')
-                ->get(route('admin.disabled.employers'))
+                ->get(route('admin.employers.disabled'))
                 ->assertStatus(200)
                 ->assertSee('Nothing found')
                 ->assertDontSee('showing from 1-10');

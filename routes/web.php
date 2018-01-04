@@ -11,6 +11,8 @@ Route::post('/register', 'Auth\EmployerRegisterController@register')->name('empl
 Route::get('/dashboard', 'EmployerController@index')->name('employer.dashboard');
 Route::post('/logout', 'Auth\EmployerLoginController@employerLogout')->name('employer.logout');
 
+Route::get('/employees', 'EmployerController@getEmployees')->name('employer.employees');
+
 Route::prefix('admin')->group(function() {
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');

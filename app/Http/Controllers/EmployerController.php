@@ -29,4 +29,12 @@ class EmployerController extends Controller
         return view('employer.dashboard');
     }
 
+    public function getEmployees()
+    {
+        $id        = Auth::guard('employer')->user()->id;
+        $employees = Employer::find($id)->getAllEmployees(10);
+        
+        return view('employer.employees.employees')->withEmployees($employees);
+    }
+    
 }

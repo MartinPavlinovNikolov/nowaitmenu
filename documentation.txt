@@ -1,0 +1,120 @@
+MAIN PROJECT:
+
+--- TECHNOLOGY STACK:
+    - apache server(version 2);
+    - mariaDB or MySQL(for testing SQLite);
+    - laravel 5.5 (framework back-end);
+    - composer(dependency manager);
+    - PHP-7;
+    - GIT (system version control);
+    - BitBucket.org (privite repository of the project);
+    - HTML-5;
+    - CSS-3;
+    - JS;
+    - Bootstrap-4 (framework front-end);
+    - PHPUnit (for testing);
+    - mike42/esc-pos (library for thermal printers in github);
+
+--- LIFE-CYCLE for the application:
+    1 employee log in his tablet(only once);
+    2 employee log in his account(only once);
+    3 employee choose a table;
+    4 employee select items from menu in the tablet(depend on the customer desires),
+        draw note,
+        open new bill if customers need that,
+        delete item if customers need that,
+        cancel order if customers cancel to make orders; 
+    5 employee send order to server;
+    6 printer/s in the different locations, get the data from the server and print out receipts;
+    7 employee send total to server when customer is ready to pay;
+    8 fiscal printer take out receipts for this order;
+
+--- EMPLOYER SECTION:
+    - registration:
+        - with company name, email and password;
+    - login:
+        - with email and password;
+    - logout;
+    - settings for Employees (CRUD):
+        - CREATE employee:
+            - name, pin code;
+        - READ employee:
+            - table with all employee and all possible information for them;
+        - UPDATE employee:
+            - change status active/disabled (login, logout);
+            - rename employee;
+            - change pin code;
+        - DELETE employee;
+    - settings for Menu of the restaurant:
+        - CRUD setup:
+            - pages:
+                - headers;
+                - items:
+                    - prices;
+                    - locations(bar,kitchen, barbecue...);
+    - settings for Printer/s in the restaurant:
+        - setup name/s of the printer/s;
+    - settings for tablets in the restaurant (CRUD):
+        - CREATE tablet:
+            - pin code;
+        - READ tablet:
+            - table with all tablet and all possible information for them;
+        - UPDATE tablet:
+            - change pin code;
+        - DELETE tablet;
+    - settings for tables in the restaurant (CRUD):
+        - CREATE table:
+            - number;
+        - READ table:
+            - table with all tables and all possible information for them;
+        - UPDATE table:
+            - change number;
+        - DELETE table;
+    - manager for Orders and Statistics:
+        - ...feature;
+    - pay for account:
+        - maybe with Stripe(library for payments with most used banks):
+        - ...feature;
+    - one month free trial! FOR EVERYBODY!:
+        - ...feature;
+    - feedback to developer/s:
+        - ...feature;
+    - dashboard with requirements for the system:
+        - static page with this information;
+    - wizard for setup the system:
+        - ...feature;
+
+--- EMPLOYEE SECTION:
+    - login:
+        - pin code (tablet code first);
+        - pin code (Employee pin code);
+    - select table to work with:
+        - calculator like buttons for selection;
+    - item selection:
+        - touch;
+    - item note:
+        - canvas(draw with finger);
+        - ...feature: hold on item draw (shortcut);
+    - shopping cart functionality (CRUD);
+    - listing current ordered items for checking stuff;
+    - add multiple carts;
+    - send order to server;
+    - send TOTAL to server;
+    - cancel to serve this table for now;
+
+--- ADMINISTRATION SECTION:
+    - login:
+        - with name and password;
+    - logout;
+    - settings:
+        - change admin password(current, new and repeating new password);
+    - dashboard:
+        - RUD (from CRUD) to all Employers and Employees in the system:
+            - READ Employers and Employee(table structure) with filters by:
+                - all Employers and all related Employees;
+                - active Employers and all related Employees;
+                - disabled Employers and all related Employees;
+                - Employers by name and all related Employees;
+                - Employers by email and all related Employees;
+            - UPDATE Employers and Employee (change status) and all related Models;
+            - DELETE Employers and Employee and all related Models;

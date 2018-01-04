@@ -19,7 +19,7 @@
 </div>
 <div class="col-auto">|</div>
 <div class="col-auto {{ Request::is('employees') ? 'active-nav' : ''}}">
-    <a class="process" href="#">Employees</a>
+    <a class="process" href="{{ route('employer.employees') }}">Employees</a>
 </div>
 <div class="col-auto">|</div>
 <div class="col-auto {{ Request::is('tables') ? 'active-nav' : ''}}">
