@@ -28,4 +28,21 @@ class AdminTest extends TestCase
         $this->assertCount(20, $result);
     }
 
+    /**
+     * @test
+     */
+    public function admin_can_get_8_employers_with_paginator()
+    {
+        $admin     = factory(\App\Admin::class)->create();
+        $employers = factory(\App\Employer::class, 20)->create();
+        foreach ($employers as $employer)
+        {
+            $admin->employers()->attach($employer);
+        }
+
+        $result = $admin->getAllEmployers(8);
+
+        $this->assertCount(8, $result);
+    }
+    
 }
