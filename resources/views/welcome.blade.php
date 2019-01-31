@@ -4,19 +4,16 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
         <title>{{env('APP_NAME')}}</title>
-
         <link rel="stylesheet" href="{{ asset('/css/bootstrap-reboot.min.css') }}">
         <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
-
-
+        <link rel="stylesheet" href="{{ asset('/css/helpers.css') }}">
     </head>
     <body>
         <div class="container-fluid flex-column">
             <nav class="row justify-content-around align-items-center" style="background-color: #f3e2cd;min-height: 4rem">
                 <div class="col-1">
-                    <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
+                    <a href='{{ url('/') }}'><image class="m-t-10 m-b-10" src="logos/logo80.png" alt="NoWaitMenu-Logo"></a>
                 </div>
                 <div class="col-4">
                     <p class="text-right text-info" style="font-size: .6rem;margin: 0">"this is the best thing for restaurants since refrigeration was invented"</p>
@@ -47,13 +44,13 @@
                             |
                         </div>
                         <div>
-                            <a class="text-success" href="{{ route('employer.register') }}">Register</a>
+                            <a class="text-success" href="{{ route('employer.register.form') }}">Register</a>
                         </div>
                         <div>
                             |
                         </div>
                         <div>
-                            <a class="text-success" href="{{ route('employer.login') }}">Login</a>
+                            <a class="text-success" href="{{ route('employer.login.form') }}">Login</a>
                         </div>
                     </div>
                 </div>

@@ -20,7 +20,7 @@
                         <div class="col-8">
                             <input id="name" type="name" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
 
-                            @if ($errors->has('email'))
+                            @if ($errors->has('name'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('name') }}</strong>
                             </span>

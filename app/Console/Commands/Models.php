@@ -169,7 +169,7 @@ class Models extends Command
         $models = $this->getAllModels();
         foreach ($models as $m)
         {
-            $m                            = explode('\\', $m);
+            $m                            = explode(DIRECTORY_SEPARATOR, $m);
             $m                            = end($m);
             $m                            = str_replace('.php', '', $m);
             $this->models_ucfirst[]       = [ucfirst($m)];

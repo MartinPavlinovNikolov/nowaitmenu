@@ -4,37 +4,74 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Employer;
-use Illuminate\Support\Facades\Auth;
 
 class EmployerController extends Controller
 {
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        $this->middleware('auth:employer');
+        $this->middleware('auth:employer')->only('home');
+        $this->middleware('auth:admin')->except('home');
+    }
+
+    public function home()
+    {
+        return view('employer.home');
+    }
+
+    public function show(string $sort, string $value)
+    {
+        $employers = Employer::where($sort, 'like', '%' . $value . '%')->paginate(10);
+
+        return view('admin.home')->withEmployers($employers);
+    }
+
+    public function getActive()
+    {
+        $employers = Employer::active()->paginate(10);
+
+        return view('admin.home')->withEmployers($employers);
+    }
+
+    public function getDisabled()
+    {
+        $employers = Employer::disabled()->paginate(10);
+
+        return view('admin.home')->withEmployers($employers);
     }
 
     /**
-     * Show the application dashboard.
+     * Update the specified resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function update(Request $request, int $id)
     {
-        return view('employer.dashboard');
+        $this->validate($request, [
+            'name' => 'min:3|string'
+        ]);
+
+        $employer         = Employer::find($id);
+        $employer->status = $employer->status ? false : true;
+        $employer->save();
+
+        return redirect()->route('admin.home');
     }
 
-    public function getEmployees()
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(int $id)
     {
-        $id        = Auth::guard('employer')->user()->id;
-        $employees = Employer::find($id)->getAllEmployees(10);
-        
-        return view('employer.employees.employees')->withEmployees($employees);
+        $employer = Employer::find($id);
+        $employer->delete();
+
+        return redirect()->route('admin.home');
     }
-    
+
 }

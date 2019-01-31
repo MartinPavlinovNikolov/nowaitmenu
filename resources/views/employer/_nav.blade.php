@@ -2,8 +2,8 @@
     <span>{{ Auth::guard('employer')->user()->name }}</span>
 </div>
 <div class="col-auto">|</div>
-<div class="col-auto {{ Request::is('dashboard') ? 'active-nav' : ''}}">
-    <a class="process" href="{{ route('employer.dashboard') }}">Home</a>
+<div class="col-auto {{ Request::is('home') ? 'active-nav' : ''}}">
+    <a class="process" href="{{ route('employer.home') }}">Home</a>
 </div>
 <div class="col-auto">|</div>
 <div class="col-auto {{ Request::is('menu') ? 'active-nav' : ''}}">
@@ -19,7 +19,7 @@
 </div>
 <div class="col-auto">|</div>
 <div class="col-auto {{ Request::is('employees') ? 'active-nav' : ''}}">
-    <a class="process" href="{{ route('employer.employees') }}">Employees</a>
+    <a class="process" href="{{ route('employees.index', Auth::guard('employer')->user()->name) }}">Employees</a>
 </div>
 <div class="col-auto">|</div>
 <div class="col-auto {{ Request::is('tables') ? 'active-nav' : ''}}">

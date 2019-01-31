@@ -1,120 +1,575 @@
 MAIN PROJECT:
 
---- TECHNOLOGY STACK:
-    - apache server(version 2);
-    - mariaDB or MySQL(for testing SQLite);
-    - laravel 5.5 (framework back-end);
-    - composer(dependency manager);
-    - PHP-7;
-    - GIT (system version control);
-    - BitBucket.org (privite repository of the project);
-    - HTML-5;
-    - CSS-3;
-    - JS;
-    - Bootstrap-4 (framework front-end);
-    - PHPUnit (for testing);
-    - mike42/esc-pos (library for thermal printers in github);
+# TECHNOLOGY STACK:
+## using TDD work-flow! - no Test, no code!!!
+## apache server(version 2);
+## mariaDB or MySQL(for testing SQLite in memory);
+## laravel 5.5 (framework back-end);
+## composer(dependency manager);
+## PHP-7.*;
+## GIT (system version control);
+## BitBucket.org (privite repository of the project);
+## HTML-5;
+## CSS-3;
+## JS;
+## Bootstrap-4 (framework front-end);
+## PHPUnit (for testing);
+## mike42/esc-pos (php library for thermal printers in github);
 
---- LIFE-CYCLE for the application:
-    1 employee log in his tablet(only once);
-    2 employee log in his account(only once);
-    3 employee choose a table;
-    4 employee select items from menu in the tablet(depend on the customer desires),
-        draw note,
-        open new bill if customers need that,
-        delete item if customers need that,
-        cancel order if customers cancel to make orders; 
-    5 employee send order to server;
-    6 printer/s in the different locations, get the data from the server and print out receipts;
-    7 employee send total to server when customer is ready to pay;
-    8 fiscal printer take out receipts for this order;
+# LIFE-CYCLE for the application:
+## 1 employee log in his tablet(only once);
+## 2 employee log in his account(only once);
+## 3 employee choose a table;
+## 4 employee select items from menu in the tablet(depend on the customer desires),
+    draw note for exceptions,
+    open new bill if customers need that,
+    delete item if customers need that,
+    cancel order if customers cancel to make orders; 
+## 5 employee send order to server;
+## 6 printer/s in the different locations, get the data from the server and print out receipts;
+## 7 employee send total to server when customer is ready to pay;
+## 8 fiscal printer take out receipts for this order;
 
---- EMPLOYER SECTION:
-    - registration:
-        - with company name, email and password;
-    - login:
-        - with email and password;
-    - logout;
-    - settings for Employees (CRUD):
-        - CREATE employee:
-            - name, pin code;
-        - READ employee:
-            - table with all employee and all possible information for them;
-        - UPDATE employee:
-            - change status active/disabled (login, logout);
-            - rename employee;
-            - change pin code;
-        - DELETE employee;
-    - settings for Menu of the restaurant:
-        - CRUD setup:
-            - pages:
-                - headers;
-                - items:
-                    - prices;
-                    - locations(bar,kitchen, barbecue...);
-    - settings for Printer/s in the restaurant:
-        - setup name/s of the printer/s;
-    - settings for tablets in the restaurant (CRUD):
-        - CREATE tablet:
-            - pin code;
-        - READ tablet:
-            - table with all tablet and all possible information for them;
-        - UPDATE tablet:
-            - change pin code;
-        - DELETE tablet;
-    - settings for tables in the restaurant (CRUD):
-        - CREATE table:
-            - number;
-        - READ table:
-            - table with all tables and all possible information for them;
-        - UPDATE table:
-            - change number;
-        - DELETE table;
-    - manager for Orders and Statistics:
-        - ...feature;
-    - pay for account:
-        - maybe with Stripe(library for payments with most used banks):
-        - ...feature;
-    - one month free trial! FOR EVERYBODY!:
-        - ...feature;
-    - feedback to developer/s:
-        - ...feature;
-    - dashboard with requirements for the system:
-        - static page with this information;
-    - wizard for setup the system:
-        - ...feature;
+# MARKETING-PAGE: get ...
+        -Marketing Test
+            -test case: user can view important links in marketing page
+            -test case: user can view  marketing page
+_________   
+         \__________________________________________________________________________________________________________________________
 
---- EMPLOYEE SECTION:
-    - login:
-        - pin code (tablet code first);
-        - pin code (Employee pin code);
-    - select table to work with:
-        - calculator like buttons for selection;
-    - item selection:
-        - touch;
-    - item note:
-        - canvas(draw with finger);
-        - ...feature: hold on item draw (shortcut);
-    - shopping cart functionality (CRUD);
-    - listing current ordered items for checking stuff;
-    - add multiple carts;
-    - send order to server;
-    - send TOTAL to server;
-    - cancel to serve this table for now;
+# EMPLOYER SECTION:
+## registration:
+### get form with company name, email and password; get .../register
+        -Employer Register Test
+            -test case: employer can get registration form
+            -test case: authenticated employer can`t get registration form
+            -test case: deferent role except user will be redirected from registration
+            -test case: guest can see correct form
+_________   
+         \__________________________________________________________________________________________________________________________
 
---- ADMINISTRATION SECTION:
-    - login:
-        - with name and password;
-    - logout;
-    - settings:
-        - change admin password(current, new and repeating new password);
-    - dashboard:
-        - RUD (from CRUD) to all Employers and Employees in the system:
-            - READ Employers and Employee(table structure) with filters by:
-                - all Employers and all related Employees;
-                - active Employers and all related Employees;
-                - disabled Employers and all related Employees;
-                - Employers by name and all related Employees;
-                - Employers by email and all related Employees;
-            - UPDATE Employers and Employee (change status) and all related Models;
-            - DELETE Employers and Employee and all related Models;
+### post register inputs for validation; post .../register
+        -Employer Register Test
+            -test case: guest can be register as employer
+            -test case: Name is require for registration
+            -test case: Name must be more then 2 characters
+            -test case: Name must be less then 100 characters
+            -test case: Email is require for registration
+            -test case: Email must be valid email
+            -test case: Password is require for registration
+            -test case: Password must be at least 8 characters
+            -test case: Confirm password is required for registration
+            -test case: Confirm password must be the same as password
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## login:
+### get login form with email and password; get .../login
+        -Employer Login Test
+            -test case: guest can get registration form
+            -test case: authenticated employer will be redirected to home page
+            -test case: authenticated tablet will be redirected to work page
+            -test case: authenticated employee will be redirected to work page
+            -test case: authenticated administrator will be redirected to admin home page
+            -test case: user can see correct form
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### post login inputs data for validation; post .../login
+        -Employer Login Test
+            -test case: guest can be login as employer
+            -test case: email is required
+            -test case: email must be email
+            -test case: password is required
+            -test case: password must be at least 8 characters
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## logout; put .../logout
+        -Employer Logout Test
+            -test case: employer can logout
+            -test case: admin can`t access logout for employer
+            -test case: tablet can`t access logout for employer
+            -test case: employee can`t access logout for employer
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## settings for Employees (CRUD):
+### CREATE employee:
+#### get form with name, pin code, status; get .../employees/create
+        -Employer Create Employee Test
+            -test case: employer can access this route
+            -test case: deferent role except employer can`t access this route
+            -test case: employer can see correct form
+_________   
+         \__________________________________________________________________________________________________________________________
+
+#### post data input for new employee; post .../employees
+        -Employer Create Employee Test
+            -test case: employer can store new employee
+            -test case: name is required
+            -test case: name must be at least 2 characters
+            -test case: pin code is required
+            -test case: pin code must be 4 integers
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### READ employee:
+#### table with all employee and all possible information for them; get .../employees
+        -Employer View Employees Listing Test
+            -test case: employer can see all employees and details about them
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### UPDATE employee:
+#### get form for specific employee; get .../employees/id
+        -Employer Update Employees Test
+            -test case: employer can see correct form for updating employees
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+#### change status active/disabled (login, logout), rename employee, change pin code; put .../employees/id
+        -Employer Update Employees Test
+            -test case: employer can toggled employees status
+            -test case: employer can change employee pin code
+            -test case: employer can rename employee
+            -test case: name must be at least 2 characters
+            -test case: pin code must be 4 integers
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### DELETE employee; delete .../employees/id
+        -Employer Delete Employees Test
+            -test case: employer can delete employee
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## settings for Menu of the restaurant:
+### get form with menu ; get .../menu
+        -Employer View Menu Test
+            -test case: employer can view all details for menu
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### put new data for menu: pages, headers, items, prices, locations(bar,kitchen, barbecue...); put .../menu
+        -Employer Update Menu Test
+            -test case: employer can make changes to menu
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+            -test case: page is required
+            -test case: two pages cant be the same integer
+            -test case: page must be a integer
+            -test case: header is required
+            -test case: two headers cant be the same
+            -test case: header must be a string
+            -test case: item is required
+            -test case: two items cant be the same
+            -test case: item must be a string
+            -test case: price is required
+            -test case: price must be a integer
+            -test case: location is required
+            -test case: location must be a string
+            -test case: location cant be longer then 100 characters
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## settings for Printer/s in the restaurant:
+### get form for setup name/s and model/s of the printer/s; get .../printers
+        -Employer View Printer Listing Test
+            -test case: employer see correct form for managing printers
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### put details from form inputs for setup name/s and model/s of the printer/s; put .../printers
+        -Employer Update Printer Test
+            -test case: employer can store data for printers
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+            -test case: name is required
+            -test case: printer model is required
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## settings for tablets in the restaurant (CRUD):
+### CREATE tablet:
+#### get form for making tablet pin code; get .../tablets/create
+        -Employer Create Tablet Test
+            -test case: employer see correct form for managing tablets
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+#### post form for making tablet pin code; post .../tablets
+        -Employer Create Tablet Test
+            -test case: employer can store data for tablet
+            -test case: pin code is required
+            -test case: pin code must be 4 integers
+_________
+         \__________________________________________________________________________________________________________________________
+
+### READ tablet:
+#### table with all tablet and all possible information for them; get .../tablets
+        -Employer View Tablet Listing Test
+            -test case: employer can see list with all tablets
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### UPDATE tablet:
+#### change pin code; put .../tablets/id
+        -Employer Update Tablet Test
+            -test case: employer can update tablet
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### DELETE tablet; delete .../tablets/id
+        -Employer Delete Tablet Test
+            -test case: employer can delete tablet
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## settings for tables in the restaurant (CRUD):
+### CREATE table:
+#### get form for making table (number); get .../tables/create
+        -Employer Create Table Test
+            -test case: employer see correct form for managing tables
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+#### post form for making table (number); post .../tables/create
+        -Employer Create Table Test
+            -test case: employer can store data for table
+            -test case: number is required
+            -test case: number must be integer
+            -test case: number is unique
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### READ table:
+#### table with all tables and all possible information for them; get .../tables
+        -Employer View Tables Listing Test
+            -test case: employer can see list with all tables
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### UPDATE table:
+#### change number; put .../tables/id
+        -Employer Update Table Test
+            -test case: employer can update table
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+            -test case: number is required
+            -test case: number must be integer
+            -test case: number is unique
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### DELETE table; delete .../tables/id
+        -Employer Delete Table Test
+            -test case: employer can delete table
+            -test case: admin cant access this route
+            -test case: employee cant access this route
+            -test case: tablet cant access this route
+            -test case: guest cant access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## manager for Orders and Statistics:
+### ...feature;
+## pay for account:
+### maybe with Stripe(library for payments with most used banks):
+### ...feature;
+## one month free trial! FOR EVERYBODY!:
+### ...feature;
+## feedback to developer/s:
+### ...feature;
+## dashboard with requirements for the system:
+### static page with this information;
+## wizard for setup the system:
+### ...feature;
+
+# EMPLOYEE SECTION:
+## login:
+### get form with pin code (tablet pin code first), pin code (Employee pin code); get .../work/login
+        -Employee Tablet Login Test
+            -test case: employee and tablet can access this route
+            -test case: only employee can`t access this route
+            -test case: only tablet can`t access this route
+            -test case: administrator can`t access this route
+            -test case: employer can`t access this route
+            -test case: employee and tablet can see correct form
+            -test case: only employee can see correct form without details for tablet
+            -test case: only tablet can see correct form without details for employee
+            -test case: employee and tablet have redirect to work page if both are authenticated
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### post form inputs for pin code (tablet pin code first), pin code (Employee pin code); post .../work/login
+        -Employee Tablet Login Test
+            -test case: employee is redirected to work if data is correct
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## select table to work with:
+### calculator like buttons for selection; get .../work/tables
+        -Employee Table Selection Test
+            -test case: only employee and tablet can access this route
+            -test case: employee can`t access this route without tablet
+            -test case: tablet can`t access this route without employee
+            -test case: administrator can`t access this route
+            -test case: employer can`t access this route
+            -test case: employee can see correct form for choosing table
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### post tables form; post .../work/tables
+        -Employee Table Selection Test
+            -test case: employee get redirect to work application page
+            -test case: employee can see correct table number on table work-space
+            -test case: employee can see correct menu on table work-space
+            -test case: table number is required
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## item selection:
+### touch;
+## item note:
+### canvas(draw with finger);
+### ...feature: hold on item draw (shortcut);
+## shopping cart functionality (CRUD);
+## listing current ordered items for checking stuff; get .../work/table/id/history
+        -Order History Listing Test
+            -test case: only employee and tablet can access this route
+            -test case: employee can`t access this route without tablet
+            -test case: tablet can`t access this route without employee
+            -test case: administrator can`t access this route
+            -test case: employer can`t access this route
+            -test case: employee can see current history of the table
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## add multiple carts;
+## send order to server; post .../work/table/id/order
+        -Post Order Test
+            -test case: only employee and tablet can access this route
+            -test case: employee can`t access this route without tablet
+            -test case: tablet can`t access this route without employee
+            -test case: administrator can`t access this route
+            -test case: employer can`t access this route
+            -test case: employee can send valid data for order
+            -test case: order can be stored correctly in database
+            -test case: table number is required
+            -test case: table number must be integer
+            -test case: order id is required
+            -test case: items are required
+            -test case: items are array
+            -test case: employee id is required
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## send TOTAL to server; post .../work/table/id/total
+        -Post Total Test
+            -test case: only employee and tablet can access this route
+            -test case: employee can`t access this route without tablet
+            -test case: tablet can`t access this route without employee
+            -test case: administrator can`t access this route
+            -test case: employer can`t access this route
+            -test case: employee can send valid data for order when hit the total
+            -test case: total can be stored correctly in database
+            -test case: table number is required
+            -test case: table number must be integer
+            -test case: order id is required
+            -test case: items are required
+            -test case: items are array
+            -test case: employee id is required
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## cancel to serve this table for now; get .../work
+        -Cancel Serve Table Test
+            -test case: only employee and tablet can access this route
+            -test case: employee can`t access this route without tablet
+            -test case: tablet can`t access this route without employee
+            -test case: administrator can`t access this route
+            -test case: employer can`t access this route
+            -test case: employee will be redirected to work page to choose new table
+_________   
+         \__________________________________________________________________________________________________________________________
+
+
+# ADMINISTRATION SECTION:
+## login:
+### login form with name and password; get .../admin/login
+        -Admin Login Test
+            -test case: guest can get form for admin
+            -test case: redirect to admin home page if is admin
+            -test case: employer can`t get form for admin
+            -test case: employee can`t get form for admin
+            -test case: tablet can`t get form for admin
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### validation of login inputs; post .../admin/login
+        -Admin Login Test
+            -test case: guest can be login as admin
+            -test case: redirect to admin home page if is admin
+            -test case: employer can`t access this route
+            -test case: employee can`t access this route
+            -test case: tablet can`t access this route
+            -test case: name is required
+            -test case: password is required
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## logout; put .../admin/logout
+        -Admin Logout Test
+            -test case: guest can`t access this route
+            -test case: employer can`t access this route
+            -test case: employee can`t access this route
+            -test case: tablet can`t access this route
+            -test case: admin can log out
+            -test case: admin will be redirected to marketing page
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## settings:
+### get form for changing admin password(current, new and repeating new password); get .../admin/settings
+        -Admin Settings Test
+            -test case: admin can see correct form for settings
+            -test case: guest can`t access this route
+            -test case: employer can`t access this route
+            -test case: employee can`t access this route
+            -test case: tablet can`t access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+### validation of settings form inputs; post .../admin/settings
+        -Admin Settings Test
+            -test case: admin can change his password
+            -test case: current_password is required
+            -test case: password is required
+            -test case: password must be at least 8 characters
+            -test case: password_confirmation is required
+            -test case: password_confirmation must be the same as password
+_________   
+         \__________________________________________________________________________________________________________________________
+
+## dashboard:
+### RUD (from CRUD) to all Employers and Employees in the system:
+#### READ Employers and Employee(table structure) with filters by:
+##### all Employers and all related Employees; get .../admin/home
+        -Admin View Employers Listing Test
+            -test case: admin can see employers listing
+            -test case: guest can`t access this route
+            -test case: employer can`t access this route
+            -test case: employee can`t access this route
+            -test case: tablet can`t access this route
+            -test case: admin can see all employees
+_________   
+         \__________________________________________________________________________________________________________________________
+
+##### active Employers and all related Employees; get .../admin/employers/active
+        -Admin Searching Employers Test
+            -test case: admin can see all active employers
+            -test case: guest can`t access this route
+            -test case: employer can`t access this route
+            -test case: employee can`t access this route
+            -test case: tablet can`t access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+##### disabled Employers and all related Employees; get .../admin/employers/disabled
+        -Admin Searching Employers Test
+            -test case: admin can see all disabled employers
+_________   
+         \__________________________________________________________________________________________________________________________
+
+##### Employers by name and all related Employees; get .../admin/employers/sort/value
+        -Admin Searching Employers Test
+            -test case: admin can surch for employers by name
+_________   
+         \__________________________________________________________________________________________________________________________
+
+##### Employers by email and all related Employees; get .../admin/employers/sort/value(duplicate above)
+        -Admin Searching Employers Test
+            -test case: admin can surch for employers by email
+_________   
+         \__________________________________________________________________________________________________________________________
+
+#### UPDATE Employers(change status); put .../admin/employers/id/status
+        -Admin Update Employers Test
+            -test case: admin can toggle status of employers
+            -test case: guest can`t access this route
+            -test case: employer can`t access this route
+            -test case: employee can`t access this route
+            -test case: tablet can`t access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+#### UPDATE Employee(change status); put .../admin/employees/id/status
+        -Admin Update Employees Test
+            -test case: admin can toggle status of employees
+            -test case: guest can`t access this route
+            -test case: employer can`t access this route
+            -test case: employee can`t access this route
+            -test case: tablet can`t access this route
+_________   
+         \__________________________________________________________________________________________________________________________
+
+#### DELETE Employers and Employee and all related Models; delete .../admin/employers/id
+        -Admin Delete Employers Test
+            -test case: admin can delete employer and all related models to this employer
+            -test case: guest can`t access this route
+            -test case: employer can`t access this route
+            -test case: employee can`t access this route
+            -test case: tablet can`t access this route
+_________   
+         \__________________________________________________________________________________________________________________________

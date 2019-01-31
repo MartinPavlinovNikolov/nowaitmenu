@@ -53,7 +53,7 @@ class Model extends Models
         $models = $this->getAllModels();
         foreach ($models as $m)
         {
-            $m                            = explode('\\', $m);
+            $m                            = explode(DIRECTORY_SEPARATOR, $m);
             $m                            = end($m);
             $m                            = str_replace('.php', '', $m);
             $this->models_strtolower[]    = strtolower($m);
@@ -172,10 +172,10 @@ class Model extends Models
     public function handle()
     {
         if (is_dir('App' . DIRECTORY_SEPARATOR . 'models')) {
-            $this->modelFull = 'App' . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . ucfirst($this->argument('model'));
+            $this->modelFull = 'App' . '\\' . 'models' . '\\' . ucfirst($this->argument('model'));
         }
         else {
-            $this->modelFull = 'App' . DIRECTORY_SEPARATOR . ucfirst($this->argument('model'));
+            $this->modelFull = 'App' . '\\' . ucfirst($this->argument('model'));
         }
 
         if ($this->exist()) {

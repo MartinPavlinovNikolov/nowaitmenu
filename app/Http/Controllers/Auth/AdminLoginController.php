@@ -12,7 +12,7 @@ class AdminLoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['guest:employer', 'guest:employee', 'guest:admin', 'guest:tablet'])->except('adminLogout');
+        $this->middleware(['guest:employer', 'guest:employee', 'guest:admin', 'guest:tablet'])->except('logout');
     }
 
     public function showLoginForm()
@@ -23,7 +23,7 @@ class AdminLoginController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            'name'     => 'required|min:3|max:255',
+            'name'     => 'required|min:2|max:255',
             'password' => 'required|min:6'
         ]);
 
@@ -33,12 +33,12 @@ class AdminLoginController extends Controller
                 ])) {
             Session::flash('message', 'Hello ' . Auth::guard('admin')->user()->name);
 
-            return redirect()->intended(route('admin.dashboard'));
+            return redirect()->intended(route('admin.employers.index'));
         }
         return redirect()->back()->withInput();
     }
 
-    public function adminLogout()
+    public function logout()
     {
         Auth::guard('admin')->logout();
         Session::flush();

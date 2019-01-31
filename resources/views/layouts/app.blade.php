@@ -13,13 +13,14 @@
         <link rel="stylesheet" href="{{ asset('/css/bootstrap-reboot.min.css') }}">
         <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('/css/helpers.css') }}">
         @yield('styles')
     </head>
     <body>
         <div class="container-fluid">
             <nav class="row flex-row justify-content-between align-items-center">
                 <div class="col-auto">
-                    <h1 class="lead"><a href='{{ url('/') }}'>NoWaitMenu-Logo</a></h1>
+                    <a href='{{ url('/') }}'><image class="m-t-10 m-b-10" src="logos/logo80.png" alt="NoWaitMenu-Logo"></a>
                 </div>
                 <div class="col-auto align-content-center">
                     <div class="row justify-content-around align-items-center prity-nav-items">

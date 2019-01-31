@@ -17,11 +17,11 @@
             <div class="panel-heading"><h1>Employer Register</h1></div>
 
             <div class="panel-body">
-                <form class="form" method="POST" action="{{ route('employer.register') }}">
+                <form class="form" method="POST" action="{{ route('employer.register.form') }}">
                     {{ csrf_field() }}
 
                     <div class="form-group row {{ $errors->has('name') ? ' has-error' : '' }}">
-                        <label for="name" class="col-4 control-label">Name: </label>
+                        <label for="name" class="col-4 control-label">Company Name: </label>
 
                         <div class="col-8">
                             <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>

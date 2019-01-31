@@ -1,31 +1,85 @@
 <?php
 
+//marketing static page
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
-Route::post('/login', 'Auth\EmployerLoginController@login')->name('employer.login.submit');
-Route::get('/login', 'Auth\EmployerLoginController@showLoginForm')->name('employer.login');
-Route::get('/register', 'Auth\EmployerRegisterController@showRegistrationForm')->name('employer.register');
-Route::post('/register', 'Auth\EmployerRegisterController@register')->name('employer.register.submit');
-Route::get('/dashboard', 'EmployerController@index')->name('employer.dashboard');
-Route::post('/logout', 'Auth\EmployerLoginController@employerLogout')->name('employer.logout');
-
-Route::get('/employees', 'EmployerController@getEmployees')->name('employer.employees');
+//Employer Home page
+Route::get('home', 'EmployerController@home')->name('employer.home');
+//Employer->employees CRUD
+//Route::resource('employees', 'EmployerEmployeesController');
+//Employer login, logout, register;
+Route::get('login', 'Auth\EmployerLoginController@showLoginForm')->name('employer.login.form');
+Route::post('login', 'Auth\EmployerLoginController@login')->name('employer.login.submit');
+Route::put('logout', 'Auth\EmployerLoginController@logout')->name('employer.logout');
+Route::get('register', 'Auth\EmployerRegisterController@showRegistrationForm')->name('employer.register.form');
+Route::post('register', 'Auth\EmployerRegisterController@register')->name('employer.register.submit');
 
 Route::prefix('admin')->group(function() {
-    Route::get('/', 'AdminController@index')->name('admin.dashboard');
-    Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
-    Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
-    Route::get('/settings', 'AdminController@getSettings')->name('admin.settings');
-    Route::post('/settings', 'AdminController@postSettings')->name('admin.settings.submit');
-    Route::post('/logout', 'Auth\AdminLoginController@adminLogout')->name('admin.logout');
-    Route::get('/employers/search', 'AdminController@getSearchEmployers')->name('admin.employers.search');
-    Route::get('/employers/active', 'AdminController@getActiveEmployers')->name('admin.employers.active');
-    Route::get('/employers/disabled', 'AdminController@getDisabledEmployers')->name('admin.employers.disabled');
-    Route::get('/employer/logout/{id}', 'AdminController@logoutEmployer')->name('admin.employer.logout');
-    Route::get('/employer/delete/{id}', 'AdminController@deleteEmployer')->name('admin.employer.delete');
-    Route::get('/employer/login/{id}', 'AdminController@loginEmployer')->name('admin.employer.login');
-    Route::get('/employer/employee/logout/{employer_id}/{employee_id}', 'AdminController@loginEmployee')->name('admin.employer.employee.logout');
-    Route::get('/employer/employee/login/{employer_id}/{employee_id}', 'AdminController@loginEmployee')->name('admin.employer.employee.login');
+
+    //List employers, delete employers;
+    Route::resource('employers', 'AdminEmployersController')->only([
+        'index', 'destroy'
+    ])->names([
+        'index'   => 'admin.employers.index', 'destroy' => 'admin.employers.destroy'
+    ]);
+
+    Route::prefix('employers')->group(function() {
+
+        //Find all employers, who are allowed to use this application
+        Route::resource('active', 'AdminActiveEmployersController')->only([
+            'index'
+        ])->names([
+            'index' => 'admin.employers.active'
+        ]);
+
+        //Find all employers, who are not allowed to use this application
+        Route::resource('by/name', 'AdminEmployersByNameController')->only([
+            'show'
+        ])->names([
+            'show' => 'admin.employers.by.name.show'
+        ]);
+
+        //Find all employers, where names containigs the given string
+        Route::resource('by/email', 'AdminEmployersByEmailController')->only([
+            'show'
+        ])->names([
+            'show' => 'admin.employers.by.email.show'
+        ]);
+
+        //Find all employers, where emails containigs the given string
+        Route::resource('disabled', 'AdminDisabledEmployersController')->only([
+            'index'
+        ])->names([
+            'index' => 'admin.employers.disabled'
+        ]);
+
+        //Toggle access of the employer to access this application
+        Route::resource('status', 'AdminEmployersStatusesController')->only([
+            'update'
+        ])->names([
+            'update' => 'admin.employers.status.update'
+        ]);
+    });
+
+    Route::resource('employees', 'AdminEmployeesController');
+
+    //Get login form for administrator
+    Route::get('login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login.form');
+
+    //Submit data for authenticate the administrator
+    Route::post('login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+
+    //Login out the administrator
+    Route::put('logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+
+    //Menage setting for password of the administrator
+    Route::resource('settings', 'AdminSettingsController')->only([
+        'update',
+        'edit'
+    ])->names([
+        'edit'   => 'admin.settings.edit',
+        'update' => 'admin.settings.update'
+    ]);
 });

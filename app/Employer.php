@@ -2,69 +2,20 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticable;
 
-class Employer extends Authenticatable
+class Employer extends Authenticable
 {
 
-    use Notifiable;
-    use Trates\Status;
+    protected $guard   = 'employer';
+    protected $guarded = [];
+    protected $dates   = ['last_login'];
 
-    protected $table = 'employers';
-    protected $guard = 'employer';
-    protected $dates = ['last_login'];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password', 'last_login'
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-    public function menu()
-    {
-        return $this->hasOne('App\Menu');
-    }
-
-    public function admins()
-    {
-        return $this->belongsToMany('App\Admin');
-    }
-
-    public function employees()
+    public function employees(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('App\Employee');
     }
 
-    public function tablets()
-    {
-        return $this->hasMany('App\Tablet');
-    }
-
-    public function tables()
-    {
-        return $this->hasMany('App\Table');
-    }
-
-    /**
-     * Delete the employer and all employees to that employer from the database.
-     *
-     * @return bool|null
-     *
-     * @throws \Exception
-     */
     public function delete()
     {
         if (is_null($this->getKeyName())) {
@@ -78,13 +29,6 @@ class Employer extends Authenticatable
             return;
         }
 
-        //custom delete related models
-        $this->status()->delete();
-        foreach ($this->employees()->get() as $employee)
-        {
-            $employee->delete();
-        }
-
         if ($this->fireModelEvent('deleting') === false) {
             return false;
         }
@@ -93,6 +37,8 @@ class Employer extends Authenticatable
         // for the models. This will allow any caching to get broken on the parents
         // by the timestamp. Then we will go ahead and delete the model instance.
         $this->touchOwners();
+
+        $this->employees()->delete();
 
         $this->performDeleteOnModel();
 
@@ -104,29 +50,34 @@ class Employer extends Authenticatable
         return true;
     }
 
-    /**
-     * 
-     * @return DB-field for authentication
-     * by default is: email
-     */
-    public function username()
+    public function scopeActive($query)
     {
-        return 'email';
+        return $query->where('status', true);
     }
 
-    /**
-     * get all employers for current administrator.
-     *
-     * @param type ( integer )$numberOfPages
-     *      default: 10; 
-     * @return all employers paginate by *
-     */
-    public function getAllEmployees(int $numberOfPages = null)
+    public function scopeDisabled($query)
     {
-        if ($numberOfPages == null) {
-            return $this->employees()->get();
-        }
-        return $this->employees()->paginate($numberOfPages);
+        return $query->where('status', false);
+    }
+    
+    public function getFormatedLastLoginAttribute()
+    {
+        return $this->last_login->format('Y/d/m');
+    }
+    
+    public function getFormatedCreatedAtAttribute()
+    {
+        return $this->created_at->format('Y/d/m');
+    }
+    
+    public function getFormatedUpdatedAtAttribute()
+    {
+        return $this->updated_at->format('Y/d/m');
+    }
+    
+    public function getBooleanStatusAttribute()
+    {
+        return !!$this->status;
     }
 
 }

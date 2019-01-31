@@ -76,15 +76,15 @@ class Handler extends ExceptionHandler
             $guard = array_get($exception->guards(), 0);
 
             $login = [
-                'admin'    => 'admin.login',
-                'employee' => 'employee.login',
-                'tablet'   => 'tablet.login',
-                'employer' => 'employer.login'
+                'admin'    => 'admin.login.form',
+                'employee' => 'employee.login.form',
+                'tablet'   => 'tablet.login.form',
+                'employer' => 'employer.login.form'
             ];
             return redirect()->guest(route($login[$guard]));
         }
         catch (Exception $exc) {
-            return redirect()->guest(route('employer.login'));
+            return redirect()->guest(route('employer.login.form'));
         }
     }
 

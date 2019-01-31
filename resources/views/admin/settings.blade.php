@@ -23,9 +23,10 @@
             <div class="panel-heading text-center">
                 <h2>Change password</h2>
             </div>
-
+            
             <div class="panel-body">
-                <form class="form" method="POST" action="{{ route('admin.settings.submit') }}">
+                <form class="form" method="POST" action="{{ route('admin.settings.update', Auth::guard('admin')->user()->id) }}">
+                    {{ method_field('PUT') }}
                     {{ csrf_field() }}
 
                     <div class="form-group row {{ $errors->has('current_password') ? ' has-error' : '' }}">

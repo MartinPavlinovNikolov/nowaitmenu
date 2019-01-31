@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Employer;
-use App\Admin;
-use App\Status;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class EmployerRegisterController extends Controller
 {
@@ -60,18 +59,10 @@ class EmployerRegisterController extends Controller
         $employer->name       = $data['name'];
         $employer->email      = $data['email'];
         $employer->password   = bcrypt($data['password']);
-        $employer->last_login = date('Y-m-d H:i:s', time());
+        $employer->status = true;
+        $employer->last_login = Carbon::now()->timestamp;
         $employer->save();
         
-        $status = new Status();
-        $status->active = true;
-        $employer->status()->save($status);
-
-        $admins = Admin::all();
-        foreach ($admins as $admin)
-        {
-            $employer->admins()->attach($admin);
-        }
         return $employer;
     }
 

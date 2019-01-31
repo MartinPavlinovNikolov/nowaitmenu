@@ -13,7 +13,7 @@ class EmployerLoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['guest:employer', 'guest:employee', 'guest:admin', 'guest:tablet'])->except('employerLogout');
+        $this->middleware(['guest:employer', 'guest:employee', 'guest:admin', 'guest:tablet'])->except('logout');
     }
 
     public function showLoginForm()
@@ -27,13 +27,13 @@ class EmployerLoginController extends Controller
             'email'    => 'required|string|email',
             'password' => 'required|min:6'
         ]);
-
+        
         if (Auth::guard('employer')->attempt([
                     'email'    => $request->email,
                     'password' => $request->password
                 ])) {
             $employer = Employer::find(Auth::guard('employer')->user()->id);
-            if($employer->status->active == false){
+            if($employer->status == false){
                 Auth::guard('employer')->logout();
                 Session::flush();
                 Session::flash('message', 'Access Forbidden!');
@@ -42,12 +42,12 @@ class EmployerLoginController extends Controller
             
             Session::flash('message', 'Hello' . $employer->name);
             
-            return redirect()->intended(route('employer.dashboard'));
+            return redirect()->intended(route('employer.home'));
         }
         return redirect()->back()->withInput();
     }
 
-    public function employerLogout()
+    public function logout()
     {
         Auth::guard('employer')->logout();
         Session::flush();

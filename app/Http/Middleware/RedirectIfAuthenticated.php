@@ -19,10 +19,10 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         $route = [
-            'admin'    => 'admin.dashboard',
-            'employee' => 'employee.dashboard',
-            'tablet'   => 'tablet.dashboard',
-            'employer' => 'employer.dashboard'
+            'admin'    => 'admin.employers.index',
+            'employee' => 'welcome',
+            'tablet'   => 'welcome',
+            'employer' => 'employer.home'
         ];
 
         /**
